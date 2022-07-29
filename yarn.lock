@@ -4877,7 +4877,7 @@
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
   "version" "2.6.12"
 
-"core-js@^3.0.0", "core-js@^3.22.3":
+"core-js@^3.0.0", "core-js@^3.22.3", "core-js@^3.6.4":
   "integrity" "sha512-7Vh11tujtAZy82da4duVreQysIoO2EvVrur7y6IzZkH1IHPSekuDi8Vuw1+YKjkbfWLRD7Nc9ICQ/sIUDutcyg=="
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-3.23.5.tgz"
   "version" "3.23.5"
@@ -9003,7 +9003,7 @@
   "resolved" "https://registry.npmjs.org/lock/-/lock-1.1.0.tgz"
   "version" "1.1.0"
 
-"lodash-es@^4.17.11":
+"lodash-es@^4.17.11", "lodash-es@^4.17.21":
   "integrity" "sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw=="
   "resolved" "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
   "version" "4.17.21"
@@ -12143,6 +12143,15 @@
   "integrity" "sha512-8mo9bslnBO3tr5PEVFzMPIWwWnipGS0xVbYf65zxDqfNwmzYn1LpiKNrR6DlClusuvo+hDHd1zKpmfAe83NQSQ=="
   "resolved" "https://registry.npmjs.org/slugify/-/slugify-1.6.5.tgz"
   "version" "1.6.5"
+
+"smooth-scrollbar@^8.7.4":
+  "integrity" "sha512-BSqZJExXoGbl9FGA4ci33DNmlHFRvDxJk4Q8OXmYykRLa1Hzg2YiV5slVogMd1UsxzNf6m0nralT8GdanKWoYw=="
+  "resolved" "https://registry.npmjs.org/smooth-scrollbar/-/smooth-scrollbar-8.7.4.tgz"
+  "version" "8.7.4"
+  dependencies:
+    "core-js" "^3.6.4"
+    "lodash-es" "^4.17.21"
+    "tslib" "^1.10.0"
 
 "snake-case@^3.0.4":
   "integrity" "sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg=="

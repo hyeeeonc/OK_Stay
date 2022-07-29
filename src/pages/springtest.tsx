@@ -8,9 +8,13 @@ import { Global } from '@emotion/react'
 
 import CarouselItems from 'components/index/CarouselItem'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
+import { calculateImageSizes } from 'gatsby-plugin-image/dist/src/image-utils'
+
+import './spring.css'
 
 const IndexWrapper = styled.main`
   height: calc(100vh - 56px);
+  width: 10px
   background-color: ${palette.gray[0]};
   // background-color: white;
   overflow: hidden;
@@ -24,15 +28,22 @@ const IndexPage: FunctionComponent = function () {
   const parallax = useRef<IParallax>(null!)
 
   useEffect(() => {
+    console.log(parallax.current.content.current)
+
     parallax.current.container.current.addEventListener(
       'wheel',
       (evt: { preventDefault: () => void; deltaY: number }) => {
-        console.log(evt)
+        // console.log(evt)
         evt.preventDefault()
+        let scr = 0
+        scr += evt.deltaY
         parallax.current.container.current.scrollLeft += evt.deltaY
+
+        console.log(parallax.current.container.current.scrollLeft)
       },
     )
   }, [])
+
   return (
     <>
       <Global styles={reset} />
@@ -43,11 +54,13 @@ const IndexPage: FunctionComponent = function () {
           ref={parallax}
           horizontal
           pages={7}
-          style={{ top: '0', left: '0' }}
+          className="Pal"
+          innerStyle={{ top: 56, height: 'calc( 100vh - 56px)' }}
+          // style={{ top: '0', left: '0' }}
         >
           <ParallaxLayer
             offset={0}
-            speed={0.5}
+            speed={1.1}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -59,7 +72,7 @@ const IndexPage: FunctionComponent = function () {
 
           <ParallaxLayer
             offset={1}
-            speed={0.5}
+            speed={1.1}
             style={{
               display: 'flex',
               justifyContent: 'center',

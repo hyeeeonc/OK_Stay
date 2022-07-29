@@ -14,7 +14,6 @@ const IndexWrapper = styled.main`
   overflow: hidden;
   display: flex;
   align-items: center;
-  transition: all 0.2s ease;
 `
 
 const Spacer = styled.div`
@@ -26,27 +25,45 @@ const IndexPage: FunctionComponent = function () {
   // const [benefitScroll, setBenefitScroll] = useState<number>(0)
   // const [roadmapScroll, setRoadmapScroll] = useState<number>(0)
 
-  const mainRef = useRef<HTMLDivElement>()
+  const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    mainRef.current.addEventListener('wheel', e => {
-      e.preventDefault()
-      if (mainScroll < 0) {
-        setMainScroll(0)
-      } else if (mainScroll > 1891) {
-        setMainScroll(1891)
+    mainRef.current.addEventListener('wheel', e => e.preventDefault())
+  }, [])
+
+  const scrollHandler = (e: React.WheelEvent) => {
+    const delta = Math.max(-1, Math.min(1, e.deltaY || -e.detail))
+    const scrollSpeed = 60
+
+    setMainScroll(ms => {
+      const newMainScroll = ms + delta * scrollSpeed
+      if (newMainScroll < 0) {
+        return 0
+      } else if (newMainScroll > 6000) {
+        return 6000
       } else {
-        setMainScroll(ms => ms + e.deltaY)
+        return newMainScroll
       }
     })
-  })
-
+  }
+  // const scrollHandler = (e: React.WheelEvent) => {
+  //   setMainScroll(ms => {
+  //     const newMainScroll = ms + e.deltaY
+  //     if (newMainScroll < 0) {
+  //       return 0
+  //     } else if (newMainScroll > 6000) {
+  //       return 6000
+  //     } else {
+  //       return newMainScroll
+  //     }
+  //   })
+  // }
   return (
     <>
       <Global styles={reset} />
       <Header />
       <Spacer />
-      <IndexWrapper ref={mainRef}>
+      <IndexWrapper ref={mainRef} onWheel={scrollHandler}>
         <MainCarousel cs={mainScroll} />
       </IndexWrapper>
     </>

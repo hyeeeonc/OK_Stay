@@ -13,9 +13,12 @@ const CarouselItem = styled.div`
   filter: drop-shadow(0px 8px 32px rgba(0, 0, 0, 0.25));
   backdrop-filter: blur(300px);
   border-radius: 59px;
+
+  flex: none;
   width: 1016px;
   height: 610px;
   margin-right: calc(50vw - 508px - 200px);
+  scroll-snap-align: center;
 `
 
 const CarouselTitleWrapper = styled.div`
