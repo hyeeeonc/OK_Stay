@@ -2,6 +2,11 @@ import { css } from '@emotion/react'
 
 const reset = css`
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-dynamic-subset.css');
+  @import url('https://use.typekit.net/yum2ckw.css');
+
+  html {
+    scroll-behavior: smooth;
+  }
 
   h1 {
     font-weight: 700;
