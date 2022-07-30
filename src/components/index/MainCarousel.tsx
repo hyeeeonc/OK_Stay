@@ -27,77 +27,27 @@ interface MainCarouselProps {
 const MainCarousel: FunctionComponent<MainCarouselProps> = function ({ cs }) {
   let carouselScroll: number = cs
   const mainCarousel = useRef<HTMLDivElement>(null)
-  const list = mainCarousel.current
 
   useEffect(() => {
-    function horizontalWheel(container) {
-      /** Max `scrollLeft` value */
-      let scrollWidth
+    console.log(carouselScroll)
+  })
 
-      /** Desired scroll distance per animation frame */
-      let getScrollStep = () => scrollWidth / 50 /* ADJUST TO YOUR WISH */
+  useEffect(() => {
+    console.log(carouselScroll)
+    console.log(mainCarousel.current.style.width)
+    console.log(mainCarousel.current.scrollLeft)
 
-      /** Target value for `scrollLeft` */
-      let targetLeft
+    mainCarousel.current.scrollLeft = cs
+    // mainCarousel.current.scrollTo({ left: cs, behavior: 'smooth' })
+    console.log(mainCarousel.current.scrollLeft)
+    // mainCarousel.current.style.transform = `translateX(-${cs})`
 
-      function scrollLeft() {
-        let beforeLeft = container.scrollLeft
-        let wantDx = getScrollStep()
-        let diff = targetLeft - container.scrollLeft
-        let dX = wantDx >= Math.abs(diff) ? diff : Math.sign(diff) * wantDx
-
-        // Performing horizontal scroll
-        container.scrollBy(dX, 0)
-
-        // Break if smaller `diff` instead of `wantDx` was used
-        if (dX === diff) return
-
-        // Break if can't scroll anymore or target reached
-        if (
-          beforeLeft === container.scrollLeft ||
-          container.scrollLeft === targetLeft
-        )
-          return
-
-        requestAnimationFrame(scrollLeft)
-      }
-
-      container.addEventListener('wheel', e => {
-        e.preventDefault()
-
-        scrollWidth = container.scrollWidth - container.clientWidth
-        targetLeft = Math.min(
-          scrollWidth,
-          Math.max(0, container.scrollLeft + e.deltaY),
-        )
-
-        requestAnimationFrame(scrollLeft)
-      })
+    if (carouselScroll < 0) {
+      carouselScroll = 0
+    } else if (carouselScroll > mainCarousel.current.offsetWidth) {
+      carouselScroll = mainCarousel.current.offsetWidth
     }
-
-    horizontalWheel(list)
-  }, [])
-
-  // useEffect(() => {
-  //   console.log(carouselScroll)
-  // })
-
-  // useEffect(() => {
-  //   console.log(carouselScroll)
-  //   console.log(mainCarousel.current.style.width)
-  //   console.log(mainCarousel.current.scrollLeft)
-
-  //   mainCarousel.current.scrollLeft = cs
-  //   // mainCarousel.current.scrollTo({ left: cs, behavior: 'smooth' })
-  //   console.log(mainCarousel.current.scrollLeft)
-  //   // mainCarousel.current.style.transform = `translateX(-${cs})`
-
-  //   if (carouselScroll < 0) {
-  //     carouselScroll = 0
-  //   } else if (carouselScroll > mainCarousel.current.offsetWidth) {
-  //     carouselScroll = mainCarousel.current.offsetWidth
-  //   }
-  // }, [carouselScroll])
+  }, [carouselScroll])
 
   return (
     <CarouselWrapper ref={mainCarousel}>

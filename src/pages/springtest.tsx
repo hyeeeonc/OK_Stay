@@ -10,8 +10,6 @@ import CarouselItems from 'components/index/CarouselItem'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
 import { calculateImageSizes } from 'gatsby-plugin-image/dist/src/image-utils'
 
-import './spring.css'
-
 const IndexWrapper = styled.main`
   height: calc(100vh - 56px);
   width: 10px

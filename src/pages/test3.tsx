@@ -6,9 +6,12 @@ import styled from '@emotion/styled'
 import reset from '../../lib/styles/global'
 import { Global } from '@emotion/react'
 
-import MainCarousel from 'components/index/MainCarousel'
+import MainCarousel2 from 'components/index/MainCarousel2'
 
 const IndexWrapper = styled.main`
+  position: fixed;
+  top: 56px;
+  left: 0;
   height: calc(100vh - 56px);
   background-color: ${palette.gray[0]};
   overflow: hidden;
@@ -64,7 +67,7 @@ const IndexPage: FunctionComponent = function () {
       <Header />
       <Spacer />
       <IndexWrapper ref={mainRef} onWheel={scrollHandler}>
-        <MainCarousel cs={mainScroll} />
+        <MainCarousel2 cs={mainScroll} />
       </IndexWrapper>
     </>
   )

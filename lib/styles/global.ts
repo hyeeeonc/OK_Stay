@@ -56,6 +56,7 @@ const reset = css`
 
   body {
     background-color: #121212;
+    overscroll-behavior: none;
   }
 
   html,
