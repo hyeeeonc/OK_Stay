@@ -22,7 +22,7 @@ const MainCarousel2: FunctionComponent = function () {
     let sliderWidth
     let current = 0
     let target = 0
-    const ease = 0.3
+    const ease = 0.1
 
     const setter = (start: number, end: number, t: number): number => {
       return start * (1 - t) + end * t

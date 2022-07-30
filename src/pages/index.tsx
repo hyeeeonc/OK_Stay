@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import Header from 'components/common/Header'
 import palette from '../../lib/styles/palette'
 import styled from '@emotion/styled'
@@ -6,12 +6,17 @@ import styled from '@emotion/styled'
 import reset from '../../lib/styles/global'
 import { Global } from '@emotion/react'
 
-import CarouselItems from 'components/index/CarouselItem'
+import MainCarousel3 from 'components/index/MainCarousel3'
 
 const IndexWrapper = styled.main`
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 100vw;
   height: calc(100vh - 56px);
   background-color: ${palette.gray[0]};
-  overflow: hidden;
+  display: flex;
+  align-items: center;
 `
 
 const Spacer = styled.div`
@@ -25,7 +30,7 @@ const IndexPage: FunctionComponent = function () {
       <Header />
       <Spacer />
       <IndexWrapper>
-        <CarouselItems></CarouselItems>
+        <MainCarousel3 />
       </IndexWrapper>
     </>
   )
