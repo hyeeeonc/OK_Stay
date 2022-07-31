@@ -7,6 +7,7 @@ const HeaderBlock = styled.div`
   height: 56px;
   background-color: ${palette.gray[1]};
   position: fixed;
+  z-index: 50;
   display: flex;
   justify-content: center;
   align-items: center;

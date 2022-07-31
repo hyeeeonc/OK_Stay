@@ -1,7 +1,13 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
-import CarouselItems from './CarouselItem'
+import CarouselBenefit from './carousel/CarouselBenefit'
+import CarouselGallary from './carousel/CarouselGallary'
+import CarouselInfo from './carousel/CarouselInfo'
+import CarouselOkra from './carousel/CarouselOkra'
+import CarouselPartners from './carousel/CarouselPartners'
+import CarouselQnA from './carousel/CarouselQnA'
+import CarouselRoadmap from './carousel/CarouselRoadmap'
 
 const CarouselBlock = styled.div`
   height: 610px;
@@ -52,13 +58,13 @@ const MainCarousel2: FunctionComponent = function () {
       style={{ transform: `translateX(-${carouselScroll}px)` }}
     >
       <CarouselWrapper>
-        <CarouselItems title="Okra Seoul NFT" />
-        <CarouselItems title="NFT Benefit" />
-        <CarouselItems title="Roadmap" />
-        <CarouselItems title="Infomation" />
-        <CarouselItems title="QnA" />
-        <CarouselItems title="Gallary" />
-        <CarouselItems title="Partners" />
+        <CarouselOkra />
+        <CarouselBenefit page={carouselPage} />
+        <CarouselRoadmap page={carouselPage} />
+        <CarouselInfo page={carouselPage} />
+        <CarouselQnA page={carouselPage} />
+        <CarouselGallary page={carouselPage} />
+        <CarouselPartners page={carouselPage} />
       </CarouselWrapper>
     </CarouselBlock>
   )
