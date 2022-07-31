@@ -11,35 +11,100 @@ import {
 } from './CarouselItem'
 
 const CarouselBody = styled.section`
-  margin-top: 50px
-  margin-left: 80px;
+  margin-top: 50px;
+  padding-left: 80px;
+  padding-right: 110px;
   height: 325px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: scroll !important;
 
   color: ${palette.gray[8]};
-
 `
 
 const CarouselBodyItems = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 45px;
 `
 
-const CarouselBodyItemsTextWrapper = styled.h3`
+const CarouselBodyIcon: FunctionComponent = function () {
+  return (
+    <div style={{ width: 50, height: 50 }}>
+      <svg
+        width="48"
+        height="49"
+        viewBox="0 0 48 49"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M5.33301 30.4563C5.33301 27.7072 7.56166 25.4785 10.3108 25.4785H17.7776C20.5268 25.4785 22.7554 27.7072 22.7554 30.4563V37.9231C22.7554 40.6723 20.5268 42.9009 17.7776 42.9009H10.3108C7.56166 42.9009 5.33301 40.6723 5.33301 37.9231V30.4563ZM17.7776 30.4563H10.3108V37.9231H17.7776V30.4563Z"
+          fill="white"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M25.2451 10.5462C25.2451 7.79701 27.4738 5.56836 30.2229 5.56836H37.6897C40.4389 5.56836 42.6675 7.79701 42.6675 10.5462V18.0129C42.6675 20.7621 40.4389 22.9907 37.6897 22.9907H30.2229C27.4738 22.9907 25.2451 20.7621 25.2451 18.0129V10.5462ZM37.6897 10.5462H30.2229V18.0129H37.6897V10.5462Z"
+          fill="white"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M5.33301 10.5462C5.33301 7.79701 7.56166 5.56836 10.3108 5.56836H17.7776C20.5268 5.56836 22.7554 7.79701 22.7554 10.5462V18.0129C22.7554 20.7621 20.5268 22.9907 17.7776 22.9907H10.3108C7.56166 22.9907 5.33301 20.7621 5.33301 18.0129V10.5462ZM17.7776 10.5462H10.3108V18.0129H17.7776V10.5462Z"
+          fill="white"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M25.2451 34.1897C25.2451 29.3787 29.1453 25.4785 33.9563 25.4785C38.7674 25.4785 42.6675 29.3787 42.6675 34.1897C42.6675 39.0008 38.7674 42.9009 33.9563 42.9009C29.1453 42.9009 25.2451 39.0008 25.2451 34.1897ZM33.9563 30.4563C31.8944 30.4563 30.2229 32.1278 30.2229 34.1897C30.2229 36.2516 31.8944 37.9231 33.9563 37.9231C36.0182 37.9231 37.6897 36.2516 37.6897 34.1897C37.6897 32.1278 36.0182 30.4563 33.9563 30.4563Z"
+          fill="white"
+        />
+      </svg>
+    </div>
+  )
+}
+
+const CarouselBodyItemsTextWrapper = styled.div`
   height: 89px;
-  display: flex;
+  color: ${palette.gray[8]};
+`
+
+const CarouselBodyItemsTitle = styled.h3`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
 `
 
 const CarouselBodyItemsContent = styled.h4`
-  opacity: 80%;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  // margin-bottom;
 `
 
-const CarouselBenefit: FunctionComponent<CarouselProps> = function ({ page }) {
+interface BenefitProps {
+  page: number
+  scroll2(e: object)
+}
+
+const CarouselBenefit: FunctionComponent<BenefitProps> = function ({
+  page,
+  scroll2,
+}) {
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.3 }}>
-      <CarouselTitleWrapper>
+      <CarouselTitleWrapper onWheel={scroll2}>
         <CarouselIcon>
           <svg
             width="52"
@@ -70,6 +135,51 @@ const CarouselBenefit: FunctionComponent<CarouselProps> = function ({ page }) {
         </CarouselIcon>
         <CarouselTitle>NFT Benefit</CarouselTitle>
       </CarouselTitleWrapper>
+
+      <CarouselBody>
+        <CarouselBodyItems>
+          <CarouselBodyItemsTextWrapper>
+            <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle>
+            <br />
+            <CarouselBodyItemsContent>
+              VIP Invitatation 및 Private Place
+            </CarouselBodyItemsContent>
+          </CarouselBodyItemsTextWrapper>
+          <CarouselBodyIcon />
+        </CarouselBodyItems>
+
+        <CarouselBodyItems>
+          <CarouselBodyItemsTextWrapper>
+            <CarouselBodyItemsTitle>OKRA LOUNGE BAR</CarouselBodyItemsTitle>
+            <br />
+            <CarouselBodyItemsContent>
+              VIP Invitatation 및 Private Place
+            </CarouselBodyItemsContent>
+          </CarouselBodyItemsTextWrapper>
+          <CarouselBodyIcon />
+        </CarouselBodyItems>
+
+        <CarouselBodyItems>
+          <CarouselBodyItemsTextWrapper>
+            <CarouselBodyItemsTitle>OKRA 해변 파티</CarouselBodyItemsTitle>
+            <br />
+            <CarouselBodyItemsContent>
+              VIP Invitatation 및 Private Place
+            </CarouselBodyItemsContent>
+          </CarouselBodyItemsTextWrapper>
+          <CarouselBodyIcon />
+        </CarouselBodyItems>
+
+        <CarouselBodyItems>
+          <CarouselBodyItemsTextWrapper>
+            <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle> <br />
+            <CarouselBodyItemsContent>
+              VIP Invitatation 및 Private Place
+            </CarouselBodyItemsContent>
+          </CarouselBodyItemsTextWrapper>
+          <CarouselBodyIcon />
+        </CarouselBodyItems>
+      </CarouselBody>
     </CarouselItem>
   )
 }

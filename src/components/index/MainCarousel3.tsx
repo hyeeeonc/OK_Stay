@@ -26,10 +26,6 @@ const CarouselWrapper = styled.div`
   padding-left: calc(50vw - 508px);
 `
 
-const CarouselOpacityController = styled.div`
-  transition: opacity 1.5s linear;
-`
-
 const BackgroundCircle = styled.div`
   position: fixed;
   background-color: #a058ed;
@@ -50,8 +46,14 @@ const BackgroundRec = styled.div`
 
 let isScrollable = true
 
+type TouchPosition = {
+  x: number
+  y: number
+}
+
 const MainCarousel3: FunctionComponent = function () {
   const carouselBlock = useRef<HTMLDivElement>(null)
+  const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
   const [carouselPage, setCarouselPage] = useState<number>(0)
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -66,14 +68,6 @@ const MainCarousel3: FunctionComponent = function () {
       height: window.innerHeight,
     })
   }
-  // const init = () => {
-  //   // let totalWidth: number
-  //   const pageWidth: number = 1016 + (window.innerWidth / 2 - 508 - 200)
-  //   setXTrans(_ => pageWidth)
-  //   // totalWidth = carouselBlock.current.getBoundingClientRect().width
-
-  //   return pageWidth
-  // }
 
   const prevPage = () => {
     if (carouselPage === 0) {
@@ -91,21 +85,14 @@ const MainCarousel3: FunctionComponent = function () {
     }
   }
 
-  // const innerScrollAnimate = (page: number, wholeScroll: number) => {
-  //   if (carouselPage === page) {
-  //     setInnerScroll(is => is + 10)
-  //     if (innerScroll >= wholeScroll ) {
-
-  //     }
-  //   }
-  //   setInnerScroll(is => is + scrollAmount)
-  //   console.log(innerScroll)
-  // }
+  const getIsScrollable = (bool: boolean) => {
+    isScrollable = bool
+  }
 
   useEffect(() => {
-    carouselBlock.current.addEventListener('wheel', e => {
-      e.preventDefault()
-    })
+    // carouselBlock.current.addEventListener('wheel', e => {
+    //   e.preventDefault()
+    // })
 
     window.addEventListener('resize', handleResize)
     return () => {
@@ -124,17 +111,33 @@ const MainCarousel3: FunctionComponent = function () {
       return
     }
     if (e.deltaY > 0) {
-      if (carouselPage === 1) {
-        // const scrollAmount: number = 60
-        setInnerScroll(is => is + 10)
-        // if (innerScroll >= 400) {
-        // }
-      } else {
-        nextPage()
-        isScrollable = false
-        setTimeout(() => (isScrollable = true), 1500)
-      }
+      nextPage()
     } else {
+      prevPage()
+    }
+    isScrollable = false
+    setTimeout(() => (isScrollable = true), 1500)
+  }
+
+  const TouchStart = (e: React.TouchEvent) => {
+    if (!isScrollable) return
+    setTouchPos({
+      x: e.changedTouches[0].pageX,
+      y: e.changedTouches[0].pageY,
+    })
+  }
+
+  const TouchEnd = (e: React.TouchEvent) => {
+    if (!isScrollable) return
+
+    const changedX: number = touchPos.x - e.changedTouches[0].pageX
+    const changedY: number = touchPos.y - e.changedTouches[0].pageY
+
+    if (changedX > 1000) {
+      nextPage()
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
+    } else if (changedX < -30) {
       prevPage()
       isScrollable = false
       setTimeout(() => (isScrollable = true), 1500)
@@ -238,17 +241,36 @@ const MainCarousel3: FunctionComponent = function () {
 
       <CarouselBlock
         ref={carouselBlock}
-        onWheel={scrollHandler}
+        onTouchStart={TouchStart}
+        onTouchEnd={TouchEnd}
         style={{ transform: `translate3d(-${xTrans}px, 0px, 0px)` }}
       >
         <CarouselWrapper>
-          <CarouselOkra page={carouselPage} />
-          <CarouselBenefit page={carouselPage} />
-          <CarouselRoadmap page={carouselPage} />
-          <CarouselInfo page={carouselPage} />
-          <CarouselQnA page={carouselPage} />
-          <CarouselGallary page={carouselPage} />
-          <CarouselPartners page={carouselPage} />
+          <div onWheel={scrollHandler}>
+            <CarouselOkra page={carouselPage} />
+          </div>
+
+          <CarouselBenefit scroll2={scrollHandler} page={carouselPage} />
+
+          <div onWheel={scrollHandler}>
+            <CarouselRoadmap page={carouselPage} />
+          </div>
+
+          <div onWheel={scrollHandler}>
+            <CarouselInfo page={carouselPage} />
+          </div>
+
+          <div onWheel={scrollHandler}>
+            <CarouselQnA page={carouselPage} />
+          </div>
+
+          <div onWheel={scrollHandler}>
+            <CarouselGallary page={carouselPage} />
+          </div>
+
+          <div onWheel={scrollHandler}>
+            <CarouselPartners page={carouselPage} />
+          </div>
         </CarouselWrapper>
       </CarouselBlock>
     </MainContainer>

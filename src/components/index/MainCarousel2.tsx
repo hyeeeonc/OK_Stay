@@ -58,7 +58,7 @@ const MainCarousel2: FunctionComponent = function () {
       style={{ transform: `translateX(-${carouselScroll}px)` }}
     >
       <CarouselWrapper>
-        <CarouselOkra />
+        <CarouselOkra page={carouselPage} />
         <CarouselBenefit page={carouselPage} />
         <CarouselRoadmap page={carouselPage} />
         <CarouselInfo page={carouselPage} />
