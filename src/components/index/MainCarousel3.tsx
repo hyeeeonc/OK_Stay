@@ -251,13 +251,12 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
             page={carouselPage}
           />
 
-          <div
-            onWheel={scrollHandler}
-            onTouchStart={TouchStart}
-            onTouchEnd={TouchEnd}
-          >
-            <CarouselRoadmap page={carouselPage} />
-          </div>
+          <CarouselRoadmap
+            scroll1={TouchStart}
+            scroll2={scrollHandler}
+            scroll3={TouchEnd}
+            page={carouselPage}
+          />
 
           <div onWheel={scrollHandler}>
             <CarouselInfo page={carouselPage} />

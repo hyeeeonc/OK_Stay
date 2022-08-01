@@ -56,3 +56,10 @@ export const CarouselBody = styled.section`
 export interface CarouselProps {
   page: number
 }
+
+export interface CarouselInnerScrollProps {
+  page: number
+  scroll1(e: object)
+  scroll2(e: object)
+  scroll3(e: object)
+}

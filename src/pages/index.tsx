@@ -7,6 +7,7 @@ import reset from '../../lib/styles/global'
 import { Global } from '@emotion/react'
 
 import MainCarousel3 from 'components/index/MainCarousel3'
+import DropDown from 'components/index/DropDown'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -42,6 +43,7 @@ const IndexPage: FunctionComponent = function () {
       <Spacer />
       <IndexWrapper>
         <MainCarousel3 headerPage={carouselPageController} />
+        <DropDown></DropDown>
       </IndexWrapper>
     </>
   )

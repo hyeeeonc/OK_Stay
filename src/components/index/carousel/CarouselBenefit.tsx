@@ -7,6 +7,7 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
+  CarouselInnerScrollProps,
 } from './CarouselItem'
 
 const CarouselBody = styled.section`
@@ -90,14 +91,7 @@ const CarouselBodyItemsContent = styled.h4`
   letter-spacing: -0.02em;
 `
 
-interface BenefitProps {
-  page: number
-  scroll1(e: object)
-  scroll2(e: object)
-  scroll3(e: object)
-}
-
-const CarouselBenefit: FunctionComponent<BenefitProps> = function ({
+const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   scroll1,
   scroll2,
