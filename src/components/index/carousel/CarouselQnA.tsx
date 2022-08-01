@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent } from 'react'
+import palette from '../../../../lib/styles/palette'
 
 import {
   CarouselItem,
@@ -8,6 +9,18 @@ import {
   CarouselTitle,
   CarouselInnerScrollProps,
 } from './CarouselItem'
+
+const QnABody = styled.div`
+  padding-left: 80px;
+  padding-right: 80px;
+  height: 325px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll !important;
+
+  color: ${palette.gray[8]};
+`
 
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
