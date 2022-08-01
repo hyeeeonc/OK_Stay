@@ -51,23 +51,18 @@ type TouchPosition = {
   y: number
 }
 
-const MainCarousel3: FunctionComponent = function () {
+interface MainCarouselProps {
+  headerPage: number
+}
+
+const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
+  headerPage,
+) {
   const carouselBlock = useRef<HTMLDivElement>(null)
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
   const [carouselPage, setCarouselPage] = useState<number>(0)
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  })
   const [xTrans, setXTrans] = useState<number>(0)
   const [innerScroll, setInnerScroll] = useState<number>(0)
-
-  const handleResize = () => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    })
-  }
 
   const prevPage = () => {
     if (carouselPage === 0) {
@@ -90,15 +85,10 @@ const MainCarousel3: FunctionComponent = function () {
   }
 
   useEffect(() => {
-    // carouselBlock.current.addEventListener('wheel', e => {
-    //   e.preventDefault()
-    // })
-
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+    console.log(headerPage.headerPage)
+    const pageSet = headerPage.headerPage
+    setCarouselPage(pageSet)
+  }, [headerPage])
 
   useEffect(() => {
     const nowPageWidth: number =
@@ -133,7 +123,7 @@ const MainCarousel3: FunctionComponent = function () {
     const changedX: number = touchPos.x - e.changedTouches[0].pageX
     const changedY: number = touchPos.y - e.changedTouches[0].pageY
 
-    if (changedX > 1000) {
+    if (changedX > 30) {
       nextPage()
       isScrollable = false
       setTimeout(() => (isScrollable = true), 1500)
@@ -246,13 +236,26 @@ const MainCarousel3: FunctionComponent = function () {
         style={{ transform: `translate3d(-${xTrans}px, 0px, 0px)` }}
       >
         <CarouselWrapper>
-          <div onWheel={scrollHandler}>
+          <div
+            onWheel={scrollHandler}
+            onTouchStart={TouchStart}
+            onTouchEnd={TouchEnd}
+          >
             <CarouselOkra page={carouselPage} />
           </div>
 
-          <CarouselBenefit scroll2={scrollHandler} page={carouselPage} />
+          <CarouselBenefit
+            scroll1={TouchStart}
+            scroll2={scrollHandler}
+            scroll3={TouchEnd}
+            page={carouselPage}
+          />
 
-          <div onWheel={scrollHandler}>
+          <div
+            onWheel={scrollHandler}
+            onTouchStart={TouchStart}
+            onTouchEnd={TouchEnd}
+          >
             <CarouselRoadmap page={carouselPage} />
           </div>
 

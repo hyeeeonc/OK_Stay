@@ -66,11 +66,21 @@ const NavArrow = styled.div`
   }
 `
 
-const Header: FunctionComponent = function () {
+interface HeaderProps {
+  getHeaderPageData(e: number)
+}
+
+const Header: FunctionComponent<HeaderProps> = function ({
+  getHeaderPageData,
+}) {
+  const headerPageControl = (page: number) => {
+    getHeaderPageData(page)
+  }
+
   return (
     <HeaderBlock>
       <HeaderWrapper>
-        <Logo>
+        <Logo onClick={() => headerPageControl(0)}>
           <svg
             width="145"
             height="20"
@@ -124,9 +134,9 @@ const Header: FunctionComponent = function () {
           </svg>
         </Logo>
         <NavWrapper>
-          <NavItems>INFORMATION</NavItems>
-          <NavItems>LIBRARY</NavItems>
-          <NavItems>MESSEAGE</NavItems>
+          <NavItems onClick={() => headerPageControl(3)}>INFORMATION</NavItems>
+          <NavItems onClick={() => headerPageControl(5)}>LIBRARY</NavItems>
+          <NavItems onClick={() => headerPageControl(4)}>MESSEAGE</NavItems>
           <NavItems>ENG</NavItems>
           <NavArrow>
             <svg

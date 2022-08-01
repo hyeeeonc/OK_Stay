@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+// import React from 'react'
 
 export const CarouselItem = styled.div`
   background: rgba(255, 255, 255, 0.25);
@@ -18,8 +19,7 @@ export const CarouselItem = styled.div`
 
 export const CarouselTitleWrapper = styled.div`
   height: 80px;
-  margin-top: 112px;
-  margin-left: 80px;
+  padding: 112px 0px 50px 80px;
   display: flex;
   align-items: center;
 `

@@ -24,13 +24,24 @@ const Spacer = styled.div`
 `
 
 const IndexPage: FunctionComponent = function () {
+  const [carouselPageController, setCarouselPageController] =
+    useState<number>(0)
+
+  const getHeaderPageData = (page: number) => {
+    setCarouselPageController(page)
+  }
+
+  useEffect(() => {
+    console.log(carouselPageController)
+  }, [carouselPageController])
+
   return (
     <>
       <Global styles={reset} />
-      <Header />
+      <Header getHeaderPageData={getHeaderPageData} />
       <Spacer />
       <IndexWrapper>
-        <MainCarousel3 />
+        <MainCarousel3 headerPage={carouselPageController} />
       </IndexWrapper>
     </>
   )

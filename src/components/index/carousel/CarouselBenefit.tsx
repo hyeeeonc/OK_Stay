@@ -7,11 +7,9 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselProps,
 } from './CarouselItem'
 
 const CarouselBody = styled.section`
-  margin-top: 50px;
   padding-left: 80px;
   padding-right: 110px;
   height: 325px;
@@ -90,21 +88,28 @@ const CarouselBodyItemsContent = styled.h4`
   font-size: 24px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  // margin-bottom;
 `
 
 interface BenefitProps {
   page: number
+  scroll1(e: object)
   scroll2(e: object)
+  scroll3(e: object)
 }
 
 const CarouselBenefit: FunctionComponent<BenefitProps> = function ({
   page,
+  scroll1,
   scroll2,
+  scroll3,
 }) {
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.3 }}>
-      <CarouselTitleWrapper onWheel={scroll2}>
+      <CarouselTitleWrapper
+        onWheel={scroll2}
+        onTouchStart={scroll1}
+        onTouchEnd={scroll3}
+      >
         <CarouselIcon>
           <svg
             width="52"
