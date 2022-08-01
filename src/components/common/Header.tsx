@@ -67,11 +67,13 @@ const NavArrow = styled.div`
 `
 
 interface HeaderProps {
-  getHeaderPageData(e: number)
+  getHeaderPageData(e: number): void
+  modalOpenHandler: React.MouseEventHandler
 }
 
 const Header: FunctionComponent<HeaderProps> = function ({
   getHeaderPageData,
+  modalOpenHandler,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -136,7 +138,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
         <NavWrapper>
           <NavItems onClick={() => headerPageControl(3)}>INFORMATION</NavItems>
           <NavItems onClick={() => headerPageControl(5)}>LIBRARY</NavItems>
-          <NavItems onClick={() => headerPageControl(4)}>MESSEAGE</NavItems>
+          <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
           <NavItems>ENG</NavItems>
           <NavArrow>
             <svg

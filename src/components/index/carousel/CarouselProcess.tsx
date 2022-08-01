@@ -11,8 +11,8 @@ import {
 } from './CarouselItem'
 
 const ProcessBody = styled.div`
-  padding: 0 80px 50px 80px;
-  height: 330px;
+  padding: 0 80px 0 80px;
+  height: 340px;
   overflow-y: scroll !important;
 
   color: ${palette.gray[8]};

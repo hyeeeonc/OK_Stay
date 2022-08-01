@@ -11,7 +11,7 @@ import {
 } from './CarouselItem'
 
 const CarouselBody = styled.section`
-  margin-top: 188px;
+  margin-top: 175px;
   margin-left: 80px;
   font-family: 'Pretendard';
   font-style: normal;

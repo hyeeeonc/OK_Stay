@@ -8,6 +8,7 @@ import { Global } from '@emotion/react'
 
 import MainCarousel3 from 'components/index/MainCarousel3'
 import DropDown from 'components/index/DropDown'
+import Modal from 'components/common/Modal'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -42,12 +43,26 @@ const IndexPage: FunctionComponent = function () {
     setDropDownOpened(ddo => !ddo)
   }
 
+  const [modalOpened, setModalOpened] = useState<boolean>(false)
+
+  const modalCloseHandler: React.MouseEventHandler = () =>
+    setModalOpened(_ => false)
+  const modalOpenHandler: React.MouseEventHandler = () =>
+    setModalOpened(_ => true)
+
   return (
     <>
       <Global styles={reset} />
-      <Header getHeaderPageData={getHeaderPageData} />
+      <Header
+        getHeaderPageData={getHeaderPageData}
+        modalOpenHandler={modalOpenHandler}
+      />
       <Spacer />
       <IndexWrapper>
+        <Modal
+          modalCloseHandler={modalCloseHandler}
+          modalOpened={modalOpened}
+        ></Modal>
         <MainCarousel3 headerPage={carouselPageController} />
         <DropDown
           dropDownOpened={dropDownOpened}

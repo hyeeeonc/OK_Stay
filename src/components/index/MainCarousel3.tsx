@@ -100,13 +100,17 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
     if (!isScrollable) {
       return
     }
-    if (e.deltaY > 0) {
+    if (e.deltaY > 15) {
       nextPage()
-    } else {
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
+    } else if (e.deltaY < -15) {
       prevPage()
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
+    } else {
+      return
     }
-    isScrollable = false
-    setTimeout(() => (isScrollable = true), 1500)
   }
 
   const TouchStart = (e: React.TouchEvent) => {
@@ -265,9 +269,12 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
             page={carouselPage}
           />
 
-          <div onWheel={scrollHandler}>
-            <CarouselQnA page={carouselPage} />
-          </div>
+          <CarouselQnA
+            page={carouselPage}
+            scroll1={TouchStart}
+            scroll2={scrollHandler}
+            scroll3={TouchEnd}
+          />
 
           <CarouselGallary
             scroll1={TouchStart}

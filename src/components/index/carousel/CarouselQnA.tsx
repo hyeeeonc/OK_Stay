@@ -6,13 +6,22 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselProps,
+  CarouselInnerScrollProps,
 } from './CarouselItem'
 
-const CarouselQnA: FunctionComponent<CarouselProps> = function ({ page }) {
+const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
+  page,
+  scroll1,
+  scroll2,
+  scroll3,
+}) {
   return (
     <CarouselItem style={{ opacity: page === 4 ? 1 : 0.3 }}>
-      <CarouselTitleWrapper>
+      <CarouselTitleWrapper
+        onWheel={scroll2}
+        onTouchStart={scroll1}
+        onTouchEnd={scroll3}
+      >
         <CarouselIcon>
           <svg
             width="52"

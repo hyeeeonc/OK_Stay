@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 
 import {
   CarouselItem,
@@ -9,11 +9,83 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
+type GallaryImage = {
+  img: string
+  title: string
+  content: string
+}
+
+const images: Array<GallaryImage> = [
+  {
+    img: 'img1',
+    title: 'title 1',
+    content: 'content 1',
+  },
+  {
+    img: 'img2',
+    title: 'title 2',
+    content: 'content 2',
+  },
+  {
+    img: 'img3',
+    title: 'title 3',
+    content: 'content 3',
+  },
+  {
+    img: 'img4',
+    title: 'title 4',
+    content: 'content 4',
+  },
+  {
+    img: 'img5',
+    title: 'title 5',
+    content: 'content 5',
+  },
+]
+
 const GallaryBody = styled.div`
   padding-top: 13px;
   padding-left: 80px;
   height: 325px;
 `
+
+type GallaryViewMode = 'TotalView' | 'DetailView'
+
+const GallaryContentArea: FunctionComponent = function () {
+  const [gallaryViewMode, setGallaryViewMode] =
+    useState<GallaryViewMode>('TotalView')
+  const [imageIndex, setImageIndex] = useState<number>(0)
+
+  const switchToDetailView = (index: number) => () => {
+    setImageIndex(_ => index)
+    setGallaryViewMode(_ => 'DetailView')
+  }
+
+  const switchToTotalView = () => {
+    setGallaryViewMode(_ => 'TotalView')
+  }
+
+  if (gallaryViewMode === 'TotalView') {
+    return (
+      <Gallary1depth>
+        {images.map((image, index) => (
+          <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
+        ))}
+      </Gallary1depth>
+    )
+  }
+
+  if (gallaryViewMode === 'DetailView') {
+    return (
+      <Gallary2depth
+        image={images[imageIndex]}
+        switchToTotalView={switchToTotalView}
+      ></Gallary2depth>
+    )
+  }
+
+  return <></>
+}
 
 const Gallary1depth = styled.div`
   padding-top: 13px;
@@ -24,7 +96,7 @@ const Gallary1depth = styled.div`
   overflow-y: hidden;
 `
 
-const GallaryImage = styled.div`
+const GallaryImage = styled.img`
   flex: none;
   width: 520px;
   height: 290px;
@@ -32,7 +104,24 @@ const GallaryImage = styled.div`
   margin-right: 32px;
 `
 
-const Gallary2depth = styled.div``
+type Gallary2depthProps = {
+  image: GallaryImage
+  switchToTotalView: React.MouseEventHandler
+}
+
+const Gallary2depth: FunctionComponent<Gallary2depthProps> = function ({
+  image,
+  switchToTotalView,
+}) {
+  return (
+    <>
+      <h1>title: {image.title}</h1>
+      <h1>content: {image.content}</h1>
+      <img src={image.img} alt={image.title} />
+      <button onClick={switchToTotalView}>돌아가기</button>
+    </>
+  )
+}
 
 const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
@@ -79,12 +168,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
       </CarouselTitleWrapper>
 
       <GallaryBody>
-        <Gallary1depth>
-          <GallaryImage />
-          <GallaryImage />
-          <GallaryImage />
-          <GallaryImage />
-        </Gallary1depth>
+        <GallaryContentArea />
       </GallaryBody>
     </CarouselItem>
   )
