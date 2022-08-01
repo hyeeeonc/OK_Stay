@@ -6,13 +6,47 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselProps,
+  CarouselInnerScrollProps,
 } from './CarouselItem'
 
-const CarouselGallary: FunctionComponent<CarouselProps> = function ({ page }) {
+const GallaryBody = styled.div`
+  padding-top: 13px;
+  padding-left: 80px;
+  height: 325px;
+`
+
+const Gallary1depth = styled.div`
+  padding-top: 13px;
+  padding-left: 80px;
+  height: 300px;
+  display: flex;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
+`
+
+const GallaryImage = styled.div`
+  flex: none;
+  width: 520px;
+  height: 290px;
+  background-color: gray;
+  margin-right: 32px;
+`
+
+const Gallary2depth = styled.div``
+
+const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
+  page,
+  scroll1,
+  scroll2,
+  scroll3,
+}) {
   return (
     <CarouselItem style={{ opacity: page === 5 ? 1 : 0.3 }}>
-      <CarouselTitleWrapper>
+      <CarouselTitleWrapper
+        onWheel={scroll2}
+        onTouchStart={scroll1}
+        onTouchEnd={scroll3}
+      >
         <CarouselIcon>
           <svg
             width="52"
@@ -43,6 +77,15 @@ const CarouselGallary: FunctionComponent<CarouselProps> = function ({ page }) {
         </CarouselIcon>
         <CarouselTitle>Gallary</CarouselTitle>
       </CarouselTitleWrapper>
+
+      <GallaryBody>
+        <Gallary1depth>
+          <GallaryImage />
+          <GallaryImage />
+          <GallaryImage />
+          <GallaryImage />
+        </Gallary1depth>
+      </GallaryBody>
     </CarouselItem>
   )
 }

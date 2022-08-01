@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent } from 'react'
+import palette from '../../../../lib/styles/palette'
 
 import {
   CarouselItem,
@@ -8,6 +9,96 @@ import {
   CarouselTitle,
   CarouselInnerScrollProps,
 } from './CarouselItem'
+
+const RoadmapBody = styled.div`
+  padding-left: 60px;
+  padding-right: 110px;
+  height: 330px;
+  display: flex;
+  overflow-y: scroll !important;
+
+  color: ${palette.gray[8]};
+`
+
+const RoadmapBodyLineContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 42px;
+  width: 120px;
+`
+
+const RoadmapBodyLine = styled.div`
+  width: 2px;
+  height: 100px;
+  background-color: white;
+  flex: none;
+`
+
+const RoadmapBodyBall = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  flex: none;
+`
+
+const RoadmapBodyTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 50px;
+`
+
+const RoadmapBodyTextItem = styled.div`
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 255px;
+  height: 89px;
+  margin-bottom: 35px;
+
+  :nth-last-child(1) {
+    margin-bottom: 50px;
+  }
+`
+
+const RoadmapBodyTextItemTitle = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  flex: none;
+`
+
+const RoadmapBodyTextItemDate = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  flex: none;
+`
+
+interface RoadmapBodyTextComponentProps {
+  title: string
+  date: string
+}
+
+const RoadmapBodyTextItems: FunctionComponent<RoadmapBodyTextComponentProps> =
+  function ({ title, date }) {
+    return (
+      <RoadmapBodyTextItem>
+        <RoadmapBodyTextItemTitle>{title}</RoadmapBodyTextItemTitle>
+        <RoadmapBodyTextItemDate>{date}</RoadmapBodyTextItemDate>
+      </RoadmapBodyTextItem>
+    )
+  }
 
 const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
@@ -60,6 +151,40 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
         </CarouselIcon>
         <CarouselTitle>Roadmap</CarouselTitle>
       </CarouselTitleWrapper>
+
+      <RoadmapBody>
+        <RoadmapBodyLineContainer>
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+          <RoadmapBodyBall />
+        </RoadmapBodyLineContainer>
+
+        <RoadmapBodyTextContainer>
+          <RoadmapBodyTextItems title=":OKRA STAY MINT" date="2022 08.26" />
+          <RoadmapBodyTextItems
+            title="CREAM&nbsp;FIELDS&nbsp;VIP&nbsp;&#38;&nbsp;HOLDER&nbsp;EXCLUSIVE&nbsp;BOOTH"
+            date="2022 11.04 ~ 11.05"
+          />
+          <RoadmapBodyTextItems
+            title=":OKRA&nbsp;LOUNGE&nbsp;BAR"
+            date="2023 1월 오픈 예정"
+          />
+          <RoadmapBodyTextItems
+            title="ARK&nbsp;CREW&nbsp;파티"
+            date="2023&nbsp;1분기&nbsp;오픈&nbsp;예정"
+          />
+          <RoadmapBodyTextItems
+            title="RAINBOW&nbsp;BEACH&nbsp;PARTY"
+            date="2023 2분기 오픈 예정"
+          />
+        </RoadmapBodyTextContainer>
+      </RoadmapBody>
     </CarouselItem>
   )
 }

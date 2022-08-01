@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import CarouselBenefit from './carousel/CarouselBenefit'
 import CarouselGallary from './carousel/CarouselGallary'
-import CarouselInfo from './carousel/CarouselInfo'
+import CarouselProcess from './carousel/CarouselProcess'
 import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
@@ -258,17 +258,23 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
             page={carouselPage}
           />
 
-          <div onWheel={scrollHandler}>
-            <CarouselInfo page={carouselPage} />
-          </div>
+          <CarouselProcess
+            scroll1={TouchStart}
+            scroll2={scrollHandler}
+            scroll3={TouchEnd}
+            page={carouselPage}
+          />
 
           <div onWheel={scrollHandler}>
             <CarouselQnA page={carouselPage} />
           </div>
 
-          <div onWheel={scrollHandler}>
-            <CarouselGallary page={carouselPage} />
-          </div>
+          <CarouselGallary
+            scroll1={TouchStart}
+            scroll2={scrollHandler}
+            scroll3={TouchEnd}
+            page={carouselPage}
+          />
 
           <div onWheel={scrollHandler}>
             <CarouselPartners page={carouselPage} />

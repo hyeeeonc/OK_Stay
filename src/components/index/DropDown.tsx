@@ -17,6 +17,8 @@ const DropDownMenuBlock = styled.div`
   background-color: ${palette.gray[2]};
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+
+  transition: opacity 0.3s ease-in;
 `
 
 const DropDownMenuItem = styled.div`
@@ -42,9 +44,15 @@ const DropDownMenuItem = styled.div`
   letter-spacing: -0.02em;
 `
 
-const DropDownMenu: FunctionComponent = function () {
+type DropDownMenuProps = {
+  dropDownOpened: boolean
+}
+
+const DropDownMenu: FunctionComponent<DropDownMenuProps> = function ({
+  dropDownOpened,
+}) {
   return (
-    <DropDownMenuBlock>
+    <DropDownMenuBlock style={{ opacity: dropDownOpened ? 1 : 0 }}>
       <DropDownMenuItem>
         <>
           <svg
@@ -146,10 +154,15 @@ const DropDownButtonBlock = styled.div`
   order: 0;
   flex-grow: 0;
 `
+type DropDownButtonProps = {
+  dropDownButtonHandler: React.MouseEventHandler
+}
 
-const DropDownButton: FunctionComponent = function () {
+const DropDownButton: FunctionComponent<DropDownButtonProps> = function ({
+  dropDownButtonHandler,
+}) {
   return (
-    <DropDownButtonBlock>
+    <DropDownButtonBlock onClick={dropDownButtonHandler}>
       <svg
         width="104"
         height="104"
@@ -250,11 +263,19 @@ const DropDownWrapper = styled.div`
   gap: 14px;
 `
 
-const DropDown: FunctionComponent = function () {
+type DropDownProps = {
+  dropDownButtonHandler: React.MouseEventHandler
+  dropDownOpened: boolean
+}
+
+const DropDown: FunctionComponent<DropDownProps> = function ({
+  dropDownButtonHandler,
+  dropDownOpened,
+}) {
   return (
     <DropDownWrapper>
-      <DropDownMenu />
-      <DropDownButton />
+      <DropDownMenu dropDownOpened={dropDownOpened} />
+      <DropDownButton dropDownButtonHandler={dropDownButtonHandler} />
     </DropDownWrapper>
   )
 }

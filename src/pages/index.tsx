@@ -36,6 +36,12 @@ const IndexPage: FunctionComponent = function () {
     console.log(carouselPageController)
   }, [carouselPageController])
 
+  const [dropDownOpened, setDropDownOpened] = useState<boolean>(false)
+
+  const dropDownButtonHandler: React.MouseEventHandler = () => {
+    setDropDownOpened(ddo => !ddo)
+  }
+
   return (
     <>
       <Global styles={reset} />
@@ -43,7 +49,10 @@ const IndexPage: FunctionComponent = function () {
       <Spacer />
       <IndexWrapper>
         <MainCarousel3 headerPage={carouselPageController} />
-        <DropDown></DropDown>
+        <DropDown
+          dropDownOpened={dropDownOpened}
+          dropDownButtonHandler={dropDownButtonHandler}
+        ></DropDown>
       </IndexWrapper>
     </>
   )
