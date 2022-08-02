@@ -96,24 +96,37 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
     setXTrans(_ => nowPageWidth)
   }, [carouselPage, xTrans])
 
-  const scrollHandler = (e: React.WheelEvent) => {
-    if (!isScrollable) {
-      return
+  const scrollHandler =
+    (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
+      if (!isScrollable) return
+
+      if (e.deltaY > 15) {
+        nextPage()
+      } else if (e.deltaY < -15) {
+        prevPage()
+      } else {
+        return
+      }
+      ref.current.scrollTo(0, 0)
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
     }
+
+  const defaultScrollHandler = (e: React.WheelEvent) => {
+    if (!isScrollable) return
+
     if (e.deltaY > 15) {
       nextPage()
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
     } else if (e.deltaY < -15) {
       prevPage()
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
     } else {
       return
     }
+    isScrollable = false
+    setTimeout(() => (isScrollable = true), 1500)
   }
 
-  const TouchStart = (e: React.TouchEvent) => {
+  const touchStart = (e: React.TouchEvent) => {
     if (!isScrollable) return
     setTouchPos({
       x: e.changedTouches[0].pageX,
@@ -121,7 +134,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
     })
   }
 
-  const TouchEnd = (e: React.TouchEvent) => {
+  const touchEnd = (e: React.TouchEvent) => {
     if (!isScrollable) return
 
     const changedX: number = touchPos.x - e.changedTouches[0].pageX
@@ -235,57 +248,59 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
 
       <CarouselBlock
         ref={carouselBlock}
-        onTouchStart={TouchStart}
-        onTouchEnd={TouchEnd}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
         style={{ transform: `translate3d(-${xTrans}px, 0px, 0px)` }}
       >
         <CarouselWrapper>
-          <div
-            onWheel={scrollHandler}
-            onTouchStart={TouchStart}
-            onTouchEnd={TouchEnd}
-          >
-            <CarouselOkra page={carouselPage} />
-          </div>
+          <CarouselOkra
+            page={carouselPage}
+            scrollHandler={defaultScrollHandler}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+          />
 
           <CarouselBenefit
-            scroll1={TouchStart}
-            scroll2={scrollHandler}
-            scroll3={TouchEnd}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={scrollHandler}
             page={carouselPage}
           />
 
           <CarouselRoadmap
-            scroll1={TouchStart}
-            scroll2={scrollHandler}
-            scroll3={TouchEnd}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={scrollHandler}
             page={carouselPage}
           />
 
           <CarouselProcess
-            scroll1={TouchStart}
-            scroll2={scrollHandler}
-            scroll3={TouchEnd}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={scrollHandler}
             page={carouselPage}
           />
 
           <CarouselQnA
             page={carouselPage}
-            scroll1={TouchStart}
-            scroll2={scrollHandler}
-            scroll3={TouchEnd}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={scrollHandler}
           />
 
           <CarouselGallary
-            scroll1={TouchStart}
-            scroll2={scrollHandler}
-            scroll3={TouchEnd}
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={scrollHandler}
             page={carouselPage}
           />
 
-          <div onWheel={scrollHandler}>
-            <CarouselPartners page={carouselPage} />
-          </div>
+          <CarouselPartners
+            touchStart={touchStart}
+            touchEnd={touchEnd}
+            scrollHandler={defaultScrollHandler}
+            page={carouselPage}
+          />
         </CarouselWrapper>
       </CarouselBlock>
     </MainContainer>

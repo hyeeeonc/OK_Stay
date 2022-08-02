@@ -24,9 +24,19 @@ const CarouselBody = styled.section`
   color: ${palette.gray[8]};
 `
 
-const CarouselOkra: FunctionComponent<CarouselProps> = function ({ page }) {
+const CarouselOkra: FunctionComponent<CarouselProps> = function ({
+  page,
+  touchStart,
+  touchEnd,
+  scrollHandler,
+}) {
   return (
-    <CarouselItem style={{ opacity: page === 0 ? 1 : 0.2 }}>
+    <CarouselItem
+      style={{ opacity: page === 0 ? 1 : 0.2 }}
+      onWheel={scrollHandler}
+      onTouchStart={touchStart}
+      onTouchEnd={touchEnd}
+    >
       <CarouselTitleWrapper>
         <CarouselIcon>
           <svg

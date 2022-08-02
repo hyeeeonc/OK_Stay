@@ -9,9 +9,19 @@ import {
   CarouselProps,
 } from './CarouselItem'
 
-const CarouselPartners: FunctionComponent<CarouselProps> = function ({ page }) {
+const CarouselPartners: FunctionComponent<CarouselProps> = function ({
+  page,
+  touchStart,
+  touchEnd,
+  scrollHandler,
+}) {
   return (
-    <CarouselItem style={{ opacity: page === 6 ? 1 : 0.2 }}>
+    <CarouselItem
+      style={{ opacity: page === 6 ? 1 : 0.2 }}
+      onWheel={scrollHandler}
+      onTouchStart={touchStart}
+      onTouchEnd={touchEnd}
+    >
       <CarouselTitleWrapper>
         <CarouselIcon>
           <svg

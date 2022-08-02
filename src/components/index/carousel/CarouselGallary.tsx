@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import {
   CarouselItem,
@@ -55,7 +55,14 @@ const GallaryContentArea: FunctionComponent = function () {
   const [gallaryViewMode, setGallaryViewMode] =
     useState<GallaryViewMode>('TotalView')
   const [imageIndex, setImageIndex] = useState<number>(0)
+  const gallaryHorizontalScroll = useRef<HTMLDivElement>(null)
 
+  useEffect(() => {
+    gallaryHorizontalScroll.current.addEventListener('wheel', e => {
+      e.preventDefault()
+      gallaryHorizontalScroll.current.scrollLeft += e.deltaY / 10
+    })
+  })
   const switchToDetailView = (index: number) => () => {
     setImageIndex(_ => index)
     setGallaryViewMode(_ => 'DetailView')
@@ -67,7 +74,7 @@ const GallaryContentArea: FunctionComponent = function () {
 
   if (gallaryViewMode === 'TotalView') {
     return (
-      <Gallary1depth>
+      <Gallary1depth ref={gallaryHorizontalScroll}>
         {images.map((image, index) => (
           <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
         ))}
@@ -125,16 +132,17 @@ const Gallary2depth: FunctionComponent<Gallary2depthProps> = function ({
 
 const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
-  scroll1,
-  scroll2,
-  scroll3,
+  touchStart,
+  touchEnd,
+  scrollHandler,
 }) {
+  const carouselBodyRef = useRef<HTMLDivElement>(null)
   return (
     <CarouselItem style={{ opacity: page === 5 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scroll2}
-        onTouchStart={scroll1}
-        onTouchEnd={scroll3}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <CarouselIcon>
           <svg
@@ -167,7 +175,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Gallary</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <GallaryBody>
+      <GallaryBody ref={carouselBodyRef}>
         <GallaryContentArea />
       </GallaryBody>
     </CarouselItem>

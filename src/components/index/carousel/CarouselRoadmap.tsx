@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -17,6 +17,7 @@ const RoadmapBody = styled.div`
   display: flex;
   overflow-y: scroll !important;
 
+  scroll-behavior: smooth;
   color: ${palette.gray[8]};
 `
 
@@ -84,6 +85,11 @@ const RoadmapBodyTextItemDate = styled.div`
   letter-spacing: -0.02em;
   flex: none;
 `
+const RoadmapSpacer = styled.div`
+  width: 100%;
+  height: 150px;
+  flex: none;
+`
 
 interface RoadmapBodyTextComponentProps {
   title: string
@@ -102,16 +108,61 @@ const RoadmapBodyTextItems: FunctionComponent<RoadmapBodyTextComponentProps> =
 
 const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
-  scroll1,
-  scroll2,
-  scroll3,
+  touchStart,
+  touchEnd,
+  scrollHandler,
 }) {
+  const carouselBodyRef = useRef<HTMLDivElement>(null)
+  let innerScrollHeight: number = 0
+
+  const [innerScroll, setInnerScroll] = useState<number>(0)
+
+  const [scrollTimeChecker, setScrollTimeChecker] = useState<Date>(new Date())
+
+  const innerScrollHandler = (e: React.WheelEvent) => {
+    setInnerScroll(is => {
+      const newInnerScroll = is + e.deltaY
+      const now = new Date()
+      const timeDiff: number = now.getTime() - scrollTimeChecker.getTime()
+
+      setScrollTimeChecker(_ => now)
+
+      console.log(newInnerScroll)
+
+      if (newInnerScroll >= innerScrollHeight) {
+        if (is < innerScrollHeight) {
+          return innerScrollHeight
+        }
+        if (timeDiff >= 300) {
+          console.log('test')
+        }
+        return innerScrollHeight
+      }
+
+      if (newInnerScroll <= 0) {
+        if (is > 0) {
+          return 0
+        }
+        if (timeDiff >= 300) {
+          console.log('test')
+        }
+        return 0
+      }
+
+      return newInnerScroll
+    })
+  }
+
+  useEffect(() => {
+    innerScrollHeight = carouselBodyRef.current.scrollHeight
+  }, [])
+
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scroll2}
-        onTouchStart={scroll1}
-        onTouchEnd={scroll3}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <CarouselIcon>
           <svg
@@ -152,7 +203,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Roadmap</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <RoadmapBody>
+      <RoadmapBody ref={carouselBodyRef} onWheel={innerScrollHandler}>
         <RoadmapBodyLineContainer>
           <RoadmapBodyBall />
           <RoadmapBodyLine />
@@ -183,6 +234,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
             title="RAINBOW&nbsp;BEACH&nbsp;PARTY"
             date="2023 2분기 오픈 예정"
           />
+          <RoadmapSpacer></RoadmapSpacer>
         </RoadmapBodyTextContainer>
       </RoadmapBody>
     </CarouselItem>

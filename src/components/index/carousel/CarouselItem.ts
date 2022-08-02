@@ -55,11 +55,14 @@ export const CarouselBody = styled.section`
 
 export interface CarouselProps {
   page: number
+  touchStart: React.TouchEventHandler
+  touchEnd: React.TouchEventHandler
+  scrollHandler: React.WheelEventHandler
 }
 
 export interface CarouselInnerScrollProps {
   page: number
-  scroll1(e: object)
-  scroll2(e: object)
-  scroll3(e: object)
+  touchStart: React.TouchEventHandler
+  touchEnd: React.TouchEventHandler
+  scrollHandler(ref: React.RefObject<HTMLDivElement>): React.WheelEventHandler
 }
