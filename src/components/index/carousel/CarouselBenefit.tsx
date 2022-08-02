@@ -98,7 +98,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   scroll3,
 }) {
   return (
-    <CarouselItem style={{ opacity: page === 1 ? 1 : 0.3 }}>
+    <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
         onWheel={scroll2}
         onTouchStart={scroll1}

@@ -26,7 +26,7 @@ const CarouselBody = styled.section`
 
 const CarouselOkra: FunctionComponent<CarouselProps> = function ({ page }) {
   return (
-    <CarouselItem style={{ opacity: page === 0 ? 1 : 0.3 }}>
+    <CarouselItem style={{ opacity: page === 0 ? 1 : 0.2 }}>
       <CarouselTitleWrapper>
         <CarouselIcon>
           <svg

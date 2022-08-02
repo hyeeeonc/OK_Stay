@@ -22,6 +22,13 @@ const QnABody = styled.div`
   color: ${palette.gray[8]};
 `
 
+const QnABodyAccordion = styled.button`
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  font
+`
+
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   scroll1,
@@ -29,7 +36,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   scroll3,
 }) {
   return (
-    <CarouselItem style={{ opacity: page === 4 ? 1 : 0.3 }}>
+    <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
         onWheel={scroll2}
         onTouchStart={scroll1}

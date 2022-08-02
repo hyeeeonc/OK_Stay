@@ -55,9 +55,9 @@ interface MainCarouselProps {
   headerPage: number
 }
 
-const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
+const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
-) {
+}) {
   const carouselBlock = useRef<HTMLDivElement>(null)
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
   const [carouselPage, setCarouselPage] = useState<number>(0)
@@ -85,8 +85,8 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function (
   }
 
   useEffect(() => {
-    console.log(headerPage.headerPage)
-    const pageSet = headerPage.headerPage
+    console.log(headerPage)
+    const pageSet = headerPage
     setCarouselPage(pageSet)
   }, [headerPage])
 

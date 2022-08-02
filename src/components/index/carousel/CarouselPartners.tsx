@@ -11,7 +11,7 @@ import {
 
 const CarouselPartners: FunctionComponent<CarouselProps> = function ({ page }) {
   return (
-    <CarouselItem style={{ opacity: page === 6 ? 1 : 0.3 }}>
+    <CarouselItem style={{ opacity: page === 6 ? 1 : 0.2 }}>
       <CarouselTitleWrapper>
         <CarouselIcon>
           <svg
