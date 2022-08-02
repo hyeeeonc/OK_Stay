@@ -8,13 +8,12 @@ const DropDownMenuBlock = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 18px 20px;
-  gap: 14px;
 
-  position: absolute;
+  position: fixed;
   width: 173px;
   height: 214px;
-  left: calc(50vw - 506px);
-  bottom: 223px;
+  left: calc(50vw - 520px);
+  top: calc(50vh + 305px - 208px);
   background-color: ${palette.gray[2]};
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -151,9 +150,9 @@ const DropDownButtonBlock = styled.div`
   align-items: flex-start;
   padding: 0px;
 
-  position: absolute;
-  left: calc(50vw - 508px - 30px);
-  bottom: 150px;
+  position: fixed;
+  left: calc(50vw - 508px - 16px);
+  top: calc(50vh + 310px + 56px);
 
   width: 104px;
   height: 104px;
