@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useRef } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -97,6 +97,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   scroll2,
   scroll3,
 }) {
+  const benefitBodyRef = useRef<HTMLDivElement>(null)
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper

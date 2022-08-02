@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useRef } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -85,6 +85,11 @@ const RoadmapBodyTextItemDate = styled.div`
   flex: none;
 `
 
+const RoadmapSpacer = styled.div`
+  width: 100%;
+  height: 150px;
+  flex: none;
+`
 interface RoadmapBodyTextComponentProps {
   title: string
   date: string
@@ -106,6 +111,13 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   scroll2,
   scroll3,
 }) {
+  const roadmapBodyRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const scrolllll: number = roadmapBodyRef.current.scrollHeight
+
+    console.log(scrolllll)
+  }, [])
+
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -165,7 +177,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
           <RoadmapBodyBall />
         </RoadmapBodyLineContainer>
 
-        <RoadmapBodyTextContainer>
+        <RoadmapBodyTextContainer ref={roadmapBodyRef}>
           <RoadmapBodyTextItems title=":OKRA STAY MINT" date="2022 08.26" />
           <RoadmapBodyTextItems
             title="CREAM&nbsp;FIELDS&nbsp;VIP&nbsp;&#38;&nbsp;HOLDER&nbsp;EXCLUSIVE&nbsp;BOOTH"
@@ -183,6 +195,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
             title="RAINBOW&nbsp;BEACH&nbsp;PARTY"
             date="2023 2분기 오픈 예정"
           />
+          <RoadmapSpacer />
         </RoadmapBodyTextContainer>
       </RoadmapBody>
     </CarouselItem>
