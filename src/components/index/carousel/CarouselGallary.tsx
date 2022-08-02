@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import {
   CarouselItem,
@@ -55,7 +55,14 @@ const GallaryContentArea: FunctionComponent = function () {
   const [gallaryViewMode, setGallaryViewMode] =
     useState<GallaryViewMode>('TotalView')
   const [imageIndex, setImageIndex] = useState<number>(0)
+  const gallaryHorizontalScroll = useRef<HTMLDivElement>(null)
 
+  useEffect(() => {
+    gallaryHorizontalScroll.current.addEventListener('wheel', e => {
+      e.preventDefault()
+      gallaryHorizontalScroll.current.scrollLeft += e.deltaY / 10
+    })
+  })
   const switchToDetailView = (index: number) => () => {
     setImageIndex(_ => index)
     setGallaryViewMode(_ => 'DetailView')
@@ -67,7 +74,7 @@ const GallaryContentArea: FunctionComponent = function () {
 
   if (gallaryViewMode === 'TotalView') {
     return (
-      <Gallary1depth>
+      <Gallary1depth ref={gallaryHorizontalScroll}>
         {images.map((image, index) => (
           <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
         ))}
