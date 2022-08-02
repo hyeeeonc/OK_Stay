@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useRef, useState } from 'react'
 
 import {
   CarouselItem,
@@ -125,16 +125,17 @@ const Gallary2depth: FunctionComponent<Gallary2depthProps> = function ({
 
 const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
-  scroll1,
-  scroll2,
-  scroll3,
+  touchStart,
+  touchEnd,
+  scrollHandler,
 }) {
+  const carouselBodyRef = useRef<HTMLDivElement>(null)
   return (
     <CarouselItem style={{ opacity: page === 5 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scroll2}
-        onTouchStart={scroll1}
-        onTouchEnd={scroll3}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <CarouselIcon>
           <svg
@@ -167,7 +168,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Gallary</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <GallaryBody>
+      <GallaryBody ref={carouselBodyRef}>
         <GallaryContentArea />
       </GallaryBody>
     </CarouselItem>

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useRef } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -18,6 +18,7 @@ const CarouselBody = styled.section`
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll !important;
+  scroll-behavior: smooth;
 
   color: ${palette.gray[8]};
 `
@@ -93,16 +94,17 @@ const CarouselBodyItemsContent = styled.h4`
 
 const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
-  scroll1,
-  scroll2,
-  scroll3,
+  touchStart,
+  touchEnd,
+  scrollHandler,
 }) {
+  const carouselBodyRef = useRef<HTMLDivElement>(null)
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scroll2}
-        onTouchStart={scroll1}
-        onTouchEnd={scroll3}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <CarouselIcon>
           <svg
@@ -135,7 +137,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>NFT Benefit</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <CarouselBody>
+      <CarouselBody ref={carouselBodyRef}>
         <CarouselBodyItems>
           <CarouselBodyItemsTextWrapper>
             <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle>

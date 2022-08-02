@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useRef } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -17,6 +17,7 @@ const RoadmapBody = styled.div`
   display: flex;
   overflow-y: scroll !important;
 
+  scroll-behavior: smooth;
   color: ${palette.gray[8]};
 `
 
@@ -102,16 +103,17 @@ const RoadmapBodyTextItems: FunctionComponent<RoadmapBodyTextComponentProps> =
 
 const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
-  scroll1,
-  scroll2,
-  scroll3,
+  touchStart,
+  touchEnd,
+  scrollHandler,
 }) {
+  const carouselBodyRef = useRef<HTMLDivElement>(null)
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scroll2}
-        onTouchStart={scroll1}
-        onTouchEnd={scroll3}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <CarouselIcon>
           <svg
@@ -152,7 +154,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Roadmap</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <RoadmapBody>
+      <RoadmapBody ref={carouselBodyRef}>
         <RoadmapBodyLineContainer>
           <RoadmapBodyBall />
           <RoadmapBodyLine />
