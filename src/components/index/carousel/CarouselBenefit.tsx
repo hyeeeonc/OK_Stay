@@ -85,7 +85,6 @@ const CarouselBodyItemsTextWrapper = styled.div`
     height: 64px;
   }
 `
-0.718503
 
 const CarouselBodyItemsTitle = styled.h3`
   font-family: 'Pretendard';

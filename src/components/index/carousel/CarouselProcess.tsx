@@ -22,7 +22,6 @@ const ProcessBody = styled.div`
     height: 250px;
   }
 `
-0.718503
 
 const ProcessItem = styled.div`
   margin-bottom: 32px;
