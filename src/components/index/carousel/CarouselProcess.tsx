@@ -11,13 +11,14 @@ import {
 } from './CarouselItem'
 
 const ProcessBody = styled.div`
-  padding: 0 80px 0 80px;
+  padding: 0 80px;
   height: 340px;
   overflow-y: scroll !important;
 
   scroll-behavior: smooth;
   color: ${palette.gray[8]};
   @media (max-width: 1199px) {
+    padding: 0 57px;
     height: 250px;
   }
 `
