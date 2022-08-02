@@ -69,9 +69,8 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
+        <QnABody ref={carouselBodyRef}></QnABody>
       </CarouselItem>
-
-      <QnABody ref={carouselBodyRef}></QnABody>
     </>
   )
 }

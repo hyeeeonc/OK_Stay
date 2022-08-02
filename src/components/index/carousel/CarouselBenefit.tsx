@@ -21,6 +21,12 @@ const CarouselBody = styled.section`
   scroll-behavior: smooth;
 
   color: ${palette.gray[8]};
+
+  @media (max-width: 1199px) {
+    padding-left: 57px;
+    padding-right: 57px;
+    height: 250px;
+  }
 `
 
 const CarouselBodyItems = styled.div`
@@ -28,6 +34,9 @@ const CarouselBodyItems = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 45px;
+  @media (max-width: 1199px) {
+    margin-bottom: 45px;
+  }
 `
 
 const CarouselBodyIcon: FunctionComponent = function () {
@@ -72,15 +81,21 @@ const CarouselBodyIcon: FunctionComponent = function () {
 const CarouselBodyItemsTextWrapper = styled.div`
   height: 89px;
   color: ${palette.gray[8]};
+  @media (max-width: 1199px) {
+    height: 64px;
+  }
 `
+0.718503
 
 const CarouselBodyItemsTitle = styled.h3`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
-  line-height: 150%;
   letter-spacing: -0.02em;
+  @media (max-width: 1199px) {
+    font-size: 26px;
+  }
 `
 
 const CarouselBodyItemsContent = styled.h4`
@@ -90,6 +105,10 @@ const CarouselBodyItemsContent = styled.h4`
   font-size: 24px;
   line-height: 150%;
   letter-spacing: -0.02em;
+  @media (max-width: 1199px) {
+    font-size: 18px;
+    padding-bottom: 5px;
+  }
 `
 
 const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({

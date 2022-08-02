@@ -24,6 +24,9 @@ const CarouselBlock = styled.div`
 const CarouselWrapper = styled.div`
   display: flex;
   padding-left: calc(50vw - 508px);
+  @media (max-width: 1199px) {
+    padding-left: calc(50vw - 375px);
+  }
 `
 
 const BackgroundCircle = styled.div`

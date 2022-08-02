@@ -2,12 +2,12 @@ import styled from '@emotion/styled'
 // import React from 'react'
 
 export const CarouselItem = styled.div`
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(3.5px);
-  -webkit-backdrop-filter: blur(3.5px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 59px;
+  background: rgba(255, 255, 255, 0.26);
+  border-radius: 58px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.4px);
+  -webkit-backdrop-filter: blur(7.4px);
+  border: 1px solid rgba(255, 255, 255, 0.34);
 
   flex: none;
   width: 1016px;
@@ -15,6 +15,19 @@ export const CarouselItem = styled.div`
   margin-right: calc(50vw - 508px - 200px);
   overflow: hidden;
   transition: opacity 1.5s linear;
+  @media (max-width: 1450px) {
+    margin-right: calc(50vw - 508px - 80px);
+  }
+
+  @media (max-width: 1199px) {
+    width: 730px;
+    height: 438px;
+    margin-right: calc(50vw - 365px - 60px);
+  }
+
+  @media (max-width: 970px) {
+    margin-right: calc(50vw - 365px - 15px);
+  }
 `
 
 export const CarouselTitleWrapper = styled.div`
@@ -22,6 +35,10 @@ export const CarouselTitleWrapper = styled.div`
   padding: 112px 0px 50px 80px;
   display: flex;
   align-items: center;
+  @media (max-width: 1199px) {
+    height: 57px;
+    padding: 65px 0 55px 57px;
+  }
 `
 
 export const CarouselIcon = styled.div`
@@ -36,6 +53,12 @@ export const CarouselIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 1199px) {
+    width: 70px;
+    height: 70px;
+    left: 57px;
+    top: 80px;
+  }
 `
 
 export const CarouselTitle = styled.h2`
@@ -47,6 +70,9 @@ export const CarouselTitle = styled.h2`
 
   margin-left: 40px;
   color: white;
+  @media (max-width: 1199px) {
+    font-size: 44px;
+  }
 `
 
 export const CarouselBody = styled.section`

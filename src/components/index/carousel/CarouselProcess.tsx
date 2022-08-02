@@ -17,10 +17,17 @@ const ProcessBody = styled.div`
 
   scroll-behavior: smooth;
   color: ${palette.gray[8]};
+  @media (max-width: 1199px) {
+    height: 250px;
+  }
 `
+0.718503
 
 const ProcessItem = styled.div`
   margin-bottom: 32px;
+  @media (max-width: 1199px) {
+    margin-bottom: 26px;
+  }
 `
 
 const ProcessItemTitle = styled.div`
@@ -30,6 +37,10 @@ const ProcessItemTitle = styled.div`
   font-size: 30px;
   line-height: 150%;
   letter-spacing: -0.02em;
+  @media (max-width: 1199px) {
+    font-size: 26px;
+    padding-bottom: 5px;
+  }
 `
 
 const ProcessItemContent = styled.div`
@@ -39,6 +50,10 @@ const ProcessItemContent = styled.div`
   font-size: 24px;
   line-height: 150%;
   letter-spacing: -0.02em;
+  @media (max-width: 1199px) {
+    font-size: 18px;
+    padding-bottom: 5px;
+  }
 `
 
 interface ProcessItemProps {

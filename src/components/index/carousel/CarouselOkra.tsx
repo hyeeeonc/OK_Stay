@@ -19,11 +19,15 @@ const CarouselBody = styled.section`
   font-size: 30px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  opacity: 80%;
+  opacity: 85%;
 
   color: ${palette.gray[8]};
+  @media (max-width: 1199px) {
+    margin-top: 120px;
+    margin-left: 57px;
+    font-size: 23px;
+  }
 `
-
 const CarouselOkra: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,

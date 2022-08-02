@@ -19,6 +19,10 @@ const RoadmapBody = styled.div`
 
   scroll-behavior: smooth;
   color: ${palette.gray[8]};
+  @media (max-width: 1199px) {
+    padding-left: 30px;
+    height: 250px;
+  }
 `
 
 const RoadmapBodyLineContainer = styled.div`
@@ -28,6 +32,10 @@ const RoadmapBodyLineContainer = styled.div`
 
   padding-top: 42px;
   width: 120px;
+  @media (max-width: 1199px) {
+    padding-top: 30px;
+    width: 95px;
+  }
 `
 
 const RoadmapBodyLine = styled.div`
@@ -35,6 +43,10 @@ const RoadmapBodyLine = styled.div`
   height: 100px;
   background-color: white;
   flex: none;
+  @media (max-width: 1199px) {
+    width: 1.6px;
+    height: 80px;
+  }
 `
 
 const RoadmapBodyBall = styled.div`
@@ -43,6 +55,10 @@ const RoadmapBodyBall = styled.div`
   background-color: white;
   border-radius: 50%;
   flex: none;
+  @media (max-width: 1199px) {
+    width: 15px;
+    height: 15px;
+  }
 `
 
 const RoadmapBodyTextContainer = styled.div`
@@ -50,6 +66,9 @@ const RoadmapBodyTextContainer = styled.div`
   flex-direction: column;
   width: 100%;
   padding-bottom: 50px;
+  @media (max-width: 1199px) {
+    padding-bottom: 35px;
+  }
 `
 
 const RoadmapBodyTextItem = styled.div`
@@ -61,8 +80,10 @@ const RoadmapBodyTextItem = styled.div`
   height: 89px;
   margin-bottom: 35px;
 
-  :nth-last-child(1) {
-    margin-bottom: 50px;
+  @media (max-width: 1199px) {
+    width: 255px;
+    height: 64px;
+    margin-bottom: 34px;
   }
 `
 
@@ -74,6 +95,9 @@ const RoadmapBodyTextItemTitle = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
   flex: none;
+  @media (max-width: 1199px) {
+    font-size: 26px;
+  }
 `
 
 const RoadmapBodyTextItemDate = styled.div`
@@ -84,11 +108,17 @@ const RoadmapBodyTextItemDate = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
   flex: none;
+  @media (max-width: 1199px) {
+    font-size: 18px;
+  }
 `
 const RoadmapSpacer = styled.div`
   width: 100%;
   height: 150px;
   flex: none;
+  @media (max-width: 1199px) {
+    heigth: 50px;
+  }
 `
 
 interface RoadmapBodyTextComponentProps {
