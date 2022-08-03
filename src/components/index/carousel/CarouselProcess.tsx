@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef } from 'react'
+import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -14,8 +14,8 @@ const ProcessBody = styled.div`
   padding: 0 80px;
   height: 340px;
   overflow-y: scroll !important;
-
   scroll-behavior: smooth;
+
   color: ${palette.gray[8]};
   @media (max-width: 1199px) {
     padding: 0 57px;
@@ -78,8 +78,14 @@ const CarouselInfo: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
+  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
+  useEffect(() => {
+    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
+  }, [])
+  const [_, setInnerScroll] = useState<number>(0)
   return (
     <CarouselItem style={{ opacity: page === 3 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -118,7 +124,14 @@ const CarouselInfo: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Process</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <ProcessBody ref={carouselBodyRef}>
+      <ProcessBody
+        ref={carouselBodyRef}
+        onWheel={innerScrollHandler({
+          innerScrollHeight,
+          setInnerScroll,
+          ref: carouselBodyRef,
+        })}
+      >
         <ProcessItems
           title="Step.01 카이카스 설치하기"
           content="크롬 웹 스토어에서 카이카스 설치 후 계정을 생성합니다."
