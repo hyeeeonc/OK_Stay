@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef } from 'react'
+import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -35,8 +35,14 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
+  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
+  useEffect(() => {
+    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
+  }, [])
+  const [_, setInnerScroll] = useState<number>(0)
   return (
     <>
       <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>
@@ -69,7 +75,14 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
-        <QnABody ref={carouselBodyRef}></QnABody>
+        <QnABody
+          ref={carouselBodyRef}
+          onWheel={innerScrollHandler({
+            innerScrollHeight,
+            setInnerScroll,
+            ref: carouselBodyRef,
+          })}
+        ></QnABody>
       </CarouselItem>
     </>
   )

@@ -10,7 +10,7 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
-const RoadmapBody = styled.div`
+const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
   padding-right: 110px;
   height: 330px;
@@ -141,52 +141,15 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-  let innerScrollHeight: number = 0
-
-  const [innerScroll, setInnerScroll] = useState<number>(0)
-
-  const [scrollTimeChecker, setScrollTimeChecker] = useState<Date>(new Date())
-
-  const innerScrollHandler = (e: React.WheelEvent) => {
-    setInnerScroll(is => {
-      const newInnerScroll = is + e.deltaY
-      const now = new Date()
-      const timeDiff: number = now.getTime() - scrollTimeChecker.getTime()
-
-      setScrollTimeChecker(_ => now)
-
-      console.log(newInnerScroll)
-
-      if (newInnerScroll >= innerScrollHeight) {
-        if (is < innerScrollHeight) {
-          return innerScrollHeight
-        }
-        if (timeDiff >= 300) {
-          console.log('test')
-        }
-        return innerScrollHeight
-      }
-
-      if (newInnerScroll <= 0) {
-        if (is > 0) {
-          return 0
-        }
-        if (timeDiff >= 300) {
-          console.log('test')
-        }
-        return 0
-      }
-
-      return newInnerScroll
-    })
-  }
-
+  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
   useEffect(() => {
-    innerScrollHeight = carouselBodyRef.current.scrollHeight
+    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
 
+  const [_, setInnerScroll] = useState<number>(0)
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -233,7 +196,15 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>Roadmap</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <RoadmapBody ref={carouselBodyRef} onWheel={innerScrollHandler}>
+      <RoadmapBody
+        ref={carouselBodyRef}
+        onWheel={innerScrollHandler({
+          innerScrollHeight,
+          setInnerScroll,
+          ref: carouselBodyRef,
+        })}
+        page={page}
+      >
         <RoadmapBodyLineContainer>
           <RoadmapBodyBall />
           <RoadmapBodyLine />
@@ -264,7 +235,6 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
             title="RAINBOW&nbsp;BEACH&nbsp;PARTY"
             date="2023 2분기 오픈 예정"
           />
-          <RoadmapSpacer></RoadmapSpacer>
         </RoadmapBodyTextContainer>
       </RoadmapBody>
     </CarouselItem>

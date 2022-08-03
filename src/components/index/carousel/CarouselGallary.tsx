@@ -7,6 +7,7 @@ import {
   CarouselIcon,
   CarouselTitle,
   CarouselInnerScrollProps,
+  InnerScrollHandlerParams,
 } from './CarouselItem'
 
 type GallaryImage = {
@@ -51,48 +52,75 @@ const GallaryBody = styled.div`
 
 type GallaryViewMode = 'TotalView' | 'DetailView'
 
-const GallaryContentArea: FunctionComponent = function () {
-  const [gallaryViewMode, setGallaryViewMode] =
-    useState<GallaryViewMode>('TotalView')
-  const [imageIndex, setImageIndex] = useState<number>(0)
-  const gallaryHorizontalScroll = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    gallaryHorizontalScroll.current.addEventListener('wheel', e => {
-      e.preventDefault()
-      gallaryHorizontalScroll.current.scrollLeft += e.deltaY / 10
-    })
-  })
-  const switchToDetailView = (index: number) => () => {
-    setImageIndex(_ => index)
-    setGallaryViewMode(_ => 'DetailView')
-  }
-
-  const switchToTotalView = () => {
-    setGallaryViewMode(_ => 'TotalView')
-  }
-
-  if (gallaryViewMode === 'TotalView') {
-    return (
-      <Gallary1depth ref={gallaryHorizontalScroll}>
-        {images.map((image, index) => (
-          <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
-        ))}
-      </Gallary1depth>
-    )
-  }
-
-  if (gallaryViewMode === 'DetailView') {
-    return (
-      <Gallary2depth
-        image={images[imageIndex]}
-        switchToTotalView={switchToTotalView}
-      ></Gallary2depth>
-    )
-  }
-
-  return <></>
+type GallaryContentAreaProps = {
+  innerScrollHandler({
+    innerScrollHeight,
+    setInnerScroll,
+    ref,
+  }: InnerScrollHandlerParams): React.WheelEventHandler
 }
+
+const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
+  function ({ innerScrollHandler }) {
+    const [gallaryViewMode, setGallaryViewMode] =
+      useState<GallaryViewMode>('TotalView')
+    const [imageIndex, setImageIndex] = useState<number>(0)
+    const gallaryHorizontalScroll = useRef<HTMLDivElement>(null)
+
+    const [innerScrollWidth, setInnerScrollWidth] = useState<number>(0)
+    const [_, setInnerScroll] = useState<number>(0)
+
+    useEffect(() => {
+      setInnerScrollWidth(_ => gallaryHorizontalScroll.current.scrollWidth)
+      gallaryHorizontalScroll.current.addEventListener('wheel', e => {
+        e.preventDefault()
+      })
+    }, [])
+
+    const horizontalScrollHandler = (e: React.WheelEvent) => {
+      const delta = Math.max(-1, Math.min(1, e.deltaY || -e.detail))
+      const scrollSpeed = 60
+      innerScrollHandler({
+        innerScrollHeight: innerScrollWidth,
+        setInnerScroll,
+        ref: gallaryHorizontalScroll,
+      })({ ...e, deltaY: delta * scrollSpeed })
+      gallaryHorizontalScroll.current.scrollLeft += delta * scrollSpeed
+    }
+
+    const switchToDetailView = (index: number) => () => {
+      setImageIndex(_ => index)
+      setGallaryViewMode(_ => 'DetailView')
+    }
+
+    const switchToTotalView = () => {
+      setGallaryViewMode(_ => 'TotalView')
+    }
+
+    if (gallaryViewMode === 'TotalView') {
+      return (
+        <Gallary1depth
+          ref={gallaryHorizontalScroll}
+          onWheel={horizontalScrollHandler}
+        >
+          {images.map((image, index) => (
+            <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
+          ))}
+        </Gallary1depth>
+      )
+    }
+
+    if (gallaryViewMode === 'DetailView') {
+      return (
+        <Gallary2depth
+          image={images[imageIndex]}
+          switchToTotalView={switchToTotalView}
+        ></Gallary2depth>
+      )
+    }
+
+    return <></>
+  }
 
 const Gallary1depth = styled.div`
   padding-top: 13px;
@@ -135,6 +163,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   return (
@@ -176,7 +205,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerScrollProps> = function ({
       </CarouselTitleWrapper>
 
       <GallaryBody ref={carouselBodyRef}>
-        <GallaryContentArea />
+        <GallaryContentArea innerScrollHandler={innerScrollHandler} />
       </GallaryBody>
     </CarouselItem>
   )

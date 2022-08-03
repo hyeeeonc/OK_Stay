@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -115,8 +115,14 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
+  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
+  useEffect(() => {
+    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
+  }, [])
+  const [_, setInnerScroll] = useState<number>(0)
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -155,7 +161,14 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>NFT Benefit</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <CarouselBody ref={carouselBodyRef}>
+      <CarouselBody
+        ref={carouselBodyRef}
+        onWheel={innerScrollHandler({
+          innerScrollHeight,
+          setInnerScroll,
+          ref: carouselBodyRef,
+        })}
+      >
         <CarouselBodyItems>
           <CarouselBodyItemsTextWrapper>
             <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle>

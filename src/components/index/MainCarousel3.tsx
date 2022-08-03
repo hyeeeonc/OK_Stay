@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { number } from 'prop-types'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import CarouselBenefit from './carousel/CarouselBenefit'
@@ -9,6 +8,7 @@ import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
 import CarouselRoadmap from './carousel/CarouselRoadmap'
+import { InnerScrollHandlerParams } from './carousel/CarouselItem'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -65,21 +65,63 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
   const [carouselPage, setCarouselPage] = useState<number>(0)
   const [xTrans, setXTrans] = useState<number>(0)
-  const [innerScroll, setInnerScroll] = useState<number>(0)
 
-  const prevPage = () => {
-    if (carouselPage === 0) {
-      return
-    } else {
-      setCarouselPage(cp => cp - 1)
+  const [scrollTimeChecker, setScrollTimeChecker] = useState<Date>(new Date())
+  const innerScrollHandler =
+    ({ innerScrollHeight, setInnerScroll, ref }: InnerScrollHandlerParams) =>
+    (e: React.WheelEvent) => {
+      setInnerScroll(is => {
+        const newInnerScroll = is + e.deltaY
+        const now = new Date()
+        const timeDiff: number = now.getTime() - scrollTimeChecker.getTime()
+
+        setScrollTimeChecker(_ => now)
+
+        if (newInnerScroll >= innerScrollHeight) {
+          if (is >= innerScrollHeight && timeDiff >= 100) {
+            if (!isScrollable) {
+              return innerScrollHeight
+            }
+            ref.current.scrollTo(0, 0)
+            nextPage()
+            return 0
+          } else {
+            return innerScrollHeight
+          }
+        } else if (newInnerScroll <= 0) {
+          if (is <= 0 && timeDiff >= 100) {
+            if (!isScrollable) {
+              return 0
+            }
+            ref.current.scrollTo(0, 0)
+            prevPage()
+            return 0
+          } else {
+            return 0
+          }
+        }
+
+        return newInnerScroll
+      })
     }
-  }
 
   const nextPage = () => {
     if (carouselPage === 6) {
       return
     } else {
       setCarouselPage(cp => cp + 1)
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
+    }
+  }
+
+  const prevPage = () => {
+    if (carouselPage === 0) {
+      return
+    } else {
+      setCarouselPage(cp => cp - 1)
+      isScrollable = false
+      setTimeout(() => (isScrollable = true), 1500)
     }
   }
 
@@ -268,6 +310,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            innerScrollHandler={innerScrollHandler}
           />
 
           <CarouselRoadmap
@@ -275,6 +318,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            innerScrollHandler={innerScrollHandler}
           />
 
           <CarouselProcess
@@ -282,6 +326,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            innerScrollHandler={innerScrollHandler}
           />
 
           <CarouselQnA
@@ -289,6 +334,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchStart={touchStart}
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
+            innerScrollHandler={innerScrollHandler}
           />
 
           <CarouselGallary
@@ -296,6 +342,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            innerScrollHandler={innerScrollHandler}
           />
 
           <CarouselPartners

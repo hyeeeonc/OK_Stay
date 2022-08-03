@@ -91,4 +91,15 @@ export interface CarouselInnerScrollProps {
   touchStart: React.TouchEventHandler
   touchEnd: React.TouchEventHandler
   scrollHandler(ref: React.RefObject<HTMLDivElement>): React.WheelEventHandler
+  innerScrollHandler({
+    innerScrollHeight,
+    setInnerScroll,
+    ref,
+  }: InnerScrollHandlerParams): React.WheelEventHandler
+}
+
+export interface InnerScrollHandlerParams {
+  innerScrollHeight: number
+  setInnerScroll: React.Dispatch<React.SetStateAction<number>>
+  ref: React.RefObject<HTMLDivElement>
 }
