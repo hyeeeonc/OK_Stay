@@ -9,6 +9,7 @@ import { Global } from '@emotion/react'
 import MainCarousel3 from 'components/index/MainCarousel3'
 import DropDown from 'components/index/DropDown'
 import Modal from 'components/common/Modal'
+import MintButton from 'components/index/MintButton'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -68,6 +69,7 @@ const IndexPage: FunctionComponent = function () {
           dropDownOpened={dropDownOpened}
           dropDownButtonHandler={dropDownButtonHandler}
         ></DropDown>
+        <MintButton />
       </IndexWrapper>
     </>
   )

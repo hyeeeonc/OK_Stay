@@ -65,6 +65,27 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
   const [carouselPage, setCarouselPage] = useState<number>(0)
   const [xTrans, setXTrans] = useState<number>(0)
+  const [windowSize, setWindowSize] = useState<{
+    width: number
+    height: number
+  }>({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  })
+
+  const handleResize = () => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    })
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const [scrollTimeChecker, setScrollTimeChecker] = useState<Date>(new Date())
   const innerScrollHandler =
@@ -136,10 +157,17 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   }, [headerPage])
 
   useEffect(() => {
-    const nowPageWidth: number =
-      carouselPage * (1016 + window.innerWidth / 2 - 508 - 200)
+    let nowPageWidth: number
+
+    if (windowSize.width > 1450) {
+      nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 200)
+    } else if (windowSize.width > 1199) {
+      nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
+    } else if (windowSize.width > 970) {
+      nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
+    }
     setXTrans(_ => nowPageWidth)
-  }, [carouselPage, xTrans])
+  }, [carouselPage, xTrans, windowSize])
 
   const scrollHandler =
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {

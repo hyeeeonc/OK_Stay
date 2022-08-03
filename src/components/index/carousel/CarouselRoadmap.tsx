@@ -144,6 +144,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
+
   const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
   useEffect(() => {
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
