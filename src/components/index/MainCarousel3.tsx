@@ -25,7 +25,7 @@ const CarouselWrapper = styled.div`
   display: flex;
   padding-left: calc(50vw - 508px);
   @media (max-width: 1199px) {
-    padding-left: calc(50vw - 375px);
+    padding-left: calc(50vw - 365px);
   }
 `
 
@@ -151,9 +151,10 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   }
 
   useEffect(() => {
-    console.log(headerPage)
-    const pageSet = headerPage
-    setCarouselPage(pageSet)
+    if (headerPage != null) {
+      const pageSet = headerPage
+      setCarouselPage(pageSet)
+    }
   }, [headerPage])
 
   useEffect(() => {
@@ -165,6 +166,8 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
       nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
     } else if (windowSize.width > 970) {
       nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
+    } else if (windowSize.width > 767) {
+      nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
     }
     setXTrans(_ => nowPageWidth)
   }, [carouselPage, xTrans, windowSize])

@@ -84,6 +84,9 @@ const RoadmapBodyTextItem = styled.div`
     width: 255px;
     height: 64px;
     margin-bottom: 34px;
+    :nth-last-child(1) {
+      padding-bottom: 60px;
+    }
   }
 `
 

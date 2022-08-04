@@ -20,7 +20,7 @@ const DropDownMenuBlock = styled.div`
 
   transition: opacity 0.3s ease-in;
   @media (max-width: 1199px) {
-    left: calc(50vw - 365px - 20px);
+    left: calc(50vw - 365px - 5px);
     top: calc(50vh + 210px - 200px);
   }
 `
@@ -155,7 +155,7 @@ const DropDownButtonBlock = styled.div`
   padding: 0px;
 
   position: fixed;
-  left: calc(50vw - 508px - 16px);
+  left: calc(50vw - 508px - 20px);
   top: calc(50vh + 310px + 56px);
 
   width: 104px;
@@ -168,7 +168,7 @@ const DropDownButtonBlock = styled.div`
     width: 90px;
     height: 90px;
 
-    left: calc(50vw - 365px - 30px);
+    left: calc(50vw - 365px - 20px);
     top: calc(50vh + 210px + 56px);
   }
 `

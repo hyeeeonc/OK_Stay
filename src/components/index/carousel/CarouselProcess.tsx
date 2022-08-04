@@ -73,7 +73,7 @@ const ProcessItems: FunctionComponent<ProcessItemProps> = function ({
   )
 }
 
-const CarouselInfo: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   touchStart,
   touchEnd,
@@ -153,4 +153,4 @@ const CarouselInfo: FunctionComponent<CarouselInnerScrollProps> = function ({
   )
 }
 
-export default CarouselInfo
+export default CarouselProcess

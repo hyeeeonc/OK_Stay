@@ -10,7 +10,7 @@ export const CarouselItem = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.34);
 
   flex: none;
-  width: 1016px;
+  width: 1014px;
   height: 610px;
   margin-right: calc(50vw - 508px - 200px);
   overflow: hidden;
@@ -20,7 +20,7 @@ export const CarouselItem = styled.div`
   }
 
   @media (max-width: 1199px) {
-    width: 730px;
+    width: 728px;
     height: 438px;
     margin-right: calc(50vw - 365px - 60px);
   }

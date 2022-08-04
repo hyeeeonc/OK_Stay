@@ -28,11 +28,17 @@ const Spacer = styled.div`
 
 const IndexPage: FunctionComponent = function () {
   const [carouselPageController, setCarouselPageController] =
-    useState<number>(0)
+    useState<number>(null)
 
   const getHeaderPageData = (page: number) => {
     setCarouselPageController(page)
   }
+
+  useEffect(() => {
+    if (carouselPageController === 0) {
+      setCarouselPageController(null)
+    }
+  }, [carouselPageController])
 
   useEffect(() => {
     console.log(carouselPageController)

@@ -23,6 +23,14 @@ const MintButtonBlock = styled.div`
   flex: none;
   order: 1;
   flex-grow: 0;
+  @media (max-width: 1199px) {
+    width: 310px;
+    height: 56px;
+    border-radius: 9px;
+
+    left: calc(50vw + 365px - 310px);
+    top: calc(50vh + 210px + 22px);
+  }
 `
 
 const MintButton: FunctionComponent = function () {

@@ -136,7 +136,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
           </svg>
         </Logo>
         <NavWrapper>
-          <NavItems onClick={() => headerPageControl(3)}>INFORMATION</NavItems>
+          <NavItems onClick={() => headerPageControl(0)}>INFORMATION</NavItems>
           <NavItems onClick={() => headerPageControl(5)}>LIBRARY</NavItems>
           <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
           <NavItems>ENG</NavItems>
