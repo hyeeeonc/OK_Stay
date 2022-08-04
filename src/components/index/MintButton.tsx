@@ -34,7 +34,23 @@ const MintButtonBlock = styled.div`
 `
 
 const MintButton: FunctionComponent = function () {
-  return <MintButtonBlock>몇일뒤 공개예정</MintButtonBlock>
+  const [dday, setDday] = useState<number>(0)
+  useEffect(() => {
+    setDday(_ => {
+      const today = new Date()
+      const std = new Date('2022-08-30')
+      console.log(std)
+      console.log(today)
+      const diff = std.getTime() - today.getTime()
+      return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0
+    })
+  }, [])
+
+  return (
+    <MintButtonBlock>
+      {dday === 0 ? `민팅하러가기` : `${dday}일 뒤 공개예정`}
+    </MintButtonBlock>
+  )
 }
 
 export default MintButton
