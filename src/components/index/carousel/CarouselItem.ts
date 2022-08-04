@@ -23,6 +23,7 @@ export const CarouselItem = styled.div`
     width: 728px;
     height: 438px;
     margin-right: calc(50vw - 365px - 60px);
+    border-radius: 41px;
   }
 
   @media (max-width: 970px) {

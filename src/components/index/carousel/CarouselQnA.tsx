@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -23,12 +29,116 @@ const QnABody = styled.div`
   color: ${palette.gray[8]};
 `
 
-const QnABodyAccordionItem = styled.div`
+const QnABodyAccordionItemContainer = styled.div`
   cursor: pointer;
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  border-bottom: 1px solid ${palette.gray[4]};
 `
+
+const QnABodyAccordionTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[8]};
+
+  flex: none;
+
+  padding: 30px 0;
+`
+const QnABodyAccordionTitleLogo = styled.div`
+  width: 40px;
+  height: 40px;
+`
+
+const QnABodyAccordionContentContainer = styled.div`
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: height 0.3s ease;
+`
+
+const QnABodyAccordionContent = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[8]};
+  padding-bottom: 20px;
+`
+
+interface CarouselAccordionItemsProps {
+  title?: string
+  content?: string
+}
+
+const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
+  function ({ title, content }) {
+    const contentContainer = useRef<HTMLDivElement>(null)
+    const contentChild = useRef<HTMLDivElement>(null)
+    const [isOpened, setIsOpened] = useState<boolean>(false)
+
+    const handleButtonClick = useCallback(
+      e => {
+        e.stopPropagation()
+        if (
+          contentContainer.current === null ||
+          contentChild.current === null
+        ) {
+          return
+        }
+        if (contentContainer.current.clientHeight > 0) {
+          contentContainer.current.style.height = '0'
+        } else {
+          contentContainer.current.style.height = `${contentChild.current.clientHeight}px`
+        }
+        setIsOpened(!isOpened)
+        console.log(0)
+      },
+      [isOpened],
+    )
+
+    return (
+      <QnABodyAccordionItemContainer>
+        <QnABodyAccordionTitleContainer onClick={handleButtonClick}>
+          {title}
+          <QnABodyAccordionTitleLogo>
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M23.2929 18.7071C23.6834 18.3166 23.6834 17.6834 23.2929 17.2929L12.8536 6.85355C12.5386 6.53857 12 6.76165 12 7.20711L12 28.7929C12 29.2383 12.5386 29.4614 12.8536 29.1464L23.2929 18.7071Z"
+                fill="white"
+              />
+            </svg>
+          </QnABodyAccordionTitleLogo>
+        </QnABodyAccordionTitleContainer>
+
+        <QnABodyAccordionContentContainer ref={contentContainer}>
+          <QnABodyAccordionContent ref={contentChild}>
+            {content}
+          </QnABodyAccordionContent>
+        </QnABodyAccordionContentContainer>
+      </QnABodyAccordionItemContainer>
+    )
+  }
 
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
@@ -85,7 +195,29 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
             setInnerScroll,
             ref: carouselBodyRef,
           })}
-        ></QnABody>
+        >
+          <CarouselAccordionItems
+            title="1. 민팅 일정은 어떻게 되나요?"
+            content="dddd"
+          />
+          <CarouselAccordionItems
+            title="2. 총 발행량은 어떻게 되나요?"
+            content="dddd"
+          />
+          <CarouselAccordionItems
+            title="3. 민팅 가격은 얼마인가요?"
+            content="dddd"
+          />
+          <CarouselAccordionItems
+            title="4. 화이트리스트 조건은 어떻게 되나요?"
+            content="dddd"
+          />
+          <CarouselAccordionItems
+            title="5. 민팅은 어디서 하나요?"
+            content="dddd"
+          />
+          <div style={{ height: 100 }} />
+        </QnABody>
       </CarouselItem>
     </>
   )
