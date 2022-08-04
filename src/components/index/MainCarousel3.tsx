@@ -8,7 +8,10 @@ import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
 import CarouselRoadmap from './carousel/CarouselRoadmap'
-import { InnerScrollHandlerParams } from './carousel/CarouselItem'
+import {
+  InnerScrollHandlerParams,
+  InnerCarouselPageHandlerParams,
+} from './carousel/CarouselItem'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -86,6 +89,37 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  const nextInnerPage =
+    ({ innerPage, setInnerPage, end }: InnerCarouselPageHandlerParams) =>
+    () => {
+      if (!isScrollable) return
+      if (innerPage >= end) {
+        nextPage()
+        setInnerPage(_ => 0)
+        isScrollable = false
+        setTimeout(() => (isScrollable = true), 1500)
+      } else {
+        setInnerPage(ip => ip + 1)
+        isScrollable = false
+        setTimeout(() => (isScrollable = true), 300)
+      }
+    }
+
+  const prevInnerPage =
+    ({ innerPage, setInnerPage, end }: InnerCarouselPageHandlerParams) =>
+    () => {
+      if (!isScrollable) return
+      if (innerPage <= 0) {
+        prevPage()
+        isScrollable = false
+        setTimeout(() => (isScrollable = true), 300)
+      } else {
+        setInnerPage(ip => ip - 1)
+        isScrollable = false
+        setTimeout(() => (isScrollable = true), 300)
+      }
+    }
 
   const [scrollTimeChecker, setScrollTimeChecker] = useState<Date>(new Date())
   const innerScrollHandler =
@@ -184,8 +218,6 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
         return
       }
       ref.current.scrollTo(0, 0)
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
     }
 
   const defaultScrollHandler = (e: React.WheelEvent) => {
@@ -198,8 +230,6 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
     } else {
       return
     }
-    isScrollable = false
-    setTimeout(() => (isScrollable = true), 1500)
   }
 
   const touchStart = (e: React.TouchEvent) => {
@@ -373,7 +403,8 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
-            innerScrollHandler={innerScrollHandler}
+            nextInnerPage={nextInnerPage}
+            prevInnerPage={prevInnerPage}
           />
 
           <CarouselPartners

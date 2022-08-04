@@ -33,7 +33,21 @@ const MintButtonBlock = styled.div`
   }
 `
 
+<<<<<<< Updated upstream
 const MintButton: FunctionComponent<{ dday: number }> = function ({ dday }) {
+=======
+const MintButton: FunctionComponent = function () {
+  const [dday, setDday] = useState<number>(0)
+  useEffect(() => {
+    setDday(_ => {
+      const today = new Date()
+      const std = new Date('2022-08-30')
+      const diff = std.getTime() - today.getTime()
+      return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0
+    })
+  }, [])
+
+>>>>>>> Stashed changes
   return (
     <MintButtonBlock>
       {dday === 0 ? `민팅하러가기` : `${dday}일 뒤 공개예정`}
