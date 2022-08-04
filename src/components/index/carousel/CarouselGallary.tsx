@@ -62,6 +62,15 @@ type GallaryContentAreaProps = {
 
 const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
   function ({ innerScrollHandler }) {
+    const [innerPage, setInnerPage] = useState<number>(0)
+    const [innerXTrans, setInnerXTrans] = useState<number>(0)
+    useEffect(() => {
+      let nowPageWidth: number
+
+      nowPageWidth = innerPage * (520 + 32)
+      setInnerXTrans(_ => nowPageWidth)
+    }, [innerPage, innerXTrans])
+
     const [gallaryViewMode, setGallaryViewMode] =
       useState<GallaryViewMode>('TotalView')
     const [imageIndex, setImageIndex] = useState<number>(0)
@@ -100,6 +109,7 @@ const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
     if (gallaryViewMode === 'TotalView') {
       return (
         <Gallary1depth
+          style={{ transform: `translate3d(-${innerXTrans}px, 0px, 0px)` }}
           ref={gallaryHorizontalScroll}
           onWheel={horizontalScrollHandler}
         >
