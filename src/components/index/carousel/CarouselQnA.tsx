@@ -16,18 +16,18 @@ const QnABody = styled.div`
   height: 325px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow-y: scroll !important;
   scroll-behavior: smooth;
+  transition: 0.3s
 
   color: ${palette.gray[8]};
 `
 
-const QnABodyAccordion = styled.button`
+const QnABodyAccordionItem = styled.div`
   cursor: pointer;
   width: 100%;
-  border: none;
-  font
+  display: flex;
+  flex-direction: column;
 `
 
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
@@ -43,6 +43,9 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
   const [_, setInnerScroll] = useState<number>(0)
+
+  const [accordionChecked, setAccordionChecked] = useState<number>(null)
+
   return (
     <>
       <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>

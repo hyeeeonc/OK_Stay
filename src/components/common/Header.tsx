@@ -69,11 +69,13 @@ const NavArrow = styled.div`
 interface HeaderProps {
   getHeaderPageData(e: number): void
   modalOpenHandler: React.MouseEventHandler
+  dday: number
 }
 
 const Header: FunctionComponent<HeaderProps> = function ({
   getHeaderPageData,
   modalOpenHandler,
+  dday,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -137,7 +139,9 @@ const Header: FunctionComponent<HeaderProps> = function ({
         </Logo>
         <NavWrapper>
           <NavItems onClick={() => headerPageControl(0)}>INFORMATION</NavItems>
-          <NavItems onClick={() => headerPageControl(5)}>LIBRARY</NavItems>
+          <NavItems onClick={() => alert(`${dday}일 후 공개됩니다.`)}>
+            LIBRARY
+          </NavItems>
           <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
           <NavItems>ENG</NavItems>
           <NavArrow>
