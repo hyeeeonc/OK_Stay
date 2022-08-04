@@ -62,8 +62,6 @@ const IndexPage: FunctionComponent = function () {
     setDday(_ => {
       const today = new Date()
       const std = new Date('2022-08-30')
-      console.log(std)
-      console.log(today)
       const diff = std.getTime() - today.getTime()
       return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0
     })

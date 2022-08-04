@@ -72,8 +72,8 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
     width: number
     height: number
   }>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: null,
+    height: null,
   })
 
   const handleResize = () => {
@@ -82,6 +82,13 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
       height: window.innerHeight,
     })
   }
+
+  useEffect(() => {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    })
+  })
 
   useEffect(() => {
     window.addEventListener('resize', handleResize)
@@ -113,7 +120,7 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
       if (innerPage <= 0) {
         prevPage()
         isScrollable = false
-        setTimeout(() => (isScrollable = true), 300)
+        setTimeout(() => (isScrollable = true), 1500)
       } else {
         setInnerPage(ip => ip - 1)
         isScrollable = false
