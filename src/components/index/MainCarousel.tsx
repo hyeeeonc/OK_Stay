@@ -132,6 +132,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   const innerScrollHandler =
     ({ innerScrollHeight, setInnerScroll, ref }: InnerScrollHandlerParams) =>
     (e: React.WheelEvent) => {
+      if (!isScrollable) return
       setInnerScroll(is => {
         const newInnerScroll = is + e.deltaY
         const now = new Date()

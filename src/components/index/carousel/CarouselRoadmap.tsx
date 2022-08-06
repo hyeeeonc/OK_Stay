@@ -10,6 +10,8 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
+import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+
 const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
   padding-right: 110px;
@@ -152,6 +154,8 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   useEffect(() => {
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
+
+  useEffect(preventInnerScrollHandler(page, 2, carouselBodyRef), [page])
 
   const [_, setInnerScroll] = useState<number>(0)
   return (

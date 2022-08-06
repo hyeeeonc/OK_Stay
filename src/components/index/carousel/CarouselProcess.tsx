@@ -10,6 +10,8 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
+import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+
 const ProcessBody = styled.div`
   padding: 0 80px;
   height: 340px;
@@ -86,6 +88,7 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
   const [_, setInnerScroll] = useState<number>(0)
+  useEffect(preventInnerScrollHandler(page, 3, carouselBodyRef), [page])
   return (
     <CarouselItem style={{ opacity: page === 3 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
