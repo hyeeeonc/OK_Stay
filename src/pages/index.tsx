@@ -6,10 +6,12 @@ import styled from '@emotion/styled'
 import reset from '../../lib/styles/global'
 import { Global } from '@emotion/react'
 
-import MainCarousel3 from 'components/index/MainCarousel3'
+import MainCarousel from 'components/index/MainCarousel'
+import MobileMain from 'components/index/MobileMain'
 import DropDown from 'components/index/DropDown'
 import Modal from 'components/common/Modal'
 import MintButton from 'components/index/MintButton'
+import { useMediaQuery } from 'react-responsive'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -27,6 +29,13 @@ const Spacer = styled.div`
 `
 
 const IndexPage: FunctionComponent = function () {
+  const isPc = useMediaQuery({
+    query : "(min-width:768px)"
+  });
+  const isMobile = useMediaQuery({
+    query : "(max-width:767px)"
+  });
+
   const [carouselPageController, setCarouselPageController] =
     useState<number>(null)
 
@@ -81,7 +90,8 @@ const IndexPage: FunctionComponent = function () {
           modalCloseHandler={modalCloseHandler}
           modalOpened={modalOpened}
         ></Modal>
-        <MainCarousel3 headerPage={carouselPageController} />
+        {isPc &&         <MainCarousel headerPage={carouselPageController} />}
+        {isMobile && <MobileMain />}
         <DropDown
           dropDownOpened={dropDownOpened}
           dropDownButtonHandler={dropDownButtonHandler}

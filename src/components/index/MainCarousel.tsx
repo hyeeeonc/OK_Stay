@@ -61,7 +61,7 @@ interface MainCarouselProps {
   headerPage: number
 }
 
-const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
+const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
 }) {
   const carouselBlock = useRef<HTMLDivElement>(null)
@@ -426,4 +426,4 @@ const MainCarousel3: FunctionComponent<MainCarouselProps> = function ({
   )
 }
 
-export default MainCarousel3
+export default MainCarousel

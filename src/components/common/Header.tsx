@@ -140,7 +140,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
         <NavWrapper>
           <NavItems onClick={() => headerPageControl(0)}>INFORMATION</NavItems>
           <NavItems onClick={() => alert(`${dday}일 후 공개됩니다.`)}>
-            LIBRARY
+            MINTING
           </NavItems>
           <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
           <NavItems>ENG</NavItems>
