@@ -206,11 +206,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
 
       <RoadmapBody
         ref={carouselBodyRef}
-        onWheel={innerScrollHandler({
-          innerScrollHeight,
-          setInnerScroll,
-          ref: carouselBodyRef,
-        })}
+        onWheel={innerScrollHandler(carouselBodyRef)}
         page={page}
       >
         <RoadmapBodyLineContainer>

@@ -92,12 +92,7 @@ export interface CarouselInnerScrollProps {
   touchStart: React.TouchEventHandler
   touchEnd: React.TouchEventHandler
   scrollHandler(ref: React.RefObject<HTMLDivElement>): React.WheelEventHandler
-  innerScrollHandler({
-    innerScrollHeight,
-    setInnerScroll,
-    ref,
-  }: InnerScrollHandlerParams): React.WheelEventHandler
-  innerScrollHandler2(
+  innerScrollHandler(
     ref: React.RefObject<HTMLDivElement>,
   ): React.WheelEventHandler
 }
