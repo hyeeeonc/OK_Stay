@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../../lib/styles/palette'
+import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 
 import {
   CarouselItem,
@@ -123,6 +124,8 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
   const [_, setInnerScroll] = useState<number>(0)
+
+  useEffect(preventInnerScrollHandler(page, 1, carouselBodyRef), [page])
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper

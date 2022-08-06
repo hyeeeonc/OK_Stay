@@ -6,8 +6,6 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
-  InnerScrollHandlerParams,
   InnerCarouselPageHandlerParams,
   CarouselInnerCarouselProps,
 } from './CarouselItem'

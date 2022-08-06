@@ -7,6 +7,7 @@ import React, {
   useCallback,
 } from 'react'
 import palette from '../../../../lib/styles/palette'
+import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 
 import {
   CarouselItem,
@@ -153,6 +154,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
     setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
   }, [])
   const [_, setInnerScroll] = useState<number>(0)
+  useEffect(preventInnerScrollHandler(page, 4, carouselBodyRef), [page])
 
   const [accordionChecked, setAccordionChecked] = useState<number>(null)
 
