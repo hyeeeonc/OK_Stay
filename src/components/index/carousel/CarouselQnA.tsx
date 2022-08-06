@@ -158,6 +158,16 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
 
   const [accordionChecked, setAccordionChecked] = useState<number>(null)
 
+  const innerScrollHandler2 = (e: React.WheelEvent) => {
+    const bottom =
+      carouselBodyRef.current.scrollHeight -
+        carouselBodyRef.current.scrollTop ===
+      carouselBodyRef.current.clientHeight
+    if (bottom) {
+      console.log('test')
+    }
+  }
+
   return (
     <>
       <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>
@@ -190,14 +200,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
-        <QnABody
-          ref={carouselBodyRef}
-          onWheel={innerScrollHandler({
-            innerScrollHeight,
-            setInnerScroll,
-            ref: carouselBodyRef,
-          })}
-        >
+        <QnABody ref={carouselBodyRef} onWheel={innerScrollHandler2}>
           <CarouselAccordionItems
             title="1. 민팅 일정은 어떻게 되나요?"
             content="dddd"

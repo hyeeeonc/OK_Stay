@@ -97,6 +97,9 @@ export interface CarouselInnerScrollProps {
     setInnerScroll,
     ref,
   }: InnerScrollHandlerParams): React.WheelEventHandler
+  innerScrollHandler2(
+    ref: React.RefObject<HTMLDivElement>,
+  ): React.WheelEventHandler
 }
 
 export interface CarouselInnerCarouselProps {
