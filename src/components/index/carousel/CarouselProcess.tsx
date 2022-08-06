@@ -81,7 +81,6 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchEnd,
   scrollHandler,
   innerScrollHandler,
-  innerScrollHandler2,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
@@ -130,7 +129,7 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
 
       <ProcessBody
         ref={carouselBodyRef}
-        onWheel={innerScrollHandler2(carouselBodyRef)}
+        onWheel={innerScrollHandler(carouselBodyRef)}
       >
         <ProcessItems
           title="Step.01 카이카스 설치하기"

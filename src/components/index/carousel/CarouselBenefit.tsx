@@ -166,11 +166,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
 
       <CarouselBody
         ref={carouselBodyRef}
-        onWheel={innerScrollHandler({
-          innerScrollHeight,
-          setInnerScroll,
-          ref: carouselBodyRef,
-        })}
+        onWheel={innerScrollHandler(carouselBodyRef)}
       >
         <CarouselBodyItems>
           <CarouselBodyItemsTextWrapper>
