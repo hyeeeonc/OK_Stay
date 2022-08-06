@@ -51,6 +51,7 @@ const BackgroundRec = styled.div`
 `
 
 let isScrollable = true
+let scrollTime = new Date()
 
 type TouchPosition = {
   x: number
@@ -168,6 +169,29 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       })
     }
 
+  const innerScrollHandler2 =
+    (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
+      if (!isScrollable) return
+      const now = new Date()
+      const timeDiff = scrollTime.getTime() - now.getTime()
+
+      if (
+        ref.current.scrollHeight - ref.current.scrollTop ===
+        ref.current.clientHeight
+      ) {
+        console.log('test')
+        if (e.deltaY >= 0 && timeDiff <= 100) {
+          ref.current.scrollTo(0, 0)
+          nextPage()
+        }
+      } else if (ref.current.scrollTop === 0) {
+        if (e.deltaY <= 0 && timeDiff <= 100) {
+          ref.current.scrollTo(0, 0)
+          prevPage()
+        }
+      }
+    }
+
   const nextPage = () => {
     if (carouselPage === 6) {
       return
@@ -186,10 +210,6 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       isScrollable = false
       setTimeout(() => (isScrollable = true), 1500)
     }
-  }
-
-  const getIsScrollable = (bool: boolean) => {
-    isScrollable = bool
   }
 
   useEffect(() => {
@@ -380,6 +400,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            innerScrollHandler2={innerScrollHandler2}
           />
 
           <CarouselRoadmap
@@ -388,6 +409,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            innerScrollHandler2={innerScrollHandler2}
           />
 
           <CarouselProcess
@@ -396,6 +418,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            innerScrollHandler2={innerScrollHandler2}
           />
 
           <CarouselQnA
@@ -404,6 +427,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             innerScrollHandler={innerScrollHandler}
+            innerScrollHandler2={innerScrollHandler2}
           />
 
           <CarouselGallary
