@@ -8,10 +8,7 @@ import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
 import CarouselRoadmap from './carousel/CarouselRoadmap'
-import {
-  InnerScrollHandlerParams,
-  InnerCarouselPageHandlerParams,
-} from './carousel/CarouselItem'
+import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
 import { Language } from 'types/common/language'
 
 const MainContainer = styled.div`
@@ -134,6 +131,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
 
   const innerScrollHandler =
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
+      console.log(e.deltaY)
       if (!isScrollable) return
       const now = new Date()
       const timeDiff = now.getTime() - scrollTime.getTime()
@@ -149,7 +147,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
           nextPage()
         }
       } else if (ref.current.scrollTop === 0) {
-        if (e.deltaY <= 0 && timeDiff >= 100) {
+        if (e.deltaY < 0 && timeDiff >= 100) {
           ref.current.scrollTo(0, 0)
           prevPage()
         }

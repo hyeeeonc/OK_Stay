@@ -148,28 +148,23 @@ const DropDownMenu: FunctionComponent<DropDownMenuProps> = function ({
   )
 }
 
-const DropDownButtonBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0px;
-
-  position: fixed;
-  left: calc(50vw - 508px - 20px);
-  top: calc(50vh + 310px + 56px);
+export const DropDownButtonBlock = styled.div`
+  // display: flex;
+  // flex-direction: row;
+  // align-items: flex-start;
+  // padding: 0px;
 
   width: 104px;
   height: 104px;
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   @media (max-width: 1199px) {
     width: 90px;
     height: 90px;
 
-    left: calc(50vw - 365px - 20px);
-    top: calc(50vh + 210px + 56px);
+  }
+  @media (max-width: 767px) {
+    left: 100px;
+    bottom: 0px;
   }
 `
 type DropDownButtonProps = {

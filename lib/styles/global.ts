@@ -54,10 +54,20 @@ const reset = css`
     }
   }
 
+  html {
+    height: -webkit-fill-available;
+  }
+
   body {
     background-color: #121212;
     overscroll-behavior: none;
     overflow: hidden;
+    @media (max-width: 767px) {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: -webkit-fill-available;
+
+    }
   }
 
   html,

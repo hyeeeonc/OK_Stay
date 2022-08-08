@@ -7,7 +7,7 @@ import reset from '../../lib/styles/global'
 import { Global } from '@emotion/react'
 
 import MainCarousel from 'components/index/MainCarousel'
-import MobileMain from 'components/index/MobileMain'
+import MobileMain from 'components/mobile/MobileMain'
 import DropDown from 'components/index/DropDown'
 import Modal from 'components/common/Modal'
 import MintButton from 'components/index/MintButton'
@@ -23,6 +23,17 @@ const IndexWrapper = styled.main`
   background-color: ${palette.gray[0]};
   display: flex;
   align-items: center;
+  @media (max-width: 767px) {
+    display: block;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+`
+
+const MobileIndexWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `
 
 const Spacer = styled.div`
@@ -98,24 +109,29 @@ const IndexPage: FunctionComponent = function () {
         language={language}
       />
       <Spacer />
-      <IndexWrapper>
-        <Modal
-          modalCloseHandler={modalCloseHandler}
-          modalOpened={modalOpened}
-        ></Modal>
-        {isPc && (
+      {isPc && (
+        <IndexWrapper>
+          <Modal
+            modalCloseHandler={modalCloseHandler}
+            modalOpened={modalOpened}
+          ></Modal>
           <MainCarousel
             headerPage={carouselPageController}
             language={language}
           />
-        )}
-        {isMobile && <MobileMain />}
-        <DropDown
-          dropDownOpened={dropDownOpened}
-          dropDownButtonHandler={dropDownButtonHandler}
-        ></DropDown>
-        <MintButton dday={dday} />
-      </IndexWrapper>
+          <DropDown
+            dropDownOpened={dropDownOpened}
+            dropDownButtonHandler={dropDownButtonHandler}
+          ></DropDown>
+          <MintButton dday={dday} />
+        </IndexWrapper>
+      )}
+
+      {isMobile && (
+        <MobileIndexWrapper>
+          <MobileMain />
+        </MobileIndexWrapper>
+      )}
     </>
   )
 }
