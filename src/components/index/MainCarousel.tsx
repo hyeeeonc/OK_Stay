@@ -12,6 +12,7 @@ import {
   InnerScrollHandlerParams,
   InnerCarouselPageHandlerParams,
 } from './carousel/CarouselItem'
+import { Language } from 'types/common/language'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -60,10 +61,12 @@ type TouchPosition = {
 
 interface MainCarouselProps {
   headerPage: number
+  language: Language
 }
 
 const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
+  language,
 }) {
   const carouselBlock = useRef<HTMLDivElement>(null)
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
@@ -89,7 +92,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       width: window.innerWidth,
       height: window.innerHeight,
     })
-  })
+  }, [])
 
   useEffect(() => {
     window.addEventListener('resize', handleResize)
@@ -133,19 +136,20 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
       if (!isScrollable) return
       const now = new Date()
-      const timeDiff = scrollTime.getTime() - now.getTime()
+      const timeDiff = now.getTime() - scrollTime.getTime()
+
+      scrollTime = now
 
       if (
         ref.current.scrollHeight - ref.current.scrollTop ===
         ref.current.clientHeight
       ) {
-        console.log('test')
-        if (e.deltaY >= 0 && timeDiff <= 100) {
+        if (e.deltaY >= 0 && timeDiff >= 100) {
           ref.current.scrollTo(0, 0)
           nextPage()
         }
       } else if (ref.current.scrollTop === 0) {
-        if (e.deltaY <= 0 && timeDiff <= 100) {
+        if (e.deltaY <= 0 && timeDiff >= 100) {
           ref.current.scrollTo(0, 0)
           prevPage()
         }
@@ -352,6 +356,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={defaultScrollHandler}
             touchStart={touchStart}
             touchEnd={touchEnd}
+            language={language}
           />
 
           <CarouselBenefit
@@ -360,6 +365,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            language={language}
           />
 
           <CarouselRoadmap
@@ -368,6 +374,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            language={language}
           />
 
           <CarouselProcess
@@ -376,6 +383,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             scrollHandler={scrollHandler}
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
+            language={language}
           />
 
           <CarouselQnA
@@ -384,6 +392,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             innerScrollHandler={innerScrollHandler}
+            language={language}
           />
 
           <CarouselGallary
@@ -391,6 +400,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            language={language}
             nextInnerPage={nextInnerPage}
             prevInnerPage={prevInnerPage}
           />
@@ -400,6 +410,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             touchEnd={touchEnd}
             scrollHandler={defaultScrollHandler}
             page={carouselPage}
+            language={language}
           />
         </CarouselWrapper>
       </CarouselBlock>

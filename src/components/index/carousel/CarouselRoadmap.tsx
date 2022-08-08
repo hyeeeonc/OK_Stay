@@ -11,6 +11,11 @@ import {
 } from './CarouselItem'
 
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+import {
+  RoadmapListType,
+  CarouselDataType,
+} from 'types/index/carousel/CarouselData'
+import { graphql, useStaticQuery } from 'gatsby'
 
 const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
@@ -145,19 +150,35 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   touchStart,
   touchEnd,
+  language,
   scrollHandler,
   innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-
-  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
-  useEffect(() => {
-    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
-  }, [])
-
   useEffect(preventInnerScrollHandler(page, 2, carouselBodyRef), [page])
 
-  const [_, setInnerScroll] = useState<number>(0)
+  const {
+    allRoadmapJson: { edges },
+  }: RoadmapListType = useStaticQuery(graphql`
+    query getRoadmaps {
+      allRoadmapJson(sort: { order: ASC, fields: [seq] }) {
+        edges {
+          node {
+            language
+            seq
+            title
+            content
+          }
+        }
+      }
+    }
+  `)
+
+  const [roadmaps, setRoadmaps] = useState<Array<CarouselDataType>>([])
+  useEffect(() => {
+    setRoadmaps(_ => edges.filter(({ node }) => node.language === language))
+  }, [language])
+
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -210,35 +231,22 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
         page={page}
       >
         <RoadmapBodyLineContainer>
-          <RoadmapBodyBall />
-          <RoadmapBodyLine />
-          <RoadmapBodyBall />
-          <RoadmapBodyLine />
-          <RoadmapBodyBall />
-          <RoadmapBodyLine />
-          <RoadmapBodyBall />
-          <RoadmapBodyLine />
-          <RoadmapBodyBall />
+          {roadmaps.map((_, index) =>
+            index === roadmaps.length - 1 ? (
+              <RoadmapBodyBall />
+            ) : (
+              <>
+                <RoadmapBodyBall />
+                <RoadmapBodyLine />
+              </>
+            ),
+          )}
         </RoadmapBodyLineContainer>
 
         <RoadmapBodyTextContainer>
-          <RoadmapBodyTextItems title=":OKRA STAY MINT" date="2022 08.26" />
-          <RoadmapBodyTextItems
-            title="CREAM&nbsp;FIELDS&nbsp;VIP&nbsp;&#38;&nbsp;HOLDER&nbsp;EXCLUSIVE&nbsp;BOOTH"
-            date="2022 11.04 ~ 11.05"
-          />
-          <RoadmapBodyTextItems
-            title=":OKRA&nbsp;LOUNGE&nbsp;BAR"
-            date="2023 1월 오픈 예정"
-          />
-          <RoadmapBodyTextItems
-            title="ARK&nbsp;CREW&nbsp;파티"
-            date="2023&nbsp;1분기&nbsp;오픈&nbsp;예정"
-          />
-          <RoadmapBodyTextItems
-            title="RAINBOW&nbsp;BEACH&nbsp;PARTY"
-            date="2023 2분기 오픈 예정"
-          />
+          {roadmaps.map(({ node: { title, content } }) => (
+            <RoadmapBodyTextItems title={title} date={content} />
+          ))}
         </RoadmapBodyTextContainer>
       </RoadmapBody>
     </CarouselItem>

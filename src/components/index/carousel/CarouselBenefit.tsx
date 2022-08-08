@@ -1,5 +1,10 @@
 import styled from '@emotion/styled'
+import { graphql, useStaticQuery } from 'gatsby'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import {
+  BenefitListType,
+  CarouselDataType,
+} from 'types/index/carousel/CarouselData'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 
@@ -39,7 +44,6 @@ const CarouselBodyItems = styled.div`
     margin-bottom: 45px;
   }
 `
-
 const CarouselBodyIcon: FunctionComponent = function () {
   return (
     <div style={{ width: 50, height: 50 }}>
@@ -117,15 +121,31 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   touchEnd,
   scrollHandler,
   innerScrollHandler,
+  language,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
-  useEffect(() => {
-    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
-  }, [])
-  const [_, setInnerScroll] = useState<number>(0)
-
   useEffect(preventInnerScrollHandler(page, 1, carouselBodyRef), [page])
+  const {
+    allBenefitJson: { edges },
+  }: BenefitListType = useStaticQuery(graphql`
+    query getBenefits {
+      allBenefitJson(sort: { order: ASC, fields: [seq] }) {
+        edges {
+          node {
+            language
+            seq
+            title
+            content
+          }
+        }
+      }
+    }
+  `)
+
+  const [benefits, setBenefits] = useState<Array<CarouselDataType>>([])
+  useEffect(() => {
+    setBenefits(_ => edges.filter(({ node }) => node.language === language))
+  }, [language])
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -168,48 +188,16 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         ref={carouselBodyRef}
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
-        <CarouselBodyItems>
-          <CarouselBodyItemsTextWrapper>
-            <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle>
-            <br />
-            <CarouselBodyItemsContent>
-              VIP Invitatation 및 Private Place
-            </CarouselBodyItemsContent>
-          </CarouselBodyItemsTextWrapper>
-          <CarouselBodyIcon />
-        </CarouselBodyItems>
-
-        <CarouselBodyItems>
-          <CarouselBodyItemsTextWrapper>
-            <CarouselBodyItemsTitle>OKRA LOUNGE BAR</CarouselBodyItemsTitle>
-            <br />
-            <CarouselBodyItemsContent>
-              VIP Invitatation 및 Private Place
-            </CarouselBodyItemsContent>
-          </CarouselBodyItemsTextWrapper>
-          <CarouselBodyIcon />
-        </CarouselBodyItems>
-
-        <CarouselBodyItems>
-          <CarouselBodyItemsTextWrapper>
-            <CarouselBodyItemsTitle>OKRA 해변 파티</CarouselBodyItemsTitle>
-            <br />
-            <CarouselBodyItemsContent>
-              VIP Invitatation 및 Private Place
-            </CarouselBodyItemsContent>
-          </CarouselBodyItemsTextWrapper>
-          <CarouselBodyIcon />
-        </CarouselBodyItems>
-
-        <CarouselBodyItems>
-          <CarouselBodyItemsTextWrapper>
-            <CarouselBodyItemsTitle>CREAM Fields</CarouselBodyItemsTitle> <br />
-            <CarouselBodyItemsContent>
-              VIP Invitatation 및 Private Place
-            </CarouselBodyItemsContent>
-          </CarouselBodyItemsTextWrapper>
-          <CarouselBodyIcon />
-        </CarouselBodyItems>
+        {benefits.map(({ node: { title, content } }) => (
+          <CarouselBodyItems>
+            <CarouselBodyItemsTextWrapper>
+              <CarouselBodyItemsTitle>{title}</CarouselBodyItemsTitle>
+              <br />
+              <CarouselBodyItemsContent>{content}</CarouselBodyItemsContent>
+            </CarouselBodyItemsTextWrapper>
+            <CarouselBodyIcon />
+          </CarouselBodyItems>
+        ))}
       </CarouselBody>
     </CarouselItem>
   )

@@ -1,5 +1,8 @@
 import styled from '@emotion/styled'
+import { graphql, useStaticQuery } from 'gatsby'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import { Language } from 'types/common/language'
+import { GallaryListType, GallaryType } from 'types/index/carousel/CarouselData'
 
 import {
   CarouselItem,
@@ -9,40 +12,6 @@ import {
   InnerCarouselPageHandlerParams,
   CarouselInnerCarouselProps,
 } from './CarouselItem'
-
-type GallaryImage = {
-  img: string
-  title: string
-  content: string
-}
-
-const images: Array<GallaryImage> = [
-  {
-    img: 'img1',
-    title: 'title 1',
-    content: 'content 1',
-  },
-  {
-    img: 'img2',
-    title: 'title 2',
-    content: 'content 2',
-  },
-  {
-    img: 'img3',
-    title: 'title 3',
-    content: 'content 3',
-  },
-  {
-    img: 'img4',
-    title: 'title 4',
-    content: 'content 4',
-  },
-  {
-    img: 'img5',
-    title: 'title 5',
-    content: 'content 5',
-  },
-]
 
 const GallaryBody = styled.div`
   padding-top: 13px;
@@ -63,10 +32,11 @@ type GallaryContentAreaProps = {
     setInnerPage,
     end,
   }: InnerCarouselPageHandlerParams): Function
+  language: Language
 }
 
 const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
-  function ({ nextInnerPage, prevInnerPage }) {
+  function ({ nextInnerPage, prevInnerPage, language }) {
     const [innerPage, setInnerPage] = useState<number>(0)
     const [innerXTrans, setInnerXTrans] = useState<number>(0)
     useEffect(() => {
@@ -79,6 +49,29 @@ const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
       useState<GallaryViewMode>('TotalView')
     const [imageIndex, setImageIndex] = useState<number>(0)
     const gallaryHorizontalScroll = useRef<HTMLDivElement>(null)
+
+    const {
+      allGallaryJson: { edges },
+    }: GallaryListType = useStaticQuery(graphql`
+      query getGallary {
+        allGallaryJson(sort: { order: ASC, fields: [seq] }) {
+          edges {
+            node {
+              language
+              seq
+              img
+              title
+              content
+            }
+          }
+        }
+      }
+    `)
+
+    const [images, setImages] = useState<Array<GallaryType>>([])
+    useEffect(() => {
+      setImages(_ => edges.filter(({ node }) => node.language === language))
+    }, [language])
 
     const innerCarouselHandler = (e: React.WheelEvent) => {
       if (e.deltaY > 15) {
@@ -106,8 +99,8 @@ const GallaryContentArea: FunctionComponent<GallaryContentAreaProps> =
           ref={gallaryHorizontalScroll}
           onWheel={innerCarouselHandler}
         >
-          {images.map((image, index) => (
-            <GallaryImage onClick={switchToDetailView(index)} src={image.img} />
+          {images.map(({ node: { seq, img } }) => (
+            <GallaryImage onClick={switchToDetailView(seq - 1)} src={img} />
           ))}
         </Gallary1depth>
       )
@@ -142,19 +135,21 @@ const GallaryImage = styled.img`
 `
 
 type Gallary2depthProps = {
-  image: GallaryImage
+  image: GallaryType
   switchToTotalView: React.MouseEventHandler
 }
 
 const Gallary2depth: FunctionComponent<Gallary2depthProps> = function ({
-  image,
+  image: {
+    node: { seq, img, title, content },
+  },
   switchToTotalView,
 }) {
   return (
     <>
-      <h1>title: {image.title}</h1>
-      <h1>content: {image.content}</h1>
-      <img src={image.img} alt={image.title} />
+      <h1>title: {title}</h1>
+      <h1>content: {content}</h1>
+      <img src={img} alt={title} />
       <button onClick={switchToTotalView}>돌아가기</button>
     </>
   )
@@ -168,6 +163,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerCarouselProps> =
     scrollHandler,
     nextInnerPage,
     prevInnerPage,
+    language,
   }) {
     const carouselBodyRef = useRef<HTMLDivElement>(null)
     return (
@@ -212,6 +208,7 @@ const CarouselGallary: FunctionComponent<CarouselInnerCarouselProps> =
           <GallaryContentArea
             nextInnerPage={nextInnerPage}
             prevInnerPage={prevInnerPage}
+            language={language}
           />
         </GallaryBody>
       </CarouselItem>

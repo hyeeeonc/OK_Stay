@@ -10,7 +10,13 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
+import {
+  ProcessListType,
+  CarouselDataType,
+} from 'types/index/carousel/CarouselData'
+
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+import { useStaticQuery, graphql } from 'gatsby'
 
 const ProcessBody = styled.div`
   padding: 0 80px;
@@ -79,16 +85,34 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   touchStart,
   touchEnd,
+  language,
   scrollHandler,
   innerScrollHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
-  useEffect(() => {
-    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
-  }, [])
-  const [_, setInnerScroll] = useState<number>(0)
   useEffect(preventInnerScrollHandler(page, 3, carouselBodyRef), [page])
+  const {
+    allProcessJson: { edges },
+  }: ProcessListType = useStaticQuery(graphql`
+    query getProcesses {
+      allProcessJson(sort: { order: ASC, fields: [seq] }) {
+        edges {
+          node {
+            language
+            seq
+            title
+            content
+          }
+        }
+      }
+    }
+  `)
+
+  const [processes, setProcesses] = useState<Array<CarouselDataType>>([])
+  useEffect(() => {
+    setProcesses(_ => edges.filter(({ node }) => node.language === language))
+  }, [language])
+
   return (
     <CarouselItem style={{ opacity: page === 3 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
@@ -131,22 +155,9 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
         ref={carouselBodyRef}
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
-        <ProcessItems
-          title="Step.01 카이카스 설치하기"
-          content="크롬 웹 스토어에서 카이카스 설치 후 계정을 생성합니다."
-        />
-        <ProcessItems
-          title="Step.02 클레이튼 전송하기"
-          content="거래소에서 클레이튼을 구매하여, 지갑에 전송합니다. 이때, 송금 수수료와 민팅 수수료를 생각하여, 민팅가격보다 약간 더 많은 클레이튼을 전송합니다."
-        />
-        <ProcessItems
-          title="Step.03 민팅 준비하기"
-          content="민팅 페이지에 접속 해 ‘NFT 민팅 하기’ 버튼을 누른 후 우측 상단 카이카스를 통해 내 지갑을 연결합니다."
-        />
-        <ProcessItems
-          title="Step.04 민팅하기"
-          content="민팅 페이지에 다시 돌아와 ‘NFT 민팅 하기' 버튼을 눌러 페이지 이동을 한 후 시간에 맞춰 버튼을 누르면 성공적으로 민팅이 완료됩니다."
-        />
+        {processes.map(({ node: { title, content } }) => (
+          <ProcessItems title={title} content={content} />
+        ))}
       </ProcessBody>
     </CarouselItem>
   )
