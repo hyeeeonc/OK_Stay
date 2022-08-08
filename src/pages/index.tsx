@@ -12,6 +12,7 @@ import DropDown from 'components/index/DropDown'
 import Modal from 'components/common/Modal'
 import MintButton from 'components/index/MintButton'
 import { useMediaQuery } from 'react-responsive'
+import { Language } from 'types/common/language'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -30,11 +31,11 @@ const Spacer = styled.div`
 
 const IndexPage: FunctionComponent = function () {
   const isPc = useMediaQuery({
-    query : "(min-width:768px)"
-  });
+    query: '(min-width:768px)',
+  })
   const isMobile = useMediaQuery({
-    query : "(max-width:767px)"
-  });
+    query: '(max-width:767px)',
+  })
 
   const [carouselPageController, setCarouselPageController] =
     useState<number>(null)
@@ -76,6 +77,16 @@ const IndexPage: FunctionComponent = function () {
     })
   }, [])
 
+  const [language, setLanguage] = useState<Language>('KOR')
+  const changeLanguage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (language === 'KOR') {
+      setLanguage(_ => 'ENG')
+    } else if (language === 'ENG') {
+      setLanguage(_ => 'KOR')
+    }
+  }
+
   return (
     <>
       <Global styles={reset} />
@@ -83,6 +94,8 @@ const IndexPage: FunctionComponent = function () {
         getHeaderPageData={getHeaderPageData}
         modalOpenHandler={modalOpenHandler}
         dday={dday}
+        changeLanguage={changeLanguage}
+        language={language}
       />
       <Spacer />
       <IndexWrapper>
@@ -90,7 +103,12 @@ const IndexPage: FunctionComponent = function () {
           modalCloseHandler={modalCloseHandler}
           modalOpened={modalOpened}
         ></Modal>
-        {isPc &&         <MainCarousel headerPage={carouselPageController} />}
+        {isPc && (
+          <MainCarousel
+            headerPage={carouselPageController}
+            language={language}
+          />
+        )}
         {isMobile && <MobileMain />}
         <DropDown
           dropDownOpened={dropDownOpened}

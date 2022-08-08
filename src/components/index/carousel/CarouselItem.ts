@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 // import React from 'react'
+import { Language } from 'types/common/language'
 
 export const CarouselItem = styled.div`
   background: rgba(255, 255, 255, 0.26);
@@ -85,6 +86,7 @@ export interface CarouselProps {
   touchStart: React.TouchEventHandler
   touchEnd: React.TouchEventHandler
   scrollHandler: React.WheelEventHandler
+  language: Language
 }
 
 export interface CarouselInnerScrollProps {
@@ -95,12 +97,14 @@ export interface CarouselInnerScrollProps {
   innerScrollHandler(
     ref: React.RefObject<HTMLDivElement>,
   ): React.WheelEventHandler
+  language: Language
 }
 
 export interface CarouselInnerCarouselProps {
   page: number
   touchStart: React.TouchEventHandler
   touchEnd: React.TouchEventHandler
+  language: Language
   scrollHandler(ref: React.RefObject<HTMLDivElement>): React.WheelEventHandler
   prevInnerPage({
     innerPage,

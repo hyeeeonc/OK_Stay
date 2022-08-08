@@ -1,11 +1,7 @@
 import styled from '@emotion/styled'
-import React, {
-  FunctionComponent,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
+import { Language } from 'types/common/language'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 
@@ -82,39 +78,41 @@ const QnABodyAccordionContent = styled.div`
 `
 
 interface CarouselAccordionItemsProps {
+  seq: number
   title?: string
   content?: string
+  selected: boolean
+  setSelectedQnA: React.Dispatch<React.SetStateAction<number>>
 }
 
 const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
-  function ({ title, content }) {
+  function ({ seq, title, content, selected, setSelectedQnA }) {
     const contentContainer = useRef<HTMLDivElement>(null)
     const contentChild = useRef<HTMLDivElement>(null)
-    const [isOpened, setIsOpened] = useState<boolean>(false)
 
-    const handleButtonClick = useCallback(
-      e => {
-        e.stopPropagation()
-        if (
-          contentContainer.current === null ||
-          contentChild.current === null
-        ) {
-          return
-        }
-        if (contentContainer.current.clientHeight > 0) {
-          contentContainer.current.style.height = '0'
-        } else {
-          contentContainer.current.style.height = `${contentChild.current.clientHeight}px`
-        }
-        setIsOpened(!isOpened)
-        console.log(0)
-      },
-      [isOpened],
-    )
+    const onclickHandler = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (selected) {
+        setSelectedQnA(_ => -1)
+      } else {
+        setSelectedQnA(_ => seq)
+      }
+    }
+
+    useEffect(() => {
+      if (contentContainer.current === null || contentChild.current === null) {
+        return
+      }
+      if (!selected) {
+        contentContainer.current.style.height = '0'
+      } else {
+        contentContainer.current.style.height = `${contentChild.current.clientHeight}px`
+      }
+    }, [selected])
 
     return (
       <QnABodyAccordionItemContainer>
-        <QnABodyAccordionTitleContainer onClick={handleButtonClick}>
+        <QnABodyAccordionTitleContainer onClick={onclickHandler}>
           {title}
           <QnABodyAccordionTitleLogo>
             <svg
@@ -141,22 +139,54 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
     )
   }
 
+type QnAType = {
+  node: {
+    language: Language
+    seq: number
+    title: string
+    content: string
+  }
+}
+
+type QnAListType = {
+  allQnaJson: {
+    edges: Array<QnAType>
+  }
+}
+
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   touchStart,
   touchEnd,
   scrollHandler,
   innerScrollHandler,
+  language,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-  const [innerScrollHeight, setInnerScrollHeight] = useState<number>(0)
-  useEffect(() => {
-    setInnerScrollHeight(_ => carouselBodyRef.current.scrollHeight)
-  }, [])
-  const [_, setInnerScroll] = useState<number>(0)
   useEffect(preventInnerScrollHandler(page, 4, carouselBodyRef), [page])
+  const [selectedQnA, setSelectedQnA] = useState<number>(-1)
 
-  const [accordionChecked, setAccordionChecked] = useState<number>(null)
+  const {
+    allQnaJson: { edges },
+  }: QnAListType = useStaticQuery(graphql`
+    query getQnA {
+      allQnaJson(sort: { order: ASC, fields: [seq] }) {
+        edges {
+          node {
+            language
+            seq
+            title
+            content
+          }
+        }
+      }
+    }
+  `)
+
+  const [qnas, setQnAs] = useState<Array<QnAType>>([])
+  useEffect(() => {
+    setQnAs(_ => edges.filter(({ node }) => node.language == language))
+  }, [language])
 
   return (
     <>
@@ -190,27 +220,19 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
-        <QnABody ref={carouselBodyRef} onWheel={innerScrollHandler(carouselBodyRef)}>
-          <CarouselAccordionItems
-            title="1. 민팅 일정은 어떻게 되나요?"
-            content="dddd"
-          />
-          <CarouselAccordionItems
-            title="2. 총 발행량은 어떻게 되나요?"
-            content="dddd"
-          />
-          <CarouselAccordionItems
-            title="3. 민팅 가격은 얼마인가요?"
-            content="dddd"
-          />
-          <CarouselAccordionItems
-            title="4. 화이트리스트 조건은 어떻게 되나요?"
-            content="dddd"
-          />
-          <CarouselAccordionItems
-            title="5. 민팅은 어디서 하나요?"
-            content="dddd"
-          />
+        <QnABody
+          ref={carouselBodyRef}
+          onWheel={innerScrollHandler(carouselBodyRef)}
+        >
+          {qnas.map(({ node: { seq, title, content } }) => (
+            <CarouselAccordionItems
+              seq={seq}
+              title={`${seq}. ${title}`}
+              content={content}
+              selected={seq === selectedQnA}
+              setSelectedQnA={setSelectedQnA}
+            />
+          ))}
           <div style={{ height: 100 }} />
         </QnABody>
       </CarouselItem>

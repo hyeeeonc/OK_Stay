@@ -15,11 +15,12 @@ module.exports = {
     },
     `gatsby-plugin-image`,
     `gatsby-plugin-emotion`,
+    `gatsby-transformer-json`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: `resources`,
+        path: `${__dirname}/src/resources`,
       },
     },
     `gatsby-transformer-sharp`,

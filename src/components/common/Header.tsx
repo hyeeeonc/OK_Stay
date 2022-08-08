@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
+import { Language } from 'types/common/language'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -70,12 +71,16 @@ interface HeaderProps {
   getHeaderPageData(e: number): void
   modalOpenHandler: React.MouseEventHandler
   dday: number
+  changeLanguage: React.MouseEventHandler
+  language: Language
 }
 
 const Header: FunctionComponent<HeaderProps> = function ({
   getHeaderPageData,
   modalOpenHandler,
   dday,
+  changeLanguage,
+  language,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -143,7 +148,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
             MINTING
           </NavItems>
           <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
-          <NavItems>ENG</NavItems>
+          <NavItems onClick={changeLanguage}>{language}</NavItems>
           <NavArrow>
             <svg
               width="12"
