@@ -3,24 +3,28 @@
     "language": "KOR",
     "seq": 1,
     "title": "CREAM Fields",
-    "content": "VIP Invitatation 및 Private Place 티켓"
+    "content": "VIP Invitatation 및 Private Place 티켓",
+    "icon": "./icons/cream_fields.svg"
   },
   {
     "language": "KOR",
     "seq": 2,
     "title": "OKRA LOUNGE BAR",
-    "content": "OKRA PLACE 티켓 (2023 공개예정)"
+    "content": "OKRA PLACE 티켓 (2023 공개예정)",
+    "icon": "./icons/okra_lounge_bar.svg"
   },
   {
     "language": "KOR",
     "seq": 3,
     "title": "OKRA Beach Party",
-    "content": "홀더 Exclusive Present 티켓"
+    "content": "홀더 Exclusive Present 티켓",
+    "icon": "./icons/okra_beach_party.svg"
   },
   {
     "language": "KOR",
     "seq": 4,
     "title": "ARK Party",
-    "content": "Private Place 티켓 (OKRA SEOUL SPECIAL CREW, 멤버 추후 공개)"
+    "content": "Private Place 티켓 (OKRA SEOUL SPECIAL CREW, 멤버 추후 공개)",
+    "icon": "./icons/ark_party.svg"
   }
 ]

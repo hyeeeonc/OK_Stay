@@ -3,6 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import {
   BenefitListType,
+  BenefitType,
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
 import palette from '../../../../lib/styles/palette'
@@ -69,7 +70,7 @@ const CarouselBodyItems = styled.div`
   }
 `
 
-const CarouselBodyIconContainer = styled.div`
+const CarouselBodyIconContainer = styled.img`
   width: 80px;
   height: 80px;
   display: flex;
@@ -192,13 +193,16 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
             seq
             title
             content
+            icon {
+              publicURL
+            }
           }
         }
       }
     }
   `)
 
-  const [benefits, setBenefits] = useState<Array<CarouselDataType>>([])
+  const [benefits, setBenefits] = useState<Array<BenefitType>>([])
   useEffect(() => {
     setBenefits(_ => edges.filter(({ node }) => node.language === language))
   }, [language])
@@ -244,9 +248,9 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         ref={carouselBodyRef}
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
-        {benefits.map(({ node: { seq, title, content } }) => (
+        {benefits.map(({ node: { title, content, icon } }) => (
           <CarouselBodyItems>
-            <CarouselBodyIcon />
+            <CarouselBodyIconContainer src={icon.publicURL} />
             <CarouselBodyItemsTextWrapper>
               <CarouselBodyItemsTitle>{title}</CarouselBodyItemsTitle>
               <br />

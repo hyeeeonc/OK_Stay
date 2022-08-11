@@ -11,9 +11,13 @@ export type CarouselDataType = {
 
 export type GallaryType = CarouselDataType & { node: { img: string } }
 
+export type BenefitType = CarouselDataType & {
+  node: { icon: { publicURL: string } }
+}
+
 export type BenefitListType = {
   allBenefitJson: {
-    edges: Array<CarouselDataType>
+    edges: Array<BenefitType>
   }
 }
 
