@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import { Language } from 'types/common/language'
 
-const MobileItem = styled.section`
+export const MobileItem = styled.section`
   background: rgba(255, 255, 255, 0.26);
   border-radius: 34px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -14,7 +15,7 @@ const MobileItem = styled.section`
   margin-top: 32px;
 `
 
-const MobileItemTitleWrapper = styled.div`
+export const MobileItemTitleWrapper = styled.div`
   margin: 60px 24px 0px 24px;
   flex: none;
   width: 100%;
@@ -32,7 +33,7 @@ const MobileItemTitleWrapper = styled.div`
   flex-grow: 0;
 `
 
-const MobileItemBody = styled.div`
+export const MobileItemBody = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
@@ -40,28 +41,13 @@ const MobileItemBody = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  margin: 32px 24px 0px 24px;
+  margin: 32px 24px 60px 24px;
 
   color: #c9c9c9;
 
   flex: none;
 `
 
-interface MobileItemsProps {
-  title: string
-  content: string
+export interface MobileItemsProps {
+  language: Language
 }
-
-const MobileItems: FunctionComponent<MobileItemsProps> = function ({
-  title,
-  content,
-}) {
-  return (
-    <MobileItem>
-      <MobileItemTitleWrapper>{title}</MobileItemTitleWrapper>
-      <MobileItemBody>{content}</MobileItemBody>
-    </MobileItem>
-  )
-}
-
-export default MobileItems

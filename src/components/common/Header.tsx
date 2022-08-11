@@ -62,6 +62,9 @@ const NavArrow = styled.div`
   margin: 0 23px 0 -5px;
   cursor: pointer;
   transition: 0.3s linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   :hover {
     opacity: 70%;
   }
@@ -151,16 +154,24 @@ const Header: FunctionComponent<HeaderProps> = function ({
           <NavItems onClick={changeLanguage}>{language}</NavItems>
           <NavArrow>
             <svg
-              width="12"
-              height="6"
-              viewBox="0 0 12 6"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
+              <circle cx="9" cy="9" r="8" stroke="white" stroke-width="2" />
               <path
-                d="M5.29289 5.29289C5.68342 5.68342 6.31658 5.68342 6.70711 5.29289L11.1464 0.853554C11.4614 0.538571 11.2383 0 10.7929 0L1.20711 0C0.761654 0 0.538571 0.538571 0.853553 0.853553L5.29289 5.29289Z"
-                fill="white"
+                d="M9 1C11.336 2.20781 13 5.33393 13 9C13 12.6661 11.336 15.7922 9 17"
+                stroke="white"
+                stroke-width="2"
               />
+              <path
+                d="M9 1C6.66404 2.20781 5 5.33393 5 9C5 12.6661 6.66404 15.7922 9 17"
+                stroke="white"
+                stroke-width="2"
+              />
+              <path d="M17 9L1 9" stroke="white" stroke-width="2" />
             </svg>
           </NavArrow>
         </NavWrapper>

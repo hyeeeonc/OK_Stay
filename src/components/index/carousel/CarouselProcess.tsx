@@ -19,19 +19,37 @@ import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 import { useStaticQuery, graphql } from 'gatsby'
 
 const ProcessBody = styled.div`
+  margin-right: 40px;
   padding: 0 80px;
   height: 340px;
   overflow-y: scroll !important;
   scroll-behavior: smooth;
 
   color: ${palette.gray[8]};
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    background: white; /* 스크롤바의 색상 */
+
+    border-radius: 31px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${palette.gray[4]};
+    border-radius: 31px;
+  }
+
   @media (max-width: 1199px) {
-    padding: 0 57px;
+    padding: 0 30px 0 57px;
     height: 250px;
   }
 
   @media (max-height: 900px) {
-    padding: 0 57px;
+    padding: 0 30px 0 57px;
     height: 250px;
   }
 `

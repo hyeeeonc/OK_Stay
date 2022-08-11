@@ -15,15 +15,42 @@ import {
 
 const QnABody = styled.div`
   padding-left: 80px;
-  padding-right: 80px;
+  padding-right: 40px;
+  margin-right: 40px;
   height: 325px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll !important;
   scroll-behavior: smooth;
-  transition: 0.3s
+  transition: 0.3s;
 
   color: ${palette.gray[8]};
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    background: white;
+
+    border-radius: 31px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${palette.gray[4]};
+    border-radius: 31px;
+  }
+
+  @media (max-width: 1199px) {
+    padding: 0 30px 0 57px;
+    height: 250px;
+  }
+
+  @media (max-height: 900px) {
+    padding: 0 30px 0 57px;
+    height: 250px;
+  }
 `
 
 const QnABodyAccordionItemContainer = styled.div`
@@ -33,6 +60,22 @@ const QnABodyAccordionItemContainer = styled.div`
   flex-direction: column;
 
   border-bottom: 1px solid ${palette.gray[4]};
+
+  :first-of-type {
+    margin-top: -30px;
+  }
+
+  @media (max-width: 1199px) {
+    :first-of-type {
+      margin-top: -22px;
+    }
+  }
+
+  @media (max-height: 900px) {
+    :first-of-type {
+      margin-top: -22px;
+    }
+  }
 `
 
 const QnABodyAccordionTitleContainer = styled.div`
@@ -52,10 +95,30 @@ const QnABodyAccordionTitleContainer = styled.div`
   flex: none;
 
   padding: 30px 0;
+
+  @media (max-width: 1199px) {
+    font-size: 22px;
+    padding: 22px 0;
+  }
+
+  @media (max-height: 900px) {
+    font-size: 22px;
+    padding: 22px 0;
+  }
 `
 const QnABodyAccordionTitleLogo = styled.div`
   width: 40px;
   height: 40px;
+  transition: all 0.3s;
+  @media (max-width: 1199px) {
+    width: 30px;
+    height: 30px;
+  }
+
+  @media (max-height: 900px) {
+    width: 30px;
+    height: 30px;
+  }
 `
 
 const QnABodyAccordionContentContainer = styled.div`
@@ -75,6 +138,16 @@ const QnABodyAccordionContent = styled.div`
 
   color: ${palette.gray[8]};
   padding-bottom: 20px;
+
+  @media (max-width: 1199px) {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
+
+  @media (max-height: 900px) {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
 `
 
 interface CarouselAccordionItemsProps {
@@ -89,6 +162,7 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
   function ({ seq, title, content, selected, setSelectedQnA }) {
     const contentContainer = useRef<HTMLDivElement>(null)
     const contentChild = useRef<HTMLDivElement>(null)
+    const contentLogo = useRef<HTMLDivElement>(null)
 
     const onclickHandler = (e: React.MouseEvent) => {
       e.stopPropagation()
@@ -105,8 +179,10 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
       }
       if (!selected) {
         contentContainer.current.style.height = '0'
+        contentLogo.current.style.transform = 'rotate(0)'
       } else {
         contentContainer.current.style.height = `${contentChild.current.clientHeight}px`
+        contentLogo.current.style.transform = 'rotate(90deg)'
       }
     }, [selected])
 
@@ -114,7 +190,7 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
       <QnABodyAccordionItemContainer>
         <QnABodyAccordionTitleContainer onClick={onclickHandler}>
           {title}
-          <QnABodyAccordionTitleLogo>
+          <QnABodyAccordionTitleLogo ref={contentLogo}>
             <svg
               width="36"
               height="36"
@@ -138,6 +214,17 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
       </QnABodyAccordionItemContainer>
     )
   }
+
+const Spacer = styled.div`
+  margin: 30px 0;
+  @media (max-width: 1199px) {
+    margin: 10px 0;
+  }
+
+  @media (max-height: 900px) {
+    margin: 10px 0;
+  }
+`
 
 type QnAType = {
   node: {
@@ -233,7 +320,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
               setSelectedQnA={setSelectedQnA}
             />
           ))}
-          <div style={{ height: 100 }} />
+          <Spacer />
         </QnABody>
       </CarouselItem>
     </>

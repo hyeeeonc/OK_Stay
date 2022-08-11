@@ -130,7 +130,7 @@ const IndexPage: FunctionComponent = function () {
 
       {isMobile && (
         <MobileIndexWrapper>
-          <MobileMain />
+          <MobileMain language={language} />
         </MobileIndexWrapper>
       )}
     </>

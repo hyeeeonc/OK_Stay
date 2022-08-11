@@ -19,13 +19,30 @@ import { graphql, useStaticQuery } from 'gatsby'
 
 const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
-  padding-right: 110px;
+  padding-right: 20px;
+  margin-right: 40px;
   height: 330px;
   display: flex;
   overflow-y: scroll !important;
 
   scroll-behavior: smooth;
   color: ${palette.gray[8]};
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    background: white; /* 스크롤바의 색상 */
+
+    border-radius: 31px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${palette.gray[4]};
+    border-radius: 31px;
+  }
+
   @media (max-width: 1199px) {
     padding-left: 30px;
     height: 250px;
@@ -56,6 +73,22 @@ const RoadmapBodyLineContainer = styled.div`
 `
 
 const RoadmapBodyLine = styled.div`
+  width: 2px;
+  height: 100px;
+  background-color: white;
+  flex: none;
+  @media (max-width: 1199px) {
+    width: 1.6px;
+    height: 80px;
+  }
+
+  @media (max-height: 900px) {
+    width: 1.6px;
+    height: 80px;
+  }
+`
+
+const RoadmapBodySecondLine = styled.div`
   width: 2px;
   height: 100px;
   background-color: white;
@@ -103,41 +136,37 @@ const RoadmapBodyTextContainer = styled.div`
 `
 
 const RoadmapBodyTextItem = styled.div`
-  flex: none;
+  word-break: break-all;
+
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 255px;
-  height: 89px;
   margin-bottom: 35px;
 
   @media (max-width: 1199px) {
-    width: 255px;
-    height: 64px;
     margin-bottom: 34px;
-    :nth-last-child(1) {
+    :last-of-type {
       padding-bottom: 60px;
     }
-  }
+
 
   @media (max-height: 900px) {
-    width: 255px;
-    height: 64px;
     margin-bottom: 34px;
-    :nth-last-child(1) {
+    :last-of-type {
       padding-bottom: 60px;
     }
-  }
 `
 
 const RoadmapBodyTextItemTitle = styled.div`
+  width: 100%;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  flex: none;
+  white-space: normal;
   @media (max-width: 1199px) {
     font-size: 26px;
   }
@@ -154,25 +183,12 @@ const RoadmapBodyTextItemDate = styled.div`
   font-size: 24px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  flex: none;
   @media (max-width: 1199px) {
     font-size: 18px;
   }
 
   @media (max-height: 900px) {
     font-size: 18px;
-  }
-`
-const RoadmapSpacer = styled.div`
-  width: 100%;
-  height: 150px;
-  flex: none;
-  @media (max-width: 1199px) {
-    heigth: 50px;
-  }
-
-  @media (max-height: 900px) {
-    heigth: 50px;
   }
 `
 

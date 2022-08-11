@@ -1,15 +1,19 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import MobileItems from './MobileItems'
+import MobileBenefit from './mobileItems/MobileBenefit'
+import { Language } from 'types/common/language'
+import MobileOkra from './mobileItems/MobileOkra'
+import MobileProcess from './mobileItems/MobileProcess'
+import MobileRoadmap from './mobileItems/MobileRoadmap'
 
 const MobileMainContainer = styled.div`
   width: 500px;
   max-width: 500px;
-  height: 100px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 `
 const BackgroundCircle = styled.div`
   width: 200px;
@@ -42,25 +46,27 @@ const BackgroundRec = styled.div`
   transition: all 1500ms ease 0s;
 `
 
-const Footer = styled.div`
-  position: fixed;
-  background-color: black;
-  width: 100%;
-  height: 100px;
-  left: 0;
-  bottom: 0;
-`
+// const Footer = styled.div`
+//   position: fixed;
+//   background-color: black;
+//   width: 100%;
+//   height: 100px;
+//   left: 0;
+//   bottom: 0;
+// `
 
-const MobileMain: FunctionComponent = function () {
+interface MobileMainProps {
+  language: Language
+}
+
+const MobileMain: FunctionComponent<MobileMainProps> = function ({ language }) {
   return (
     <MobileMainContainer>
       <BackgroundCircle />
-      <MobileItems
-        title="Okra Seoul Nft"
-        content="다수의 페스티벌 파티의 인프라를 가진 OKRASEOUL이 제공하는 
-Festival, Party, Lounge 에서 프라이빗한 공간을 독점적으로 사용할 수 있는 Membership NFT 입니다."
-      />
-      <Footer />
+      <MobileOkra />
+      <MobileBenefit language={language} />
+      <MobileRoadmap language={language} />
+      <MobileProcess language={language} />
     </MobileMainContainer>
   )
 }

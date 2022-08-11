@@ -19,7 +19,7 @@ import {
 
 const CarouselBody = styled.section`
   padding-left: 80px;
-  padding-right: 110px;
+  margin-right: 40px;
   height: 325px;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,8 @@ const CarouselBody = styled.section`
   }
 
   ::-webkit-scrollbar-track {
-    background: ${palette.gray[2]};
+    background: ${palette.gray[4]};
+    border-radius: 31px;
   }
 
   @media (max-width: 1199px) {
@@ -71,8 +72,9 @@ const CarouselBodyItems = styled.div`
 `
 
 const CarouselBodyIconContainer = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 54px;
+  height: 54px;
+  padding: 13px 13px 13px 13px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,6 +83,7 @@ const CarouselBodyIconContainer = styled.img`
   @media (max-width: 1199px) {
     width: 38px;
     height: 38px;
+    padding: 0;
   }
 `
 
