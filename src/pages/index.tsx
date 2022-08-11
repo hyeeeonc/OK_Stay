@@ -11,6 +11,7 @@ import MobileMain from 'components/mobile/MobileMain'
 import DropDown from 'components/index/DropDown'
 import Modal from 'components/common/Modal'
 import MintButton from 'components/index/MintButton'
+
 import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 

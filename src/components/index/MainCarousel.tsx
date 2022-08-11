@@ -8,6 +8,8 @@ import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
 import CarouselRoadmap from './carousel/CarouselRoadmap'
+
+import MouseIndicator from './MouseIndicator'
 import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
 import { Language } from 'types/common/language'
 
@@ -26,6 +28,10 @@ const CarouselWrapper = styled.div`
   display: flex;
   padding-left: calc(50vw - 508px);
   @media (max-width: 1199px) {
+    padding-left: calc(50vw - 365px);
+  }
+
+  @media (max-height: 900px) {
     padding-left: calc(50vw - 365px);
   }
 `
@@ -412,6 +418,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
           />
         </CarouselWrapper>
       </CarouselBlock>
+      <MouseIndicator carouselPage={carouselPage} />
     </MainContainer>
   )
 }

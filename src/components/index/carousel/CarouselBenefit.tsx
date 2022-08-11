@@ -28,7 +28,28 @@ const CarouselBody = styled.section`
 
   color: ${palette.gray[8]};
 
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    background: white; /* 스크롤바의 색상 */
+
+    border-radius: 31px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${palette.gray[2]};
+  }
+
   @media (max-width: 1199px) {
+    padding-left: 57px;
+    padding-right: 57px;
+    height: 250px;
+  }
+
+  @media (max-height: 900px) {
     padding-left: 57px;
     padding-right: 57px;
     height: 250px;
@@ -37,49 +58,71 @@ const CarouselBody = styled.section`
 
 const CarouselBodyItems = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 45px;
   @media (max-width: 1199px) {
     margin-bottom: 45px;
   }
+
+  @media (max-height: 900px) {
+    margin-bottom: 45px;
+  }
 `
+
+const CarouselBodyIconContainer = styled.div`
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+
+  @media (max-width: 1199px) {
+    width: 38px;
+    height: 38px;
+  }
+`
+
 const CarouselBodyIcon: FunctionComponent = function () {
   return (
-    <div style={{ width: 50, height: 50 }}>
+    <CarouselBodyIconContainer>
       <svg
-        width="48"
-        height="49"
-        viewBox="0 0 48 49"
+        width="54"
+        height="54"
+        viewBox="0 0 54 54"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M5.33301 30.4563C5.33301 27.7072 7.56166 25.4785 10.3108 25.4785H17.7776C20.5268 25.4785 22.7554 27.7072 22.7554 30.4563V37.9231C22.7554 40.6723 20.5268 42.9009 17.7776 42.9009H10.3108C7.56166 42.9009 5.33301 40.6723 5.33301 37.9231V30.4563ZM17.7776 30.4563H10.3108V37.9231H17.7776V30.4563Z"
-          fill="white"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M25.2451 10.5462C25.2451 7.79701 27.4738 5.56836 30.2229 5.56836H37.6897C40.4389 5.56836 42.6675 7.79701 42.6675 10.5462V18.0129C42.6675 20.7621 40.4389 22.9907 37.6897 22.9907H30.2229C27.4738 22.9907 25.2451 20.7621 25.2451 18.0129V10.5462ZM37.6897 10.5462H30.2229V18.0129H37.6897V10.5462Z"
-          fill="white"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M5.33301 10.5462C5.33301 7.79701 7.56166 5.56836 10.3108 5.56836H17.7776C20.5268 5.56836 22.7554 7.79701 22.7554 10.5462V18.0129C22.7554 20.7621 20.5268 22.9907 17.7776 22.9907H10.3108C7.56166 22.9907 5.33301 20.7621 5.33301 18.0129V10.5462ZM17.7776 10.5462H10.3108V18.0129H17.7776V10.5462Z"
-          fill="white"
-        />
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M25.2451 34.1897C25.2451 29.3787 29.1453 25.4785 33.9563 25.4785C38.7674 25.4785 42.6675 29.3787 42.6675 34.1897C42.6675 39.0008 38.7674 42.9009 33.9563 42.9009C29.1453 42.9009 25.2451 39.0008 25.2451 34.1897ZM33.9563 30.4563C31.8944 30.4563 30.2229 32.1278 30.2229 34.1897C30.2229 36.2516 31.8944 37.9231 33.9563 37.9231C36.0182 37.9231 37.6897 36.2516 37.6897 34.1897C37.6897 32.1278 36.0182 30.4563 33.9563 30.4563Z"
-          fill="white"
-        />
+        <mask
+          id="mask0_686_285"
+          style={{ maskType: 'alpha' }}
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="54"
+          height="54"
+        >
+          <rect width="54" height="54" fill="#D9D9D9" />
+        </mask>
+        <g mask="url(#mask0_686_285)"></g>
+        <g clip-path="url(#clip0_686_285)">
+          <path
+            d="M51.0001 43.7465C50.9039 40.7678 48.7011 37.9438 45.8153 37.2959C44.6033 37.0251 43.3817 36.9767 42.1504 37.0541C41.073 37.1218 40.0149 36.9864 39.0049 36.5705C37.7929 36.0773 36.7444 35.3229 35.7536 34.4912C35.6766 34.4042 35.6093 34.3171 35.5324 34.2398C33.9356 32.673 32.7909 30.8258 32.1656 28.6788C31.4057 26.0966 31.3384 23.5241 32.3869 20.9806C33.1179 19.2011 33.5604 17.3345 33.8778 15.4487C34.1087 14.0657 34.2145 12.673 33.8586 11.2997C33.3199 9.23977 32.1368 7.69238 30.1937 6.75427C27.635 5.5357 25.2013 5.78715 23.0177 7.52797C20.7957 9.29779 19.9877 11.6769 20.5552 14.4912C20.8245 15.8162 21.4786 16.9767 22.2289 18.0889C22.7869 18.9109 23.3063 19.762 23.5564 20.7388C24.0374 22.673 23.8931 24.5783 23.3736 26.4931C22.0366 31.3771 18.2273 34.7233 13.3119 35.3713C10.9552 35.6808 8.67544 36.3481 6.59768 37.528C4.06782 38.969 2.8558 41.2224 3.02894 44.1237C3.19247 46.7833 4.54878 48.7369 6.92474 49.9458C7.53075 50.2552 8.16562 50.497 8.86782 50.5067C11.1668 50.8452 13.1099 50.1682 14.7067 48.4661C15.3993 47.7311 15.8995 46.8607 16.3516 45.9709C16.544 45.6034 16.746 45.2456 16.9384 44.8781C17.477 43.9013 18.1504 43.0599 19.0642 42.3926C20.6802 41.2224 22.4887 40.6324 24.4125 40.3326C26.0766 40.1392 27.7311 40.1972 29.3472 40.6808C31.5404 41.3384 33.4354 42.4603 34.8301 44.3461C36.4462 46.5415 38.3027 48.5048 40.6209 49.9651C42.1312 50.9226 43.7857 51.203 45.546 50.8355C48.9031 50.1585 51.1059 47.0154 51.0001 43.7465ZM15.9764 46.0193C16.063 45.9902 16.1592 45.9709 16.2554 45.9709C16.1592 45.9709 16.0726 45.9902 15.9764 46.0193ZM29.655 39.1431C29.0394 38.7079 28.4334 38.2726 27.7696 37.9148C26.8847 37.499 26.067 36.9574 25.1436 36.5995C22.3925 35.526 19.5548 34.9651 16.5921 35.0521C16.3997 35.0618 16.2073 35.0618 16.0149 35.0618C15.9861 35.0618 15.9572 35.0521 15.861 35.0231C17.2269 34.704 18.5159 34.3462 19.7568 33.8626C24.8454 31.88 28.6161 28.4274 31.1845 23.6015C31.271 23.4467 31.348 23.292 31.4346 23.1373C31.4634 23.1663 31.5019 23.2049 31.5308 23.234C31.0113 24.9361 30.5784 26.6672 30.3957 28.4467C30.0782 31.3868 30.2899 34.2785 31.1941 37.1024C31.6173 38.7465 32.3291 40.2746 33.1372 41.7639C33.2815 42.0251 33.4354 42.2959 33.5796 42.557C33.5508 42.5763 33.5219 42.5957 33.4931 42.6247C32.2907 41.3771 31.069 40.1585 29.655 39.1431ZM27.7312 38.0212C27.7312 38.0115 27.7408 38.0019 27.7408 38.0019C27.7408 38.0019 27.7312 38.0115 27.7312 38.0212Z"
+            fill="white"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_686_285">
+            <rect
+              width="48"
+              height="45"
+              fill="white"
+              transform="translate(3 6)"
+            />
+          </clipPath>
+        </defs>
       </svg>
-    </div>
+    </CarouselBodyIconContainer>
   )
 }
 
@@ -87,6 +130,10 @@ const CarouselBodyItemsTextWrapper = styled.div`
   height: 89px;
   color: ${palette.gray[8]};
   @media (max-width: 1199px) {
+    height: 64px;
+  }
+
+  @media (max-height: 900px) {
     height: 64px;
   }
 `
@@ -100,6 +147,10 @@ const CarouselBodyItemsTitle = styled.h3`
   @media (max-width: 1199px) {
     font-size: 26px;
   }
+
+  @media (max-height: 900px) {
+    font-size: 26px;
+  }
 `
 
 const CarouselBodyItemsContent = styled.h4`
@@ -110,6 +161,11 @@ const CarouselBodyItemsContent = styled.h4`
   line-height: 150%;
   letter-spacing: -0.02em;
   @media (max-width: 1199px) {
+    font-size: 18px;
+    padding-bottom: 5px;
+  }
+
+  @media (max-height: 900px) {
     font-size: 18px;
     padding-bottom: 5px;
   }
@@ -188,14 +244,14 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         ref={carouselBodyRef}
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
-        {benefits.map(({ node: { title, content } }) => (
+        {benefits.map(({ node: { seq, title, content } }) => (
           <CarouselBodyItems>
+            <CarouselBodyIcon />
             <CarouselBodyItemsTextWrapper>
               <CarouselBodyItemsTitle>{title}</CarouselBodyItemsTitle>
               <br />
               <CarouselBodyItemsContent>{content}</CarouselBodyItemsContent>
             </CarouselBodyItemsTextWrapper>
-            <CarouselBodyIcon />
           </CarouselBodyItems>
         ))}
       </CarouselBody>

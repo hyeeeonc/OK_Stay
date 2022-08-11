@@ -30,6 +30,13 @@ export const CarouselItem = styled.div`
   @media (max-width: 970px) {
     margin-right: calc(50vw - 365px - 15px);
   }
+
+  @media (max-height: 900px) {
+    width: 728px;
+    height: 438px;
+    margin-right: calc(50vw - 365px - 60px);
+    border-radius: 41px;
+  }
 `
 
 export const CarouselTitleWrapper = styled.div`
@@ -38,6 +45,11 @@ export const CarouselTitleWrapper = styled.div`
   display: flex;
   align-items: center;
   @media (max-width: 1199px) {
+    height: 57px;
+    padding: 65px 0 55px 57px;
+  }
+
+  @media (max-height: 900px) {
     height: 57px;
     padding: 65px 0 55px 57px;
   }
@@ -61,6 +73,13 @@ export const CarouselIcon = styled.div`
     left: 57px;
     top: 80px;
   }
+
+  @media (max-height: 900px) {
+    width: 70px;
+    height: 70px;
+    left: 57px;
+    top: 80px;
+  }
 `
 
 export const CarouselTitle = styled.h2`
@@ -73,6 +92,10 @@ export const CarouselTitle = styled.h2`
   margin-left: 40px;
   color: white;
   @media (max-width: 1199px) {
+    font-size: 44px;
+  }
+
+  @media (max-height: 900px) {
     font-size: 44px;
   }
 `

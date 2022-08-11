@@ -27,6 +27,12 @@ const CarouselBody = styled.section`
     margin-left: 57px;
     font-size: 23px;
   }
+
+  @media (max-height: 900px) {
+    margin-top: 120px;
+    margin-left: 57px;
+    font-size: 23px;
+  }
 `
 const CarouselOkra: FunctionComponent<CarouselProps> = function ({
   page,

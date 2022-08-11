@@ -29,11 +29,20 @@ const ProcessBody = styled.div`
     padding: 0 57px;
     height: 250px;
   }
+
+  @media (max-height: 900px) {
+    padding: 0 57px;
+    height: 250px;
+  }
 `
 
 const ProcessItem = styled.div`
   margin-bottom: 32px;
   @media (max-width: 1199px) {
+    margin-bottom: 26px;
+  }
+
+  @media (max-height: 900px) {
     margin-bottom: 26px;
   }
 `
@@ -49,6 +58,11 @@ const ProcessItemTitle = styled.div`
     font-size: 26px;
     padding-bottom: 5px;
   }
+
+  @media (max-height: 900px) {
+    font-size: 26px;
+    padding-bottom: 5px;
+  }
 `
 
 const ProcessItemContent = styled.div`
@@ -59,6 +73,11 @@ const ProcessItemContent = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
   @media (max-width: 1199px) {
+    font-size: 18px;
+    padding-bottom: 5px;
+  }
+
+  @media (max-height: 900px) {
     font-size: 18px;
     padding-bottom: 5px;
   }

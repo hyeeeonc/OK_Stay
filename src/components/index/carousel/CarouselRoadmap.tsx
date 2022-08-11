@@ -30,6 +30,11 @@ const RoadmapBody = styled.div<{ page: number }>`
     padding-left: 30px;
     height: 250px;
   }
+
+  @media (max-height: 900px) {
+    padding-left: 30px;
+    height: 250px;
+  }
 `
 
 const RoadmapBodyLineContainer = styled.div`
@@ -43,6 +48,11 @@ const RoadmapBodyLineContainer = styled.div`
     padding-top: 30px;
     width: 95px;
   }
+
+  @media (max-height: 900px) {
+    padding-top: 30px;
+    width: 95px;
+  }
 `
 
 const RoadmapBodyLine = styled.div`
@@ -51,6 +61,11 @@ const RoadmapBodyLine = styled.div`
   background-color: white;
   flex: none;
   @media (max-width: 1199px) {
+    width: 1.6px;
+    height: 80px;
+  }
+
+  @media (max-height: 900px) {
     width: 1.6px;
     height: 80px;
   }
@@ -66,6 +81,11 @@ const RoadmapBodyBall = styled.div`
     width: 15px;
     height: 15px;
   }
+
+  @media (max-height: 900px) {
+    width: 15px;
+    height: 15px;
+  }
 `
 
 const RoadmapBodyTextContainer = styled.div`
@@ -74,6 +94,10 @@ const RoadmapBodyTextContainer = styled.div`
   width: 100%;
   padding-bottom: 50px;
   @media (max-width: 1199px) {
+    padding-bottom: 35px;
+  }
+
+  @media (max-height: 900px) {
     padding-bottom: 35px;
   }
 `
@@ -95,6 +119,15 @@ const RoadmapBodyTextItem = styled.div`
       padding-bottom: 60px;
     }
   }
+
+  @media (max-height: 900px) {
+    width: 255px;
+    height: 64px;
+    margin-bottom: 34px;
+    :nth-last-child(1) {
+      padding-bottom: 60px;
+    }
+  }
 `
 
 const RoadmapBodyTextItemTitle = styled.div`
@@ -106,6 +139,10 @@ const RoadmapBodyTextItemTitle = styled.div`
   letter-spacing: -0.02em;
   flex: none;
   @media (max-width: 1199px) {
+    font-size: 26px;
+  }
+
+  @media (max-height: 900px) {
     font-size: 26px;
   }
 `
@@ -121,12 +158,20 @@ const RoadmapBodyTextItemDate = styled.div`
   @media (max-width: 1199px) {
     font-size: 18px;
   }
+
+  @media (max-height: 900px) {
+    font-size: 18px;
+  }
 `
 const RoadmapSpacer = styled.div`
   width: 100%;
   height: 150px;
   flex: none;
   @media (max-width: 1199px) {
+    heigth: 50px;
+  }
+
+  @media (max-height: 900px) {
     heigth: 50px;
   }
 `
