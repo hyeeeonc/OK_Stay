@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../lib/styles/palette'
+import { useMediaQuery } from 'react-responsive'
 
 const DropDownMenuBlock = styled.div`
   display: flex;
@@ -154,17 +155,27 @@ export const DropDownButtonBlock = styled.div`
   // align-items: flex-start;
   // padding: 0px;
 
+  position: fixed;
+
   width: 104px;
   height: 104px;
 
-  @media (max-width: 1199px) {
-    width: 90px;
-    height: 90px;
+  bottom: calc((100vh - 56px) / 2 - 305px - 133px);
+  left: calc(50vw - 508px - 20px);
 
+  @media (max-width: 1199px) {
+    bottom: calc((100vh - 56px) / 2 - 220px - 123px);
+    left: calc(50vw - 365px - 20px);
   }
   @media (max-width: 767px) {
-    left: 100px;
-    bottom: 0px;
+    width: 48px;
+    height: 48px;
+
+    bottom: 40px;
+    left: calc(50vw - 250px);
+  }
+  @media (max-width: 500px) {
+    left: 1px;
   }
 `
 type DropDownButtonProps = {
@@ -174,96 +185,196 @@ type DropDownButtonProps = {
 const DropDownButton: FunctionComponent<DropDownButtonProps> = function ({
   dropDownButtonHandler,
 }) {
+  const isPc = useMediaQuery({
+    query: '(min-width:768px)',
+  })
+  const isMobile = useMediaQuery({
+    query: '(max-width:767px)',
+  })
+
   return (
     <DropDownButtonBlock onClick={dropDownButtonHandler}>
-      <svg
-        width="104"
-        height="104"
-        viewBox="0 0 104 104"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g filter="url(#filter0_d_327_159)">
-          <rect
-            x="20"
-            y="82"
-            width="64"
-            height="64"
-            rx="32"
-            transform="rotate(-90 20 82)"
-            fill="#2E2D2D"
-            shape-rendering="crispEdges"
-          />
-          <mask
-            id="mask0_327_159"
-            style={{ maskType: 'alpha' }}
-            maskUnits="userSpaceOnUse"
-            x="34"
-            y="32"
-            width="36"
-            height="36"
-          >
-            <rect x="34" y="32" width="36" height="36" fill="#D9D9D9" />
-          </mask>
-          <g mask="url(#mask0_327_159)">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M57.6392 44.362C58.4527 45.1755 58.4527 46.4944 57.6392 47.3078L49.307 55.6397C48.4935 56.4532 47.1746 56.4532 46.3611 55.6397C45.5476 54.8263 45.5476 53.5074 46.3611 52.694L54.6933 44.362C55.5068 43.5486 56.8257 43.5486 57.6392 44.362Z"
-              fill="white"
+      {isPc && (
+        <svg
+          width="104"
+          height="104"
+          viewBox="0 0 104 104"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g filter="url(#filter0_d_327_159)">
+            <rect
+              x="20"
+              y="82"
+              width="64"
+              height="64"
+              rx="32"
+              transform="rotate(-90 20 82)"
+              fill="#2E2D2D"
+              shape-rendering="crispEdges"
             />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M60.5627 41.4364C58.8662 39.7399 56.1155 39.7399 54.4189 41.4364L51.389 44.4662C50.5755 45.2796 49.2566 45.2796 48.4431 44.4662C47.6296 43.6527 47.6296 42.3338 48.4431 41.5204L51.473 38.4906C54.7966 35.1672 60.1851 35.1672 63.5086 38.4906C66.8322 41.814 66.8322 47.2023 63.5086 50.5258L60.4787 53.5555C59.6652 54.369 58.3463 54.369 57.5328 53.5555C56.7194 52.7421 56.7194 51.4232 57.5328 50.6098L60.5627 47.58C62.2593 45.8835 62.2593 43.1329 60.5627 41.4364Z"
-              fill="white"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M43.4373 58.5626C45.1338 60.2591 47.8845 60.2591 49.5811 58.5626L52.611 55.5328C53.4245 54.7194 54.7434 54.7194 55.5569 55.5328C56.3704 56.3463 56.3704 57.6652 55.5569 58.4786L52.527 61.5084C49.2034 64.8318 43.8149 64.8318 40.4914 61.5084C37.1678 58.185 37.1678 52.7967 40.4914 49.4733L43.5213 46.4435C44.3348 45.63 45.6537 45.63 46.4672 46.4435C47.2806 47.2569 47.2806 48.5758 46.4672 49.3893L43.4373 52.419C41.7407 54.1155 41.7407 56.8661 43.4373 58.5626Z"
-              fill="white"
-            />
+            <mask
+              id="mask0_327_159"
+              style={{ maskType: 'alpha' }}
+              maskUnits="userSpaceOnUse"
+              x="34"
+              y="32"
+              width="36"
+              height="36"
+            >
+              <rect x="34" y="32" width="36" height="36" fill="#D9D9D9" />
+            </mask>
+            <g mask="url(#mask0_327_159)">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M57.6392 44.362C58.4527 45.1755 58.4527 46.4944 57.6392 47.3078L49.307 55.6397C48.4935 56.4532 47.1746 56.4532 46.3611 55.6397C45.5476 54.8263 45.5476 53.5074 46.3611 52.694L54.6933 44.362C55.5068 43.5486 56.8257 43.5486 57.6392 44.362Z"
+                fill="white"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M60.5627 41.4364C58.8662 39.7399 56.1155 39.7399 54.4189 41.4364L51.389 44.4662C50.5755 45.2796 49.2566 45.2796 48.4431 44.4662C47.6296 43.6527 47.6296 42.3338 48.4431 41.5204L51.473 38.4906C54.7966 35.1672 60.1851 35.1672 63.5086 38.4906C66.8322 41.814 66.8322 47.2023 63.5086 50.5258L60.4787 53.5555C59.6652 54.369 58.3463 54.369 57.5328 53.5555C56.7194 52.7421 56.7194 51.4232 57.5328 50.6098L60.5627 47.58C62.2593 45.8835 62.2593 43.1329 60.5627 41.4364Z"
+                fill="white"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M43.4373 58.5626C45.1338 60.2591 47.8845 60.2591 49.5811 58.5626L52.611 55.5328C53.4245 54.7194 54.7434 54.7194 55.5569 55.5328C56.3704 56.3463 56.3704 57.6652 55.5569 58.4786L52.527 61.5084C49.2034 64.8318 43.8149 64.8318 40.4914 61.5084C37.1678 58.185 37.1678 52.7967 40.4914 49.4733L43.5213 46.4435C44.3348 45.63 45.6537 45.63 46.4672 46.4435C47.2806 47.2569 47.2806 48.5758 46.4672 49.3893L43.4373 52.419C41.7407 54.1155 41.7407 56.8661 43.4373 58.5626Z"
+                fill="white"
+              />
+            </g>
           </g>
-        </g>
-        <defs>
-          <filter
-            id="filter0_d_327_159"
-            x="0"
-            y="0"
-            width="104"
-            height="104"
-            filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
-          >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-            <feColorMatrix
-              in="SourceAlpha"
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-              result="hardAlpha"
+          <defs>
+            <filter
+              id="filter0_d_327_159"
+              x="0"
+              y="0"
+              width="104"
+              height="104"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset dy="2" />
+              <feGaussianBlur stdDeviation="10" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_327_159"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow_327_159"
+                result="shape"
+              />
+            </filter>
+          </defs>
+        </svg>
+      )}
+
+      {isMobile && (
+        <svg
+          width="88"
+          height="88"
+          viewBox="0 0 88 88"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g filter="url(#filter0_d_327_110)">
+            <rect
+              x="20"
+              y="66"
+              width="48"
+              height="48"
+              rx="24"
+              transform="rotate(-90 20 66)"
+              fill="#2E2D2D"
+              shape-rendering="crispEdges"
             />
-            <feOffset dy="2" />
-            <feGaussianBlur stdDeviation="10" />
-            <feComposite in2="hardAlpha" operator="out" />
-            <feColorMatrix
-              type="matrix"
-              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
-            />
-            <feBlend
-              mode="normal"
-              in2="BackgroundImageFix"
-              result="effect1_dropShadow_327_159"
-            />
-            <feBlend
-              mode="normal"
-              in="SourceGraphic"
-              in2="effect1_dropShadow_327_159"
-              result="shape"
-            />
-          </filter>
-        </defs>
-      </svg>
+            <mask
+              id="mask0_327_110"
+              style={{ maskType: `alpha` }}
+              maskUnits="userSpaceOnUse"
+              x="32"
+              y="30"
+              width="24"
+              height="24"
+            >
+              <rect x="32" y="30" width="24" height="24" fill="#D9D9D9" />
+            </mask>
+            <g mask="url(#mask0_327_110)">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M47.7071 38.2929C48.0976 38.6834 48.0976 39.3166 47.7071 39.7071L41.7071 45.7071C41.3166 46.0976 40.6834 46.0976 40.2929 45.7071C39.9024 45.3166 39.9024 44.6834 40.2929 44.2929L46.2929 38.2929C46.6834 37.9024 47.3166 37.9024 47.7071 38.2929Z"
+                fill="white"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M50.2929 35.7076C49.0266 34.4412 46.9734 34.4412 45.7071 35.7076L43.7071 37.7076C43.3166 38.0981 42.6834 38.0981 42.2929 37.7076C41.9024 37.317 41.9024 36.6839 42.2929 36.2933L44.2929 34.2933C46.3403 32.246 49.6597 32.246 51.7071 34.2933C53.7545 36.3407 53.7545 39.6602 51.7071 41.7076L49.7071 43.7076C49.3166 44.0981 48.6834 44.0981 48.2929 43.7076C47.9024 43.317 47.9024 42.6839 48.2929 42.2933L50.2929 40.2933C51.5592 39.027 51.5592 36.9739 50.2929 35.7076Z"
+                fill="white"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M37.7071 48.2934C38.9734 49.5597 41.0266 49.5597 42.2929 48.2934L44.2929 46.2934C44.6834 45.9029 45.3166 45.9029 45.7071 46.2934C46.0976 46.6839 46.0976 47.3171 45.7071 47.7076L43.7071 49.7076C41.6597 51.755 38.3403 51.755 36.2929 49.7076C34.2455 47.6603 34.2455 44.3408 36.2929 42.2934L38.2929 40.2934C38.6834 39.9029 39.3166 39.9029 39.7071 40.2934C40.0976 40.6839 40.0976 41.3171 39.7071 41.7076L37.7071 43.7076C36.4408 44.974 36.4408 47.0271 37.7071 48.2934Z"
+                fill="white"
+              />
+            </g>
+          </g>
+          <defs>
+            <filter
+              id="filter0_d_327_110"
+              x="0"
+              y="0"
+              width="88"
+              height="88"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset dy="2" />
+              <feGaussianBlur stdDeviation="10" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_327_110"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow_327_110"
+                result="shape"
+              />
+            </filter>
+          </defs>
+        </svg>
+      )}
     </DropDownButtonBlock>
   )
 }

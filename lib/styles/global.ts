@@ -8,7 +8,6 @@ const reset = css`
     font-weight: 700;
     font-size: 80px;
     line-height: 150%;
-    letter-spacing: -0.02em;
     @media (max-width: 499px) {
       font-size: 40px;
     }
@@ -18,7 +17,6 @@ const reset = css`
     font-weight: 700;
     font-size: 52px;
     line-height: 150%;
-    letter-spacing: -0.02em;
     @media (max-width: 499px) {
       font-size: 32px;
     }
@@ -28,7 +26,6 @@ const reset = css`
     font-weight: 700;
     font-size: 30px;
     line-height: 150%;
-    letter-spacing: -0.02em;
     @media (max-width: 499px) {
       font-size: 20px;
     }
@@ -38,7 +35,6 @@ const reset = css`
     font-weight: 700;
     font-size: 24px;
     line-height: 150%;
-    letter-spacing: -0.02em;
     @media (max-width: 499px) {
       font-size: 16px;
     }
@@ -48,7 +44,6 @@ const reset = css`
     font-weight: 700;
     font-size: 18px;
     line-height: 150%;
-    letter-spacing: -0.02em;
     @media (max-width: 499px) {
       font-size: 14px;
     }
@@ -66,7 +61,6 @@ const reset = css`
       overflow-y: scroll;
       overflow-x: hidden;
       height: -webkit-fill-available;
-
     }
   }
 

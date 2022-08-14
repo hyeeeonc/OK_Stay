@@ -3,9 +3,9 @@ import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../lib/styles/palette'
 
 const MintButtonBlock = styled.div`
-  position: absolute;
+  position: fixed;
   left: calc(50vw + 508px - 400px);
-  top: calc(50vh + 310px + 13px);
+  bottom: calc((100vh - 56px) / 2 - 310px - 105px);
 
   display: flex;
   flex-direction: row;
@@ -29,7 +29,15 @@ const MintButtonBlock = styled.div`
     border-radius: 9px;
 
     left: calc(50vw + 365px - 310px);
-    top: calc(50vh + 210px + 22px);
+    bottom: calc((100vh - 56px) / 2 - 220px - 97px);
+  }
+
+  @media (max-width: 767px) {
+    width: 264px;
+    height: 48px;
+
+    bottom: 23px;
+    left: calc(50vw - 30px);
   }
 `
 

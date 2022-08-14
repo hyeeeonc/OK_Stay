@@ -14,6 +14,7 @@ import MintButton from 'components/index/MintButton'
 
 import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
+import MobileHeader from 'components/common/MobileHeader'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -39,6 +40,9 @@ const MobileIndexWrapper = styled.div`
 
 const Spacer = styled.div`
   height: 56px;
+  @media (max-width: 767px) {
+    48px;
+  }
 `
 
 const IndexPage: FunctionComponent = function () {
@@ -102,37 +106,49 @@ const IndexPage: FunctionComponent = function () {
   return (
     <>
       <Global styles={reset} />
-      <Header
-        getHeaderPageData={getHeaderPageData}
-        modalOpenHandler={modalOpenHandler}
-        dday={dday}
-        changeLanguage={changeLanguage}
-        language={language}
-      />
-      <Spacer />
       {isPc && (
-        <IndexWrapper>
-          <Modal
-            modalCloseHandler={modalCloseHandler}
-            modalOpened={modalOpened}
-          ></Modal>
-          <MainCarousel
-            headerPage={carouselPageController}
+        <>
+          <Header
+            getHeaderPageData={getHeaderPageData}
+            modalOpenHandler={modalOpenHandler}
+            dday={dday}
+            changeLanguage={changeLanguage}
             language={language}
           />
-          <DropDown
-            dropDownOpened={dropDownOpened}
-            dropDownButtonHandler={dropDownButtonHandler}
-          ></DropDown>
-          <MintButton dday={dday} />
-        </IndexWrapper>
+          <Spacer />
+          <IndexWrapper>
+            <Modal
+              modalCloseHandler={modalCloseHandler}
+              modalOpened={modalOpened}
+            ></Modal>
+            <MainCarousel
+              headerPage={carouselPageController}
+              language={language}
+            />
+          </IndexWrapper>
+        </>
       )}
 
       {isMobile && (
-        <MobileIndexWrapper>
-          <MobileMain language={language} />
-        </MobileIndexWrapper>
+        <>
+          <MobileHeader
+            getHeaderPageData={getHeaderPageData}
+            modalOpenHandler={modalOpenHandler}
+            dday={dday}
+            changeLanguage={changeLanguage}
+            language={language}
+          />
+          <Spacer />
+          <MobileIndexWrapper>
+            <MobileMain language={language} />
+          </MobileIndexWrapper>
+        </>
       )}
+      <DropDown
+        dropDownOpened={dropDownOpened}
+        dropDownButtonHandler={dropDownButtonHandler}
+      />
+      <MintButton dday={dday} />
     </>
   )
 }
