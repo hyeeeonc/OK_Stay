@@ -30,7 +30,7 @@ const ContentArea = styled.div`
 `
 
 const ModalContactWrapper = styled.section`
-  width: 704px;
+  max-width: 704px;
   display: flex;
   flex-direction: column;
 `
@@ -91,6 +91,8 @@ const ModalExit = styled.div`
   position: absolute;
   left: calc(50vw + 435px + 5px);
   top: calc(50vh - 260px - 56px + 8px);
+
+  @media();
 `
 
 type ModalProps = {
@@ -106,14 +108,14 @@ const Modal: FunctionComponent<ModalProps> = function ({
     <>
       <Container
         style={{
-          zIndex: modalOpened == true ? 40 : -10,
+          zIndex: modalOpened == true ? 100 : -10,
           opacity: modalOpened == true ? 1 : 0,
         }}
         onClick={modalCloseHandler}
       ></Container>
       <ContentArea
         style={{
-          zIndex: modalOpened == true ? 41 : -11,
+          zIndex: modalOpened == true ? 101 : -11,
           opacity: modalOpened == true ? 1 : 0,
         }}
       >
@@ -151,7 +153,7 @@ const Modal: FunctionComponent<ModalProps> = function ({
       </ContentArea>
       <ModalExit
         style={{
-          zIndex: modalOpened == true ? 40 : -10,
+          zIndex: modalOpened == true ? 100 : -10,
           opacity: modalOpened == true ? 1 : 0,
         }}
         onClick={modalCloseHandler}

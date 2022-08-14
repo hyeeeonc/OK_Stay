@@ -125,6 +125,11 @@ const IndexPage: FunctionComponent = function () {
               headerPage={carouselPageController}
               language={language}
             />
+            <DropDown
+              dropDownOpened={dropDownOpened}
+              dropDownButtonHandler={dropDownButtonHandler}
+            />
+            <MintButton dday={dday} />
           </IndexWrapper>
         </>
       )}
@@ -142,13 +147,13 @@ const IndexPage: FunctionComponent = function () {
           <MobileIndexWrapper>
             <MobileMain language={language} />
           </MobileIndexWrapper>
+          <DropDown
+            dropDownOpened={dropDownOpened}
+            dropDownButtonHandler={dropDownButtonHandler}
+          />
+          <MintButton dday={dday} />
         </>
       )}
-      <DropDown
-        dropDownOpened={dropDownOpened}
-        dropDownButtonHandler={dropDownButtonHandler}
-      />
-      <MintButton dday={dday} />
     </>
   )
 }

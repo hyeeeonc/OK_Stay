@@ -13,6 +13,11 @@ import {
   CarouselInnerScrollProps,
 } from './CarouselItem'
 
+import {
+  QnAListType,
+  CarouselDataType,
+} from 'types/index/carousel/CarouselData'
+
 const QnABody = styled.div`
   padding-left: 80px;
   padding-right: 40px;
@@ -226,21 +231,6 @@ const Spacer = styled.div`
   }
 `
 
-type QnAType = {
-  node: {
-    language: Language
-    seq: number
-    title: string
-    content: string
-  }
-}
-
-type QnAListType = {
-  allQnaJson: {
-    edges: Array<QnAType>
-  }
-}
-
 const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   page,
   touchStart,
@@ -270,7 +260,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
     }
   `)
 
-  const [qnas, setQnAs] = useState<Array<QnAType>>([])
+  const [qnas, setQnAs] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
     setQnAs(_ => edges.filter(({ node }) => node.language == language))
   }, [language])

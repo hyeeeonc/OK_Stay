@@ -4,7 +4,7 @@ import palette from '../../../lib/styles/palette'
 
 const MintButtonBlock = styled.div`
   position: fixed;
-  left: calc(50vw + 508px - 400px);
+  right: calc(50vw - 508px);
   bottom: calc((100vh - 56px) / 2 - 310px - 105px);
 
   display: flex;
@@ -28,17 +28,22 @@ const MintButtonBlock = styled.div`
     height: 56px;
     border-radius: 9px;
 
-    left: calc(50vw + 365px - 310px);
+    right: calc(50vw - 365px);
     bottom: calc((100vh - 56px) / 2 - 220px - 97px);
   }
 
   @media (max-width: 767px) {
-    width: 264px;
+    width: 380px;
     height: 48px;
 
     bottom: 23px;
-    left: calc(50vw - 30px);
+    right: calc(50vw - 231px);
   }
+
+    @media (max-width: 500px) {
+      width: calc(100vw - 32px - 88px);
+      right: 20px;
+
 `
 
 const MintButton: FunctionComponent<{ dday: number }> = function ({ dday }) {

@@ -8,21 +8,27 @@ const DropDownMenuBlock = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 18px 20px;
+  padding: 16px 0 16px 20px;
 
   position: fixed;
-  width: 173px;
-  height: 214px;
+  width: 145px;
+  height: 200px;
   left: calc(50vw - 520px);
-  top: calc(50vh + 305px - 208px);
+  bottom: calc(50vh - 305px + 208px - 250px);
   background-color: ${palette.gray[2]};
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 
-  transition: opacity 0.3s ease-in;
+  transition: all 0.3s ease-in;
+
   @media (max-width: 1199px) {
     left: calc(50vw - 365px - 5px);
-    top: calc(50vh + 210px - 200px);
+    bottom: calc(50vh - 210px - 45px);
+  }
+
+  @media (max-width: 767px) {
+    left: calc(50vw - 231px);
+    bottom: 90px;
   }
 `
 
@@ -32,7 +38,7 @@ const DropDownMenuItem = styled.div`
   align-items: center;
   padding: 0px;
 
-  width: 125px;
+  width: 120px;
   height: 40px;
   flex: none;
 
@@ -41,7 +47,7 @@ const DropDownMenuItem = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 150%;
   letter-spacing: -0.02em;
 `
@@ -49,7 +55,7 @@ const DropDownMenuItem = styled.div`
 const DropDownMenuLogo = styled.div`
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-right: 12px;
 `
 
 type DropDownMenuProps = {
@@ -63,7 +69,7 @@ const DropDownMenu: FunctionComponent<DropDownMenuProps> = function ({
     <DropDownMenuBlock
       style={{
         opacity: dropDownOpened ? 1 : 0,
-        zIndex: dropDownOpened ? 10 : -40,
+        zIndex: dropDownOpened ? 40 : -40,
       }}
     >
       <DropDownMenuItem>

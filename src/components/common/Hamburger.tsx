@@ -97,7 +97,7 @@ const HamburgerMenu = styled.div`
   height: 100%;
   width: 0;
   transition: 0.5s ease;
-  z-index: 30;
+  z-index: 60;
   background-color: ${palette.gray[1]};
   opacity: 1;
 `
@@ -153,21 +153,30 @@ const Hamburger: FunctionComponent<HamburgerProps> = function ({
 }) {
   const hamburgerClicker = useRef<HTMLDivElement>(null)
   const hamburgerCheck = useRef<HTMLInputElement>(null)
+  const hamburgerMenu = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    hamburgerMenu.current.addEventListener('wheel', e => e.preventDefault())
+    hamburgerMenu.current.addEventListener('touchmove', e => e.preventDefault())
+  })
 
   useEffect(() => {
     hamburgerClicker.current.addEventListener('click', () => {
       hamburgerCheck.current.click()
     })
-  })
+  }, [])
 
   return (
     <HamburgerContainer>
       <HamburgerClicker ref={hamburgerClicker} />
-      <HamburgerCheck ref={hamburgerCheck} type="checkbox" />
-      <HamburgerCheckIcon className="burger-icon">
+      <HamburgerCheck
+        ref={hamburgerCheck}
+        id="hamburgerCheck"
+        type="checkbox"
+      />
+      <HamburgerCheckIcon className="burger-icon" htmlFor="hamburgerCheck">
         <HamburgerCheckIconSticks className="burger-sticks" />
       </HamburgerCheckIcon>
-      <HamburgerMenu className="menu">
+      <HamburgerMenu ref={hamburgerMenu} className="menu">
         <HamburgerMenuItemsWrapper>
           <HamburgerMenuItems>INFORMATION</HamburgerMenuItems>
           <HamburgerMenuItems>MINTING</HamburgerMenuItems>

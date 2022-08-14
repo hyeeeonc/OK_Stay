@@ -5,6 +5,7 @@ import { Language } from 'types/common/language'
 import MobileOkra from './mobileItems/MobileOkra'
 import MobileProcess from './mobileItems/MobileProcess'
 import MobileRoadmap from './mobileItems/MobileRoadmap'
+import MobileQnA from './mobileItems/MobileQnA'
 
 const MobileMainContainer = styled.div`
   width: 500px;
@@ -67,6 +68,7 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({ language }) {
       <MobileBenefit language={language} />
       <MobileRoadmap language={language} />
       <MobileProcess language={language} />
+      <MobileQnA language={language} />
     </MobileMainContainer>
   )
 }
