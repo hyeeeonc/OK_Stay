@@ -203,7 +203,11 @@ const CarouselArticle: FunctionComponent<CarouselInnerScrollProps> = function ({
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
         {articles.map(({ node: { img, title, content } }) => (
-          <ArticleItems image={img.publicURL} title={title} content={content} />
+          <ArticleItems
+            image={img?.publicURL}
+            title={title}
+            content={content}
+          />
         ))}
       </ArticleBody>
     </CarouselItem>

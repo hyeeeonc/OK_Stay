@@ -16,6 +16,7 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-plugin-emotion`,
     `gatsby-transformer-json`,
+    `gatsby-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
