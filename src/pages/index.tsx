@@ -10,11 +10,13 @@ import MainCarousel from 'components/index/MainCarousel'
 import MobileMain from 'components/mobile/MobileMain'
 import DropDown from 'components/index/DropDown'
 import ContactModal from 'components/index/modal/ContactModal'
+import ArticleModal from 'components/index/modal/ArticleModal'
 import MintButton from 'components/index/MintButton'
 
 import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 import MobileHeader from 'components/common/MobileHeader'
+import { ArticleType } from 'types/index/carousel/Article'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -44,6 +46,8 @@ const Spacer = styled.div`
     48px;
   }
 `
+
+type ArticleModalType = ArticleType & { modalOpened: boolean }
 
 const IndexPage: FunctionComponent = function () {
   const isPc = useMediaQuery({
@@ -83,6 +87,20 @@ const IndexPage: FunctionComponent = function () {
   const modalOpenHandler: React.MouseEventHandler = () =>
     setModalOpened(_ => true)
 
+  const [articleModal, setArticleModal] = useState<ArticleModalType>({
+    title: '',
+    content: '',
+    image: '',
+    modalOpened: false,
+  })
+  const articleModalOpenHandler =
+    (article: ArticleType) => (e: React.MouseEvent) => {
+      setArticleModal(_ => ({ ...article, modalOpened: true }))
+    }
+
+  const articleModalCloseHandler: React.MouseEventHandler = () =>
+    setArticleModal(a => ({ ...a, modalOpened: false }))
+
   const [dday, setDday] = useState<number>(0)
   useEffect(() => {
     setDday(_ => {
@@ -121,9 +139,17 @@ const IndexPage: FunctionComponent = function () {
               modalCloseHandler={modalCloseHandler}
               modalOpened={modalOpened}
             ></ContactModal>
+            <ArticleModal
+              modalOpened={articleModal.modalOpened}
+              modalCloseHandler={articleModalCloseHandler}
+              title={articleModal.title}
+              content={articleModal.content}
+              image={articleModal.image}
+            ></ArticleModal>
             <MainCarousel
               headerPage={carouselPageController}
               language={language}
+              articleModalOpenHandler={articleModalOpenHandler}
             />
             <DropDown
               dropDownOpened={dropDownOpened}
