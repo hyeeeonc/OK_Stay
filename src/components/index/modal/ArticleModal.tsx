@@ -10,16 +10,47 @@ import {
   ModalProps,
 } from '../../common/Modal'
 
-const ArticleModalImg = styled.img`
+const ArticleModalContentBlock = styled.div`
+  overflow-y: hidden;
+  overflow-x: scroll;
+  width: 870px;
+  height: 520px;
+  background-color: ${palette.gray[9]};
+  transition: 0.3s;
+  border-radius: 10px;
+`
+
+const ArticleModalImgContainer = styled.div`
   max-width: 704px;
   height: 300px;
   margin: 24px 0;
+  overflow: hidden;
+  flex: none;
+
+  display: flex;
+  align-items: center;
 
   border-radius: 11px;
 `
 
+const ArticleModalImg = styled.img`
+  max-width: 100%;
+  height: auto;
+`
+
 const ArticleModalBodyContent = styled.div`
   max-width: 704px;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[4]};
+
+  padding-bottom: 50px;
 `
 
 type ArticleModalProps = ModalProps & {
@@ -52,8 +83,20 @@ const ArticleModal: FunctionComponent<ArticleModalProps> = function ({
       >
         <ModalContactWrapper>
           <ModalTitle>{title}</ModalTitle>
-          <ArticleModalImg src={image} />
-          <ArticleModalBodyContent>{content}</ArticleModalBodyContent>
+          <ArticleModalImgContainer>
+            <ArticleModalImg src={image} />
+          </ArticleModalImgContainer>
+          <ArticleModalBodyContent>
+            {content.split('\n').map(line => {
+              return (
+                <span>
+                  {line}
+                  <br />
+                  <br />
+                </span>
+              )
+            })}
+          </ArticleModalBodyContent>
         </ModalContactWrapper>
       </ContentArea>
       <ModalExit

@@ -174,6 +174,9 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
             img {
               publicURL
             }
+            modalImg {
+              publicURL
+            }
             title
             content
           }
@@ -217,13 +220,13 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
         ref={carouselBodyRef}
         onWheel={innerScrollHandler(carouselBodyRef)}
       >
-        {articles.map(({ node: { img, title, content } }) => (
+        {articles.map(({ node: { img, modalImg, title, content } }) => (
           <ArticleItems
             article={{ title, content, image: img?.publicURL }}
             articleModalOpenHandler={articleModalOpenHandler({
               title,
               content,
-              image: img?.publicURL,
+              image: modalImg?.publicURL,
             })}
           />
         ))}

@@ -25,8 +25,12 @@ export const ContentArea = styled.div`
   transition: 0.3s;
   display: flex;
   justify-content: center;
-  align-items: center;
   border-radius: 10px;
+  overflow-x: scroll;
+  @media (max-width: 900px) {
+    width: 760px;
+    left: calc(50vw - 380px);
+  }
 `
 
 export const ModalContactWrapper = styled.section`
@@ -42,7 +46,7 @@ export const ModalTitle = styled.div`
   font-size: 30px;
   line-height: 150%;
   color: ${palette.gray[0]};
-  margin-bottom: 24px;
+  margin: 40px 0 24px 0;
 `
 
 export const ModalExit = styled.div`
@@ -50,7 +54,15 @@ export const ModalExit = styled.div`
   left: calc(50vw + 435px + 5px);
   top: calc(50vh - 260px - 56px + 8px);
 
-  @media();
+  @media (max-width: 1090px) {
+    left: calc(50vw + 435px - 85px);
+    top: calc(50vh - 260px - 56px - 80px);
+  }
+
+  @media (max-width: 900px) {
+    left: calc(50vw + 380px - 85px);
+    top: calc(50vh - 260px - 56px - 80px);
+  }
 `
 
 export type ModalProps = {
