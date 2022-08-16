@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 // import React from 'react'
 import { Language } from 'types/common/language'
+import { ArticleType } from 'types/index/carousel/Article'
 
 export const CarouselItem = styled.div`
   background: rgba(255, 255, 255, 0.26);
@@ -121,6 +122,10 @@ export interface CarouselInnerScrollProps {
     ref: React.RefObject<HTMLDivElement>,
   ): React.WheelEventHandler
   language: Language
+}
+
+export interface CarouselArticleProps extends CarouselInnerScrollProps {
+  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
 }
 
 export interface CarouselInnerCarouselProps {

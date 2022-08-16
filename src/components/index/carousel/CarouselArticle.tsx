@@ -7,10 +7,11 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
+  CarouselArticleProps,
 } from './CarouselItem'
 
 import { GallaryListType, GallaryType } from 'types/index/carousel/CarouselData'
+import { ArticleType } from 'types/index/carousel/Article'
 
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 import { useStaticQuery, graphql } from 'gatsby'
@@ -128,19 +129,18 @@ const ArticleitemContent = styled.div`
 
   overflow: hidden;
 `
-interface ArticleItemsProps {
-  image: string
-  title: string
-  content: string
+
+type ArticleItemsProps = {
+  article: ArticleType
+  articleModalOpenHandler: React.MouseEventHandler
 }
 
 const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
-  image,
-  title,
-  content,
+  article: { title, content, image },
+  articleModalOpenHandler,
 }) {
   return (
-    <ArticleItem>
+    <ArticleItem onClick={articleModalOpenHandler}>
       <ArticleItemImage src={image}></ArticleItemImage>
       <ArticleItemTextWrapper>
         <ArticleItemTitle>{title}</ArticleItemTitle>
@@ -150,13 +150,14 @@ const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
   )
 }
 
-const CarouselArticle: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
   page,
   touchStart,
   touchEnd,
   language,
   scrollHandler,
   innerScrollHandler,
+  articleModalOpenHandler,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 5, carouselBodyRef), [page])
@@ -218,9 +219,12 @@ const CarouselArticle: FunctionComponent<CarouselInnerScrollProps> = function ({
       >
         {articles.map(({ node: { img, title, content } }) => (
           <ArticleItems
-            image={img?.publicURL}
-            title={title}
-            content={content}
+            article={{ title, content, image: img?.publicURL }}
+            articleModalOpenHandler={articleModalOpenHandler({
+              title,
+              content,
+              image: img?.publicURL,
+            })}
           />
         ))}
       </ArticleBody>

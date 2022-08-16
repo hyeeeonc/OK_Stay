@@ -22,9 +22,18 @@ const ArticleModalBodyContent = styled.div`
   max-width: 704px;
 `
 
-const ContactModal: FunctionComponent<ModalProps> = function ({
+type ArticleModalProps = ModalProps & {
+  title: string
+  content: string
+  image: string
+}
+
+const ArticleModal: FunctionComponent<ArticleModalProps> = function ({
   modalOpened,
   modalCloseHandler,
+  title,
+  content,
+  image,
 }) {
   return (
     <>
@@ -42,9 +51,9 @@ const ContactModal: FunctionComponent<ModalProps> = function ({
         }}
       >
         <ModalContactWrapper>
-          {/* <ModalTitle>{title}</ModalTitle> 여기에 타이틀 */}
-          {/* <ArticleModalImg>{img}</ArticleModalImg> 여기에 이미지 */}
-          {/* <ArticleModalBodyContent>{content}</ArticleModalBodyContent> 여기에 컨텐츠 */}
+          <ModalTitle>{title}</ModalTitle>
+          <ArticleModalImg src={image} />
+          <ArticleModalBodyContent>{content}</ArticleModalBodyContent>
         </ModalContactWrapper>
       </ContentArea>
       <ModalExit
@@ -134,4 +143,4 @@ const ContactModal: FunctionComponent<ModalProps> = function ({
   )
 }
 
-export default ContactModal
+export default ArticleModal

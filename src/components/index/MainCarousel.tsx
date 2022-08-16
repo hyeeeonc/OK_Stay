@@ -12,6 +12,7 @@ import CarouselArticle from './carousel/CarouselArticle'
 import MouseIndicator from './MouseIndicator'
 // import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
 import { Language } from 'types/common/language'
+import { ArticleType } from 'types/index/carousel/Article'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -65,11 +66,13 @@ type TouchPosition = {
 interface MainCarouselProps {
   headerPage: number
   language: Language
+  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
 }
 
 const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
   language,
+  articleModalOpenHandler,
 }) {
   const carouselBlock = useRef<HTMLDivElement>(null)
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
@@ -375,6 +378,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             page={carouselPage}
             innerScrollHandler={innerScrollHandler}
             language={language}
+            articleModalOpenHandler={articleModalOpenHandler}
           />
 
           <CarouselPartners
