@@ -2,15 +2,15 @@ import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 
 import CarouselBenefit from './carousel/CarouselBenefit'
-import CarouselGallary from './carousel/CarouselGallary'
 import CarouselProcess from './carousel/CarouselProcess'
 import CarouselOkra from './carousel/CarouselOkra'
 import CarouselPartners from './carousel/CarouselPartners'
 import CarouselQnA from './carousel/CarouselQnA'
 import CarouselRoadmap from './carousel/CarouselRoadmap'
+import CarouselArticle from './carousel/CarouselArticle'
 
 import MouseIndicator from './MouseIndicator'
-import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
+// import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
 import { Language } from 'types/common/language'
 
 const MainContainer = styled.div`
@@ -104,37 +104,6 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     }
   }, [])
 
-  const nextInnerPage =
-    ({ innerPage, setInnerPage, end }: InnerCarouselPageHandlerParams) =>
-    () => {
-      if (!isScrollable) return
-      if (innerPage >= end) {
-        nextPage()
-        setInnerPage(_ => 0)
-        isScrollable = false
-        setTimeout(() => (isScrollable = true), 1500)
-      } else {
-        setInnerPage(ip => ip + 1)
-        isScrollable = false
-        setTimeout(() => (isScrollable = true), 300)
-      }
-    }
-
-  const prevInnerPage =
-    ({ innerPage, setInnerPage, end }: InnerCarouselPageHandlerParams) =>
-    () => {
-      if (!isScrollable) return
-      if (innerPage <= 0) {
-        prevPage()
-        isScrollable = false
-        setTimeout(() => (isScrollable = true), 1500)
-      } else {
-        setInnerPage(ip => ip - 1)
-        isScrollable = false
-        setTimeout(() => (isScrollable = true), 300)
-      }
-    }
-
   const innerScrollHandler =
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
       console.log(e.deltaY)
@@ -194,7 +163,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 200)
     } else if (windowSize.width > 1199) {
       nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
-    } else if (windowSize.width > 970) {
+    } else if (windowSize.width > 970 || windowSize.height < 900) {
       nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
     } else if (windowSize.width > 767) {
       nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
@@ -399,14 +368,13 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
             language={language}
           />
 
-          <CarouselGallary
+          <CarouselArticle
             touchStart={touchStart}
             touchEnd={touchEnd}
             scrollHandler={scrollHandler}
             page={carouselPage}
+            innerScrollHandler={innerScrollHandler}
             language={language}
-            nextInnerPage={nextInnerPage}
-            prevInnerPage={prevInnerPage}
           />
 
           <CarouselPartners

@@ -9,7 +9,9 @@ export type CarouselDataType = {
   }
 }
 
-export type GallaryType = CarouselDataType & { node: { img: string } }
+export type GallaryType = CarouselDataType & {
+  node: { img: { publicURL: string } }
+}
 
 export type BenefitType = CarouselDataType & {
   node: { icon: { publicURL: string } }

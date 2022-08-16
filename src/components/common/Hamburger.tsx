@@ -96,7 +96,7 @@ const HamburgerMenu = styled.div`
   right: 0;
   height: 100%;
   width: 0;
-  transition: 0.5s ease;
+  transition: width 0.5s ease;
   z-index: 60;
   background-color: ${palette.gray[1]};
   opacity: 1;

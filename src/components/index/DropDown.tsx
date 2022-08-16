@@ -30,6 +30,10 @@ const DropDownMenuBlock = styled.div`
     left: calc(50vw - 231px);
     bottom: 90px;
   }
+
+  @media (max-width: 500px) {
+    left: 16px;
+  }
 `
 
 const DropDownMenuItem = styled.div`

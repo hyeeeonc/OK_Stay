@@ -1,8 +1,17 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import palette from '../../../lib/styles/palette'
 
 const MintButtonBlock = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[0]};
+
   position: fixed;
   right: calc(50vw - 508px);
   bottom: calc((100vh - 56px) / 2 - 310px - 105px);
@@ -23,6 +32,7 @@ const MintButtonBlock = styled.div`
   flex: none;
   order: 1;
   flex-grow: 0;
+
   @media (max-width: 1199px) {
     width: 310px;
     height: 56px;
@@ -30,6 +40,7 @@ const MintButtonBlock = styled.div`
 
     right: calc(50vw - 365px);
     bottom: calc((100vh - 56px) / 2 - 220px - 97px);
+    font-size: 16px;
   }
 
   @media (max-width: 767px) {
@@ -38,12 +49,15 @@ const MintButtonBlock = styled.div`
 
     bottom: 23px;
     right: calc(50vw - 231px);
+
+    font-size: 16px;
+    font-weight: 700;
   }
 
-    @media (max-width: 500px) {
-      width: calc(100vw - 32px - 88px);
-      right: 20px;
-
+  @media (max-width: 500px) {
+    width: calc(100vw - 32px - 88px);
+    right: 20px;
+  }
 `
 
 const MintButton: FunctionComponent<{ dday: number }> = function ({ dday }) {
