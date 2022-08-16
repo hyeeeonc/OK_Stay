@@ -6,10 +6,10 @@ export const preventInnerScrollHandler =
   (page: number, nowPage: number, ref: RefObject<HTMLDivElement>) => () => {
     if (page === nowPage) {
       setTimeout(() => {
-        ref.current.removeEventListener('wheel', preventInnerScroll)
+        ref.current?.removeEventListener('wheel', preventInnerScroll)
       }, 1500)
     } else {
-      ref.current.addEventListener('wheel', preventInnerScroll, {
+      ref.current?.addEventListener('wheel', preventInnerScroll, {
         passive: false,
       })
     }

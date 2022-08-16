@@ -14,7 +14,8 @@ import {
 import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 import MobileHeader from 'components/common/MobileHeader'
-import { graphql, StaticQuery, useStaticQuery } from 'gatsby'
+import { graphql, useStaticQuery } from 'gatsby'
+import useQueryString from 'hooks/useQueryString'
 
 const MintingPageBody = styled.div``
 const MintingPageCardBlock = styled.div`
@@ -132,15 +133,7 @@ const MintingPageContentContent = styled.div`
   color: ${palette.gray[2]};
 `
 
-type MintingPageProps = {
-  language: Language
-  changeLanguage: React.MouseEventHandler
-}
-
-const MintingPage: FunctionComponent<MintingPageProps> = function ({
-  language,
-  changeLanguage,
-}) {
+const MintingPage: FunctionComponent = function () {
   const isPc = useMediaQuery({
     query: '(min-width:768px)',
   })
@@ -163,8 +156,6 @@ const MintingPage: FunctionComponent<MintingPageProps> = function ({
 
   const [modalOpened, setModalOpened] = useState<boolean>(false)
 
-  const modalCloseHandler: React.MouseEventHandler = () =>
-    setModalOpened(_ => false)
   const modalOpenHandler: React.MouseEventHandler = () =>
     setModalOpened(_ => true)
 
@@ -197,6 +188,16 @@ const MintingPage: FunctionComponent<MintingPageProps> = function ({
       }
     }
   `)
+
+  const [language, setLanguage] = useQueryString<Language>('lang', 'KOR')
+  const changeLanguage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (language === 'KOR') {
+      setLanguage('ENG')
+    } else if (language === 'ENG') {
+      setLanguage('KOR')
+    }
+  }
 
   const [guides, setGuides] = useState<Array<MintingGuideType>>([])
   useEffect(() => {
@@ -237,6 +238,7 @@ const MintingPage: FunctionComponent<MintingPageProps> = function ({
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'SIMPLE'}
           />
           <Spacer />
         </>

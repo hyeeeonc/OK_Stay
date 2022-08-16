@@ -162,14 +162,22 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   useEffect(() => {
     let nowPageWidth: number
 
-    if (windowSize.width > 1450) {
-      nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 200)
-    } else if (windowSize.width > 1199) {
-      nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
-    } else if (windowSize.width > 970 || windowSize.height < 900) {
-      nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
-    } else if (windowSize.width > 767) {
-      nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
+    if (windowSize.height > 901) {
+      if (windowSize.width > 1450) {
+        nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 200)
+      } else if (windowSize.width > 1199) {
+        nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
+      } else if (windowSize.width > 970) {
+        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
+      } else if (windowSize.width > 767) {
+        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
+      }
+    } else if (windowSize.height < 900) {
+      if (windowSize.width > 970) {
+        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
+      } else if (windowSize.width > 767) {
+        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
+      }
     }
     setXTrans(_ => nowPageWidth)
   }, [carouselPage, xTrans, windowSize])

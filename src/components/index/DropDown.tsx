@@ -177,6 +177,12 @@ export const DropDownButtonBlock = styled.div`
     bottom: calc((100vh - 56px) / 2 - 220px - 123px);
     left: calc(50vw - 365px - 20px);
   }
+
+  @media (max-height: 900px) {
+    bottom: calc((100vh - 56px) / 2 - 220px - 123px);
+    left: calc(50vw - 365px - 20px);
+  }
+
   @media (max-width: 767px) {
     width: 48px;
     height: 48px;
@@ -184,6 +190,7 @@ export const DropDownButtonBlock = styled.div`
     bottom: 40px;
     left: calc(50vw - 250px);
   }
+
   @media (max-width: 500px) {
     left: 1px;
   }

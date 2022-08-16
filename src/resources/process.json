@@ -27,24 +27,24 @@
     "language": "ENG",
     "seq": 1,
     "title": "Step.01 Install Kaikas",
-    "content": "test"
+    "content": "Install Kaikas from Chrome webstore and sign up "
   },
   {
     "language": "ENG",
     "seq": 2,
     "title": "Step.02 Send KLAY",
-    "content": "test"
+    "content": "Purchase KLAY from the open market, send it to your personal Kaikas wallet. For the probable transaction fee, send bit more KLAY than the minting price."
   },
   {
     "language": "ENG",
     "seq": 3,
-    "title": "Step.03 Ready for Minting",
-    "content": "test"
+    "title": "Step.03 Get ready for the mint",
+    "content": "Click the MINTING tab and click the “NFT MINTING” button. Connect your personal Kaikas wallet to the website."
   },
   {
     "language": "ENG",
     "seq": 4,
-    "title": "Step.04 Minting",
-    "content": "test"
+    "title": "Step.04 Mint",
+    "content": "Return to the MINTING tab, click the “NFT MINTING” button on the time of drop. You will find the successfully minted NFT in your wallet."
   }
 ]

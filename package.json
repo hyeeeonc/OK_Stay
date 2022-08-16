@@ -19,6 +19,7 @@
     "gatsby-transformer-json": "^4.20.0",
     "gatsby-transformer-sharp": "^4.19.0",
     "prop-types": "^15.8.1",
+    "query-string": "^7.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-responsive": "^9.0.0-beta.10"

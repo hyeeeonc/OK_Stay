@@ -98,7 +98,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
     <HeaderBlock>
       <HeaderWrapper>
         <Logo onClick={() => headerPageControl(0)}>
-          <Link to="/">
+          <Link to={`/?lang=${language}`}>
             <svg
               width="145"
               height="20"
@@ -158,16 +158,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
               <NavItems onClick={() => headerPageControl(0)}>
                 INFORMATION
               </NavItems>
-              <NavItems onClick={() => alert(`${dday}일 후 공개됩니다.`)}>
-                MINTING
-              </NavItems>
-              <NavItems
-                onClick={() =>
-                  navigate('/minting', {
-                    state: { language, changeLanguage },
-                  })
-                }
-              >
+              <NavItems onClick={() => navigate(`/minting?lang=${language}`)}>
                 MINTING
               </NavItems>
               <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>

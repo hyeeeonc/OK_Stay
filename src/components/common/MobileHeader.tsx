@@ -4,6 +4,7 @@ import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
 
 import Hamburger from './Hamburger'
+import { HeaderMode } from 'types/common/Header'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -66,6 +67,7 @@ interface HeaderProps {
   dday: number
   changeLanguage: React.MouseEventHandler
   language: Language
+  headerMode: HeaderMode
 }
 
 const MobileHeader: FunctionComponent<HeaderProps> = function ({
@@ -74,6 +76,7 @@ const MobileHeader: FunctionComponent<HeaderProps> = function ({
   dday,
   changeLanguage,
   language,
+  headerMode,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -139,7 +142,11 @@ const MobileHeader: FunctionComponent<HeaderProps> = function ({
           </defs>
         </svg>
       </Logo>
-      <Hamburger language={language} changeLanguage={changeLanguage} />
+      {headerMode === 'DETAIL' ? (
+        <Hamburger language={language} changeLanguage={changeLanguage} />
+      ) : (
+        <span onClick={changeLanguage}>{language}</span>
+      )}
     </HeaderBlock>
   )
 }
