@@ -9,7 +9,7 @@ import { Global } from '@emotion/react'
 import MainCarousel from 'components/index/MainCarousel'
 import MobileMain from 'components/mobile/MobileMain'
 import DropDown from 'components/index/DropDown'
-import Modal from 'components/common/Modal'
+import ContactModal from 'components/index/modal/ContactModal'
 import MintButton from 'components/index/MintButton'
 
 import { useMediaQuery } from 'react-responsive'
@@ -117,10 +117,10 @@ const IndexPage: FunctionComponent = function () {
           />
           <Spacer />
           <IndexWrapper>
-            <Modal
+            <ContactModal
               modalCloseHandler={modalCloseHandler}
               modalOpened={modalOpened}
-            ></Modal>
+            ></ContactModal>
             <MainCarousel
               headerPage={carouselPageController}
               language={language}

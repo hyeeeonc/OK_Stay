@@ -68,6 +68,7 @@ const ArticleItemImage = styled.img`
   width: 180px;
   height: 180px;
   border-radius: 12px;
+  filter: grayscale(100%);
 
   @media (max-width: 1199px) {
     width: 128px;
@@ -82,7 +83,9 @@ const ArticleItemImage = styled.img`
   }
 `
 
-const ArticleItemTextWrapper = styled.div``
+const ArticleItemTextWrapper = styled.div`
+  margin-left: 40px;
+`
 
 const ArticleItemTitle = styled.div`
   font-family: 'Pretendard';
@@ -91,6 +94,8 @@ const ArticleItemTitle = styled.div`
   font-size: 30px;
   line-height: 150%;
   letter-spacing: -0.02em;
+
+  margin-bottom: 8px;
 
   color: ${palette.gray[9]};
   @media (max-width: 1199px) {
@@ -105,6 +110,8 @@ const ArticleItemTitle = styled.div`
 `
 
 const ArticleitemContent = styled.div`
+  width: 100%;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -113,6 +120,13 @@ const ArticleitemContent = styled.div`
   letter-spacing: -0.02em;
 
   color: ${palette.gray[7]};
+
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
 `
 interface ArticleItemsProps {
   image: string
