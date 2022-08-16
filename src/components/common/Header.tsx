@@ -3,6 +3,8 @@ import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
 import { Link } from 'gatsby'
+import { HeaderMode } from 'types/common/Header'
+import { navigate } from 'gatsby'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -77,6 +79,7 @@ interface HeaderProps {
   dday: number
   changeLanguage: React.MouseEventHandler
   language: Language
+  headerMode: HeaderMode
 }
 
 const Header: FunctionComponent<HeaderProps> = function ({
@@ -85,6 +88,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
   dday,
   changeLanguage,
   language,
+  headerMode,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -149,15 +153,28 @@ const Header: FunctionComponent<HeaderProps> = function ({
           </Link>
         </Logo>
         <NavWrapper>
-          <NavItems onClick={() => headerPageControl(0)}>INFORMATION</NavItems>
-          <Link
-            style={{ textDecoration: 'none', color: 'white' }}
-            to="/minting"
-          >
-            <NavItems>MINTING</NavItems>
-          </Link>
-
-          <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
+          {headerMode === 'DETAIL' ? (
+            <>
+              <NavItems onClick={() => headerPageControl(0)}>
+                INFORMATION
+              </NavItems>
+              <NavItems onClick={() => alert(`${dday}일 후 공개됩니다.`)}>
+                MINTING
+              </NavItems>
+              <NavItems
+                onClick={() =>
+                  navigate('/minting', {
+                    state: { language, changeLanguage },
+                  })
+                }
+              >
+                MINTING
+              </NavItems>
+              <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
+            </>
+          ) : (
+            <></>
+          )}
           <NavItems onClick={changeLanguage}>{language}</NavItems>
           <NavArrow>
             <svg

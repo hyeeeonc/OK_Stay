@@ -132,6 +132,7 @@ const IndexPage: FunctionComponent = function () {
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'DETAIL'}
           />
           <Spacer />
           <IndexWrapper>
