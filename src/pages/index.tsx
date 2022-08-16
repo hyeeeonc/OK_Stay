@@ -43,7 +43,7 @@ const MobileIndexWrapper = styled.div`
 const Spacer = styled.div`
   height: 56px;
   @media (max-width: 767px) {
-    48px;
+    height: 48px;
   }
 `
 
