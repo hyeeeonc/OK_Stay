@@ -17,6 +17,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 import MobileHeader from 'components/common/MobileHeader'
 import { ArticleType } from 'types/index/carousel/Article'
+import useQueryString from 'hooks/useQueryString'
 
 const IndexWrapper = styled.main`
   position: fixed;
@@ -111,13 +112,13 @@ const IndexPage: FunctionComponent = function () {
     })
   }, [])
 
-  const [language, setLanguage] = useState<Language>('KOR')
+  const [language, setLanguage] = useQueryString<Language>('lang', 'KOR')
   const changeLanguage = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (language === 'KOR') {
-      setLanguage(_ => 'ENG')
+      setLanguage('ENG')
     } else if (language === 'ENG') {
-      setLanguage(_ => 'KOR')
+      setLanguage('KOR')
     }
   }
 
@@ -132,6 +133,7 @@ const IndexPage: FunctionComponent = function () {
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'DETAIL'}
           />
           <Spacer />
           <IndexWrapper>
@@ -168,6 +170,7 @@ const IndexPage: FunctionComponent = function () {
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'DETAIL'}
           />
           <Spacer />
           <MobileIndexWrapper>

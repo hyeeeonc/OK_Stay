@@ -16,73 +16,19 @@
     "modalImg": "./images/modal2.jpg"
   },
   {
-    "language": "KOR",
-    "seq": 3,
-    "title": "test title 3",
-    "content": "test content 3",
-    "img": "./images/3.png"
-  },
-  {
-    "language": "KOR",
-    "seq": 4,
-    "title": "test title 4",
-    "content": "test content 4",
-    "img": "./images/4.png"
-  },
-  {
-    "language": "KOR",
-    "seq": 5,
-    "title": "test title 5",
-    "content": "test content 5",
-    "img": "./images/5.png"
-  },
-  {
-    "language": "KOR",
-    "seq": 6,
-    "title": "test title 6",
-    "content": "test content 6",
-    "img": "./images/6.png"
-  },
-  {
     "language": "ENG",
     "seq": 1,
-    "title": "test title 1",
-    "content": "test content 1",
-    "img": "./images/1.png"
+    "title": "What is :OKRA STAY?",
+    "content": "What is :OKRA STAY?\n:OKRA STAY is a an accessible “space” for anyone. Anyone can visit like a guest house, meet new friends, hang out, and chill having a interesting conversation. OKRA has been renowned for our exceptional hosting of the space for clubs, lounge bars, and festivals. :OKRA STAY is a space provided from exceptional experience of OKRA, which not only has taken over Korea but spreading out to the globe. In the lead with CREAMFIELDS, a dark horse in the world EDM festival era, we offer an extraordinary experience for everyone who decides to join our journey.\n“Extraordinary for everyone else, Ordinary with :OKRA STAY”",
+    "img": "./images/1.png",
+    "modalImg": "./images/modal1.jpg"
   },
   {
     "language": "ENG",
     "seq": 2,
-    "title": "test title 2",
-    "content": "test content 2",
-    "img": "./images/2.png"
-  },
-  {
-    "language": "ENG",
-    "seq": 3,
-    "title": "test title 3",
-    "content": "test content 3",
-    "img": "./images/3.png"
-  },
-  {
-    "language": "ENG",
-    "seq": 4,
-    "title": "test title 4",
-    "content": "test content 4",
-    "img": "./images/4.png"
-  },
-  {
-    "language": "ENG",
-    "seq": 5,
-    "title": "test title 5",
-    "content": "test content 5",
-    "img": "./images/5.png"
-  },
-  {
-    "language": "ENG",
-    "seq": 6,
-    "title": "test title 6",
-    "content": "test content 6",
-    "img": "./images/6.png"
+    "title": "Why isn’t there a whitelist for :OKRA STAY?",
+    "content": "It is extremely common in modern NFT market to have a “Whitelist”. Before we get deeper into it, what is Whitelist? It is a list of selected people who will get an advantage in purchasing NFTs. Advantages can vary from a chance to purchase an NFT in lower price than the others to a offer where you can purchase an NFT without competing with others, or sometimes both advantages come together. Then what does it take to get your name up into a Whitelist? Most of the projects nowadays are adapting the following qualifications to get into the Whitelist.\n1. You are owner of NFTs of other renowned projects.\n2. You invited others into the Discord server of a project.\n3. You attended to a specific event on the Discord server of a project.\nThis “privileged access” to the Whitelist is present to increase the participation of the community. The more active you are in the community, the better or bigger advantages you get.\nHowever as you’ve seen in the topic, there is no Whitelist in :OKRA STAY. Here is why.\nSuperficially it seems like a win-to-win rewarding structure without a flaw, but there are following cracks in the system.\n1. The easiest way for the newbies to purchase the NFT is to join the Whitelist. But the bar, also known as the price, is set high making it hard for the newbies to join the NFT market.\n2. Discord, the most commonly chosen method of the community for various NFT projects, is not a well-known platform in Korea. For someone who isn’t familiar with the system, it is hard to get into the Whitelist without struggling.\n3. The biggest, yet unspoken purpose of Whitelist is to stop the new traders to join the market. The volume of NFTs dedicated to the Whitelist takes minimum 1/3, up to 2/3 of the total Volume of the project. As most of the NFTs end up being in pocket of the original holders, the public volume for the new traders is decreasing. New traders keep hitting failure again and again, leading them to leave the market, causing the market to be static.\nTo prevent the listed issues, we decided to eliminate the Whitelist from :OKRA STAY. For the wholesome growth of the NFT market, we must fix the hole in the system. In order for NFT market to grow continuously, we need flow of the market. We need more traders to join the market, making more transactions, productions, and purchases. We have found Whitelist as our greatest enemy for wholesome NFT society, and yet decided to remove the system from our project. ",
+    "img": "./images/2.png",
+    "modalImg": "./images/modal2.jpg"
   }
 ]

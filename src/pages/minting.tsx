@@ -6,15 +6,16 @@ import styled from '@emotion/styled'
 import minting from '../../lib/styles/minting'
 import { Global } from '@emotion/react'
 
-import MainCarousel from 'components/index/MainCarousel'
-import MobileMain from 'components/mobile/MobileMain'
-import DropDown from 'components/index/DropDown'
-import ContactModal from 'components/index/modal/ContactModal'
-import MintButton from 'components/index/MintButton'
+import {
+  MintingGuideListType,
+  MintingGuideType,
+} from 'types/minting/MintingGuide'
 
 import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 import MobileHeader from 'components/common/MobileHeader'
+import { graphql, useStaticQuery } from 'gatsby'
+import useQueryString from 'hooks/useQueryString'
 
 const MintingPageBody = styled.div``
 const MintingPageCardBlock = styled.div`
@@ -153,20 +154,8 @@ const MintingPage: FunctionComponent = function () {
     }
   }, [carouselPageController])
 
-  useEffect(() => {
-    console.log(carouselPageController)
-  }, [carouselPageController])
-
-  const [dropDownOpened, setDropDownOpened] = useState<boolean>(false)
-
-  const dropDownButtonHandler: React.MouseEventHandler = () => {
-    setDropDownOpened(ddo => !ddo)
-  }
-
   const [modalOpened, setModalOpened] = useState<boolean>(false)
 
-  const modalCloseHandler: React.MouseEventHandler = () =>
-    setModalOpened(_ => false)
   const modalOpenHandler: React.MouseEventHandler = () =>
     setModalOpened(_ => true)
 
@@ -180,15 +169,49 @@ const MintingPage: FunctionComponent = function () {
     })
   }, [])
 
-  const [language, setLanguage] = useState<Language>('KOR')
+  const {
+    allMintingJson: { edges },
+  }: MintingGuideListType = useStaticQuery(graphql`
+    query getMintingGuides {
+      allMintingJson(sort: { order: ASC, fields: [seq] }) {
+        edges {
+          node {
+            language
+            seq
+            title
+            content
+            img {
+              publicURL
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const [language, setLanguage] = useQueryString<Language>('lang', 'KOR')
   const changeLanguage = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (language === 'KOR') {
-      setLanguage(_ => 'ENG')
+      setLanguage('ENG')
     } else if (language === 'ENG') {
-      setLanguage(_ => 'KOR')
+      setLanguage('KOR')
     }
   }
+
+  const [guides, setGuides] = useState<Array<MintingGuideType>>([])
+  useEffect(() => {
+    setGuides(_ => edges.filter(({ node }) => node.language === language))
+  }, [language])
+
+  const [민팅하러가기, set민팅하러가기] = useState<string>('민팅하러가기')
+  useEffect(() => {
+    if (language === 'KOR') {
+      set민팅하러가기(_ => '민팅하러가기')
+    } else if (language === 'ENG') {
+      set민팅하러가기(_ => 'Go Minting')
+    }
+  }, [language])
 
   return (
     <>
@@ -201,6 +224,7 @@ const MintingPage: FunctionComponent = function () {
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'SIMPLE'}
           />
           <Spacer />
         </>
@@ -214,6 +238,7 @@ const MintingPage: FunctionComponent = function () {
             dday={dday}
             changeLanguage={changeLanguage}
             language={language}
+            headerMode={'SIMPLE'}
           />
           <Spacer />
         </>
@@ -309,17 +334,14 @@ const MintingPage: FunctionComponent = function () {
           </MintingPageCard>
         </MintingPageCardBlock>
 
-        <MintingPageContentBlock>
-          <img src="./images/minting1.png" />
-          <MintingPageContentTitle>
-            Step.01 카이카스 설치하기
-          </MintingPageContentTitle>
-          <MintingPageContentContent>
-            크롬 웹 스토어에서 카이카스를 검색 후 우측 상단의 ‘Chrome에 추가’
-            버튼을 눌러 카이카스를 설치합니다. 이후 절차에 따라 계정을
-            생성합니다.
-          </MintingPageContentContent>
-        </MintingPageContentBlock>
+        {guides.map(({ node: { title, content, seq, img } }) => (
+          <MintingPageContentBlock>
+            <img src={img.publicURL} alt={title} />
+            <MintingPageContentTitle>{title}</MintingPageContentTitle>
+            <MintingPageContentContent>{content}</MintingPageContentContent>
+            {seq === 1 ? <a href="">{민팅하러가기}</a> : <></>}
+          </MintingPageContentBlock>
+        ))}
       </MintingPageBody>
     </>
   )

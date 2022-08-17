@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "allowJs": true,
     "jsx": "preserve",
@@ -21,6 +21,7 @@
   },
   "include": [
     "src/**/*.tsx",
+    "src/**/*.ts",
     "src/components/index/carousel/CarouselItem.ts",
     "src/components/mobile/mobileItems/MobilePartners",
     "src/components/mobile/mobileItems/MobileItems.ts"

@@ -2,37 +2,85 @@
   {
     "language": "KOR",
     "seq": 1,
-    "title": "민팅 날짜는 언제인가요?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "title": "민팅 일정은 어떻게 되나요?",
+    "content": "2022년 8월 26일에 진행될 예정입니다."
   },
   {
     "language": "KOR",
     "seq": 2,
     "title": "총 발행량은 어떻게 되나요?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "content": "10,000장 입니다."
   },
   {
     "language": "KOR",
     "seq": 3,
     "title": "민팅 가격은 얼마인가요?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "content": "?월 ?일 Article 및 디스코드에 공지할 예정입니다."
   },
   {
     "language": "KOR",
     "seq": 4,
-    "title": "화이트 리스트 조건은 어떻게 되나요?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "title": "화이트리스트 조건은 어떻게 되나요?",
+    "content": "화이트리스트는 뽑지 않습니다. ?월 ?일 Article 페이지에 게시될 글을 확인해 주세요."
   },
   {
     "language": "KOR",
     "seq": 5,
     "title": "민팅은 어디서 하나요?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "content": "민팅은 자체 페이지를 이용하여 진행될 예정이며, 링크는 민팅 직전에 공지할 예정입니다."
+  },
+  {
+    "language": "KOR",
+    "seq": 6,
+    "title": ":OKRA STAY가 무엇인가요?",
+    "content": ":OKRA STAY는 :OKRA가 제공하는 다양한 문화 공간입니다."
+  },
+  {
+    "language": "KOR",
+    "seq": 7,
+    "title": "CREAMFIELDS 외 홀더 베네핏이 있나요?",
+    "content": "당연히 CREAMFIELDS 외에도 다양한 혜택이 있습니다. 자세한 내용은 홈페이지 내 Benefit을 참고해 주세요"
   },
   {
     "language": "ENG",
     "seq": 1,
-    "title": "WTF?",
-    "content": "ㅁㄴㅇㄻㄴㅇㄹ"
+    "title": "When is the D-DAY?",
+    "content": "Minting will be held on August 26, 2022."
+  },
+  {
+    "language": "ENG",
+    "seq": 2,
+    "title": "What (How big) is the total volume of issue?",
+    "content": "Total 10,000 NFTs will be issued."
+  },
+  {
+    "language": "ENG",
+    "seq": 3,
+    "title": "What is the minting price?",
+    "content": "It will be announced on library and discord on ? / ?"
+  },
+  {
+    "language": "ENG",
+    "seq": 4,
+    "title": "How do I sign up to the whitelist?",
+    "content": "There will be no whitelist for this project. We will notify on the library on ? / ?"
+  },
+  {
+    "language": "ENG",
+    "seq": 5,
+    "title": "Where can I mint the :OKRA STAY?",
+    "content": "The address for minting is going to be announced before the drop."
+  },
+  {
+    "language": "ENG",
+    "seq": 6,
+    "title": "What is :OKRA STAY?",
+    "content": ":OKRA STAY is a culture spaces provided by OKRA."
+  },
+  {
+    "language": "ENG",
+    "seq": 7,
+    "title": "Are there any holder benefits other than CREAM FIELDS?",
+    "content": "Not only the CREAM FIELDS, lots of benefits will be provide to holders. For further information, please refer to BENEFITS on our website."
   }
 ]

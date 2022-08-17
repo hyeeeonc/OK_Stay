@@ -3,6 +3,8 @@ import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
 import { Link } from 'gatsby'
+import { HeaderMode } from 'types/common/Header'
+import { navigate } from 'gatsby'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -77,6 +79,7 @@ interface HeaderProps {
   dday: number
   changeLanguage: React.MouseEventHandler
   language: Language
+  headerMode: HeaderMode
 }
 
 const Header: FunctionComponent<HeaderProps> = function ({
@@ -85,6 +88,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
   dday,
   changeLanguage,
   language,
+  headerMode,
 }) {
   const headerPageControl = (page: number) => {
     getHeaderPageData(page)
@@ -94,7 +98,7 @@ const Header: FunctionComponent<HeaderProps> = function ({
     <HeaderBlock>
       <HeaderWrapper>
         <Logo onClick={() => headerPageControl(0)}>
-          <Link to="/">
+          <Link to={`/?lang=${language}`}>
             <svg
               width="145"
               height="20"
@@ -149,15 +153,19 @@ const Header: FunctionComponent<HeaderProps> = function ({
           </Link>
         </Logo>
         <NavWrapper>
-          <NavItems onClick={() => headerPageControl(0)}>INFORMATION</NavItems>
-          <Link
-            style={{ textDecoration: 'none', color: 'white' }}
-            to="/minting"
-          >
-            <NavItems>MINTING</NavItems>
-          </Link>
-
-          <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
+          {headerMode === 'DETAIL' ? (
+            <>
+              <NavItems onClick={() => headerPageControl(0)}>
+                INFORMATION
+              </NavItems>
+              <NavItems onClick={() => navigate(`/minting?lang=${language}`)}>
+                MINTING
+              </NavItems>
+              <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
+            </>
+          ) : (
+            <></>
+          )}
           <NavItems onClick={changeLanguage}>{language}</NavItems>
           <NavArrow>
             <svg

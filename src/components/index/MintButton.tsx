@@ -43,6 +43,16 @@ const MintButtonBlock = styled.div`
     font-size: 16px;
   }
 
+  @media (max-height: 900px) {
+    width: 310px;
+    height: 56px;
+    border-radius: 9px;
+
+    right: calc(50vw - 365px);
+    bottom: calc((100vh - 56px) / 2 - 220px - 97px);
+    font-size: 16px;
+  }
+
   @media (max-width: 767px) {
     width: 380px;
     height: 48px;

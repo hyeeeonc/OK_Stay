@@ -1,0 +1,16 @@
+[
+  {
+    "language": "KOR",
+    "seq": 1,
+    "title": "Step.01 카이카스 설치하기",
+    "content": "크롬 웹 스토어에서 카이카스를 검색 후 우측 상단의 'Chrome에 추가' 버튼을 눌러 카이카스를 설치합니다. 이후 절차에 따라 계정을 생성합니다.",
+    "img": "./images/minting_guide/1.png"
+  },
+  {
+    "language": "ENG",
+    "seq": 1,
+    "title": "Step.01 TEST ENG",
+    "content": "TEST ENG",
+    "img": "./images/minting_guide/1.png"
+  }
+]
