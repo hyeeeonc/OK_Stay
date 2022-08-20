@@ -7,8 +7,9 @@ import {
   ModalContactWrapper,
   ModalTitle,
   ModalExit,
-  ModalProps,
 } from '../../common/Modal'
+
+import { ArticleModalProps } from 'types/index/modal/Modal'
 
 const ArticleModalContentBlock = styled.div`
   overflow-y: hidden;
@@ -53,18 +54,10 @@ const ArticleModalBodyContent = styled.div`
   padding-bottom: 50px;
 `
 
-type ArticleModalProps = ModalProps & {
-  title: string
-  content: string
-  image: string
-}
-
 const ArticleModal: FunctionComponent<ArticleModalProps> = function ({
   modalOpened,
   modalCloseHandler,
-  title,
-  content,
-  image,
+  article: { image, title, content, modalImage },
 }) {
   return (
     <>
@@ -84,7 +77,7 @@ const ArticleModal: FunctionComponent<ArticleModalProps> = function ({
         <ModalContactWrapper>
           <ModalTitle>{title}</ModalTitle>
           <ArticleModalImgContainer>
-            <ArticleModalImg src={image} />
+            <ArticleModalImg src={modalImage} />
           </ArticleModalImgContainer>
           <ArticleModalBodyContent>
             {content.split('\n').map(line => {

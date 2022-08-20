@@ -7,8 +7,9 @@ import {
   ModalContactWrapper,
   ModalTitle,
   ModalExit,
-  ModalProps,
 } from '../../common/Modal'
+
+import { ModalProps } from 'types/index/modal/Modal'
 
 const ContactModalTitle = styled.input`
   width: 664px;

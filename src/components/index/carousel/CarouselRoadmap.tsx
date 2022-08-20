@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { FunctionComponent, useEffect, useMemo, useRef, useState } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -16,6 +16,7 @@ import {
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
 import { graphql, useStaticQuery } from 'gatsby'
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
@@ -207,7 +208,7 @@ const RoadmapBodyTextItems: FunctionComponent<RoadmapBodyTextComponentProps> =
     )
   }
 
-const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,
   touchEnd,
@@ -217,6 +218,12 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 2, carouselBodyRef), [page])
+
+  const _innerScrollHandler = useMemo(
+    () => innerScrollHandler(carouselBodyRef),
+    [],
+  )
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
 
   const {
     allRoadmapJson: { edges },
@@ -235,6 +242,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
     }
   `)
 
+  console.log('roadmap')
   const [roadmaps, setRoadmaps] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
     setRoadmaps(_ => edges.filter(({ node }) => node.language === language))
@@ -243,7 +251,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scrollHandler(carouselBodyRef)}
+        onWheel={_scrollHandler}
         onTouchStart={touchStart}
         onTouchEnd={touchEnd}
       >
@@ -288,7 +296,7 @@ const CarouselRoadmap: FunctionComponent<CarouselInnerScrollProps> = function ({
 
       <RoadmapBody
         ref={carouselBodyRef}
-        onWheel={innerScrollHandler(carouselBodyRef)}
+        onWheel={_innerScrollHandler}
         page={page}
       >
         <RoadmapBodyLineContainer>

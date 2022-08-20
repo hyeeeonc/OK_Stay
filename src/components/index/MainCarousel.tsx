@@ -1,5 +1,12 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, {
+  FunctionComponent,
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 import CarouselBenefit from './carousel/CarouselBenefit'
 import CarouselProcess from './carousel/CarouselProcess'
@@ -10,9 +17,13 @@ import CarouselRoadmap from './carousel/CarouselRoadmap'
 import CarouselArticle from './carousel/CarouselArticle'
 
 import MouseIndicator from './MouseIndicator'
-// import { InnerCarouselPageHandlerParams } from './carousel/CarouselItem'
 import { Language } from 'types/common/language'
 import { ArticleType } from 'types/index/carousel/Article'
+import useRefState from 'hooks/useRefState'
+import {
+  CarouselArticleProps,
+  CarouselProps,
+} from 'types/index/carousel/CarouselProps'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -55,9 +66,6 @@ const BackgroundRec = styled.div`
   transition: all 1500ms ease 0s;
 `
 
-let isScrollable = true
-let scrollTime = new Date()
-
 type TouchPosition = {
   x: number
   y: number
@@ -86,12 +94,12 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     height: null,
   })
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,
     })
-  }
+  }, [])
 
   useEffect(() => {
     setWindowSize({
@@ -107,84 +115,93 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     }
   }, [])
 
-  const innerScrollHandler =
+  const [_, setPrevScrollTime] = useRefState<Date>(new Date())
+  const [isScrollable, setScrollable] = useRefState<boolean>(true)
+  const innerScrollHandler = useCallback(
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
-      console.log(e.deltaY)
-      if (!isScrollable) return
-      const now = new Date()
-      const timeDiff = now.getTime() - scrollTime.getTime()
-
-      scrollTime = now
-
-      if (
-        ref.current.scrollHeight - ref.current.scrollTop ===
-        ref.current.clientHeight
-      ) {
-        if (e.deltaY >= 0 && timeDiff >= 100) {
-          ref.current.scrollTo(0, 0)
-          nextPage()
+      if (!isScrollable.current) return
+      setPrevScrollTime(t => {
+        const now = new Date()
+        const timeDiff = now.getTime() - t.getTime()
+        if (
+          ref.current.scrollHeight - ref.current.scrollTop ===
+          ref.current.clientHeight
+        ) {
+          if (e.deltaY >= 0 && timeDiff >= 100) {
+            ref.current.scrollTo(0, 0)
+            nextPage()
+          }
+        } else if (ref.current.scrollTop === 0) {
+          if (e.deltaY < 0 && timeDiff >= 100) {
+            ref.current.scrollTo(0, 0)
+            prevPage()
+          }
         }
-      } else if (ref.current.scrollTop === 0) {
-        if (e.deltaY < 0 && timeDiff >= 100) {
-          ref.current.scrollTo(0, 0)
-          prevPage()
-        }
+        return now
+      })
+    },
+    [],
+  )
+
+  const nextPage = useCallback(() => {
+    setCarouselPage(cp => {
+      if (cp === 6) {
+        return cp
+      } else {
+        setScrollable(_ => false)
+        setTimeout(() => setScrollable(_ => true), 1500)
+        return cp + 1
       }
-    }
+    })
+  }, [])
 
-  const nextPage = () => {
-    if (carouselPage === 6) {
-      return
-    } else {
-      setCarouselPage(cp => cp + 1)
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
-    }
-  }
-
-  const prevPage = () => {
-    if (carouselPage === 0) {
-      return
-    } else {
-      setCarouselPage(cp => cp - 1)
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
-    }
-  }
+  const prevPage = useCallback(() => {
+    setCarouselPage(cp => {
+      if (cp === 0) {
+        return cp
+      } else {
+        setScrollable(_ => false)
+        setTimeout(() => setScrollable(_ => true), 1500)
+        return cp - 1
+      }
+    })
+  }, [])
 
   useEffect(() => {
-    if (headerPage != null) {
-      const pageSet = headerPage
-      setCarouselPage(pageSet)
-    }
+    setCarouselPage(_ => headerPage || 0)
   }, [headerPage])
 
-  useEffect(() => {
-    let nowPageWidth: number
+  const calcPageWidth = useCallback(
+    (cp: number) => {
+      if (windowSize.height > 901) {
+        if (windowSize.width > 1450) {
+          return cp * (1016 + windowSize.width / 2 - 508 - 200)
+        } else if (windowSize.width > 1199) {
+          return cp * (1016 + windowSize.width / 2 - 508 - 80)
+        } else if (windowSize.width > 970) {
+          return cp * (730 + windowSize.width / 2 - 365 - 60)
+        } else if (windowSize.width > 767) {
+          return cp * (730 + windowSize.width / 2 - 365 - 15)
+        }
+      } else if (windowSize.height < 900) {
+        if (windowSize.width > 970) {
+          return cp * (730 + windowSize.width / 2 - 365 - 60)
+        } else if (windowSize.width > 767) {
+          return cp * (730 + windowSize.width / 2 - 365 - 15)
+        }
+      }
+      return 0
+    },
+    [windowSize],
+  )
 
-    if (windowSize.height > 901) {
-      if (windowSize.width > 1450) {
-        nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 200)
-      } else if (windowSize.width > 1199) {
-        nowPageWidth = carouselPage * (1016 + windowSize.width / 2 - 508 - 80)
-      } else if (windowSize.width > 970) {
-        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
-      } else if (windowSize.width > 767) {
-        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
-      }
-    } else if (windowSize.height < 900) {
-      if (windowSize.width > 970) {
-        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 60)
-      } else if (windowSize.width > 767) {
-        nowPageWidth = carouselPage * (730 + windowSize.width / 2 - 365 - 15)
-      }
-    }
-    setXTrans(_ => nowPageWidth)
+  useEffect(() => {
+    setXTrans(_ => calcPageWidth(carouselPage))
   }, [carouselPage, xTrans, windowSize])
 
-  const scrollHandler =
+  const scrollHandler = useCallback(
     (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
-      if (!isScrollable) return
+      if (!isScrollable.current) return
 
       if (e.deltaY > 15) {
         nextPage()
@@ -194,10 +211,12 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
         return
       }
       ref.current.scrollTo(0, 0)
-    }
+    },
+    [],
+  )
 
-  const defaultScrollHandler = (e: React.WheelEvent) => {
-    if (!isScrollable) return
+  const defaultScrollHandler = useCallback((e: React.WheelEvent) => {
+    if (!isScrollable.current) return
 
     if (e.deltaY > 15) {
       nextPage()
@@ -206,31 +225,48 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     } else {
       return
     }
-  }
+  }, [])
 
-  const touchStart = (e: React.TouchEvent) => {
-    if (!isScrollable) return
+  const touchStart = useCallback((e: React.TouchEvent) => {
+    if (!isScrollable.current) return
     setTouchPos({
       x: e.changedTouches[0].pageX,
       y: e.changedTouches[0].pageY,
     })
+  }, [])
+
+  const touchEnd = useCallback((e: React.TouchEvent) => {
+    if (!isScrollable.current) return
+
+    const deltaX: number = touchPos.x - e.changedTouches[0].pageX
+
+    if (deltaX > 30) {
+      nextPage()
+    } else if (deltaX < -30) {
+      prevPage()
+    }
+  }, [])
+
+  const defaultCarouselProps: CarouselProps = {
+    page: carouselPage,
+    touchStart,
+    touchEnd,
+    scrollHandler: () => defaultScrollHandler,
+    language,
   }
 
-  const touchEnd = (e: React.TouchEvent) => {
-    if (!isScrollable) return
+  const innerScrollCarouselProps: CarouselProps = {
+    page: carouselPage,
+    touchStart,
+    touchEnd,
+    scrollHandler: scrollHandler,
+    innerScrollHandler: innerScrollHandler,
+    language,
+  }
 
-    const changedX: number = touchPos.x - e.changedTouches[0].pageX
-    const changedY: number = touchPos.y - e.changedTouches[0].pageY
-
-    if (changedX > 30) {
-      nextPage()
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
-    } else if (changedX < -30) {
-      prevPage()
-      isScrollable = false
-      setTimeout(() => (isScrollable = true), 1500)
-    }
+  const articleCarouselProps: CarouselArticleProps = {
+    ...innerScrollCarouselProps,
+    articleModalOpenHandler,
   }
 
   return (
@@ -335,67 +371,19 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
         style={{ transform: `translate3d(-${xTrans}px, 0px, 0px)` }}
       >
         <CarouselWrapper>
-          <CarouselOkra
-            page={carouselPage}
-            scrollHandler={defaultScrollHandler}
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            language={language}
-          />
+          <CarouselOkra {...defaultCarouselProps} />
 
-          <CarouselBenefit
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={scrollHandler}
-            page={carouselPage}
-            innerScrollHandler={innerScrollHandler}
-            language={language}
-          />
+          <CarouselBenefit {...innerScrollCarouselProps} />
 
-          <CarouselRoadmap
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={scrollHandler}
-            page={carouselPage}
-            innerScrollHandler={innerScrollHandler}
-            language={language}
-          />
+          <CarouselRoadmap {...innerScrollCarouselProps} />
 
-          <CarouselProcess
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={scrollHandler}
-            page={carouselPage}
-            innerScrollHandler={innerScrollHandler}
-            language={language}
-          />
+          <CarouselProcess {...innerScrollCarouselProps} />
 
-          <CarouselQnA
-            page={carouselPage}
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={scrollHandler}
-            innerScrollHandler={innerScrollHandler}
-            language={language}
-          />
+          <CarouselQnA {...innerScrollCarouselProps} />
 
-          <CarouselArticle
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={scrollHandler}
-            page={carouselPage}
-            innerScrollHandler={innerScrollHandler}
-            language={language}
-            articleModalOpenHandler={articleModalOpenHandler}
-          />
+          <CarouselArticle {...articleCarouselProps} />
 
-          <CarouselPartners
-            touchStart={touchStart}
-            touchEnd={touchEnd}
-            scrollHandler={defaultScrollHandler}
-            page={carouselPage}
-            language={language}
-          />
+          <CarouselPartners {...defaultCarouselProps} />
         </CarouselWrapper>
       </CarouselBlock>
       <MouseIndicator carouselPage={carouselPage} />

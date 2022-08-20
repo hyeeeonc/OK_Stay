@@ -64,8 +64,3 @@ export const ModalExit = styled.div`
     top: calc(50vh - 260px - 56px - 80px);
   }
 `
-
-export type ModalProps = {
-  modalOpened: boolean
-  modalCloseHandler: React.MouseEventHandler
-}

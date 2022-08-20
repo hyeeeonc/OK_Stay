@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
+import React, { FunctionComponent, useRef, useState, useEffect, useMemo } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -7,8 +7,9 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
 } from './CarouselItem'
+
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 import {
   ProcessListType,
@@ -118,7 +119,7 @@ const ProcessItems: FunctionComponent<ProcessItemProps> = function ({
   )
 }
 
-const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselProcess: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,
   touchEnd,
@@ -144,6 +145,12 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
       }
     }
   `)
+  console.log('process')
+  const _innerScrollHandler = useMemo(
+    () => innerScrollHandler(carouselBodyRef),
+    [],
+  )
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
 
   const [processes, setProcesses] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
@@ -153,7 +160,7 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 3 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scrollHandler(carouselBodyRef)}
+        onWheel={_scrollHandler}
         onTouchStart={touchStart}
         onTouchEnd={touchEnd}
       >
@@ -190,7 +197,7 @@ const CarouselProcess: FunctionComponent<CarouselInnerScrollProps> = function ({
 
       <ProcessBody
         ref={carouselBodyRef}
-        onWheel={innerScrollHandler(carouselBodyRef)}
+        onWheel={_innerScrollHandler}
       >
         {processes.map(({ node: { title, content } }) => (
           <ProcessItems title={title} content={content} />

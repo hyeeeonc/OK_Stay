@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useMemo } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -7,8 +7,9 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselProps,
 } from './CarouselItem'
+
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 const CarouselBody = styled.section`
   margin-top: 175px;
@@ -39,11 +40,13 @@ const CarouselOkra: FunctionComponent<CarouselProps> = function ({
   touchStart,
   touchEnd,
   scrollHandler,
+  language,
 }) {
+  const _scrollHandler = useMemo(() => scrollHandler(), [])
   return (
     <CarouselItem
       style={{ opacity: page === 0 ? 1 : 0.2 }}
-      onWheel={scrollHandler}
+      onWheel={_scrollHandler}
       onTouchStart={touchStart}
       onTouchEnd={touchEnd}
     >
