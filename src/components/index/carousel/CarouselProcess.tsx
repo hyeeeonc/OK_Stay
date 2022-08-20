@@ -145,12 +145,11 @@ const CarouselProcess: FunctionComponent<CarouselProps> = function ({
       }
     }
   `)
-  console.log('process')
   const _innerScrollHandler = useMemo(
     () => innerScrollHandler(carouselBodyRef),
-    [],
+    [page],
   )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const [processes, setProcesses] = useState<Array<CarouselDataType>>([])
   useEffect(() => {

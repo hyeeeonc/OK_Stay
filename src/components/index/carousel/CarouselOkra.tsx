@@ -42,7 +42,7 @@ const CarouselOkra: FunctionComponent<CarouselProps> = function ({
   scrollHandler,
   language,
 }) {
-  const _scrollHandler = useMemo(() => scrollHandler(), [])
+  const _scrollHandler = useMemo(() => scrollHandler(), [page])
   return (
     <CarouselItem
       style={{ opacity: page === 0 ? 1 : 0.2 }}

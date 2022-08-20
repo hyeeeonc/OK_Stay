@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React, {
   FunctionComponent,
-  MutableRefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -115,6 +115,26 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     }
   }, [])
 
+  const nextPage = useCallback(() => {
+    if (carouselPage === 6) {
+      return
+    } else {
+      setCarouselPage(carouselPage + 1)
+      setScrollable(_ => false)
+      setTimeout(() => setScrollable(_ => true), 1500)
+    }
+  }, [carouselPage])
+
+  const prevPage = useCallback(() => {
+    if (carouselPage === 0) {
+      return
+    } else {
+      setCarouselPage(carouselPage - 1)
+      setScrollable(_ => false)
+      setTimeout(() => setScrollable(_ => true), 1500)
+    }
+  }, [carouselPage])
+
   const [_, setPrevScrollTime] = useRefState<Date>(new Date())
   const [isScrollable, setScrollable] = useRefState<boolean>(true)
   const innerScrollHandler = useCallback(
@@ -123,49 +143,26 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       setPrevScrollTime(t => {
         const now = new Date()
         const timeDiff = now.getTime() - t.getTime()
+
         if (
-          ref.current.scrollHeight - ref.current.scrollTop ===
+          ref.current.scrollHeight - Math.round(ref.current.scrollTop) <=
           ref.current.clientHeight
         ) {
-          if (e.deltaY >= 0 && timeDiff >= 100) {
-            ref.current.scrollTo(0, 0)
+          if (e.deltaY > 0 && timeDiff >= 100) {
             nextPage()
+            ref.current.scrollTo(0, 0)
           }
         } else if (ref.current.scrollTop === 0) {
           if (e.deltaY < 0 && timeDiff >= 100) {
-            ref.current.scrollTo(0, 0)
             prevPage()
+            ref.current.scrollTo(0, 0)
           }
         }
         return now
       })
     },
-    [],
+    [carouselPage],
   )
-
-  const nextPage = useCallback(() => {
-    setCarouselPage(cp => {
-      if (cp === 6) {
-        return cp
-      } else {
-        setScrollable(_ => false)
-        setTimeout(() => setScrollable(_ => true), 1500)
-        return cp + 1
-      }
-    })
-  }, [])
-
-  const prevPage = useCallback(() => {
-    setCarouselPage(cp => {
-      if (cp === 0) {
-        return cp
-      } else {
-        setScrollable(_ => false)
-        setTimeout(() => setScrollable(_ => true), 1500)
-        return cp - 1
-      }
-    })
-  }, [])
 
   useEffect(() => {
     setCarouselPage(_ => headerPage || 0)
@@ -200,7 +197,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   }, [carouselPage, xTrans, windowSize])
 
   const scrollHandler = useCallback(
-    (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
+    (ref?: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
       if (!isScrollable.current) return
 
       if (e.deltaY > 15) {
@@ -210,58 +207,48 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       } else {
         return
       }
-      ref.current.scrollTo(0, 0)
+      ref?.current.scrollTo(0, 0)
     },
-    [],
+    [carouselPage],
   )
 
-  const defaultScrollHandler = useCallback((e: React.WheelEvent) => {
-    if (!isScrollable.current) return
+  const touchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isScrollable.current) return
+      setTouchPos({
+        x: e.changedTouches[0].pageX,
+        y: e.changedTouches[0].pageY,
+      })
+    },
+    [carouselPage],
+  )
 
-    if (e.deltaY > 15) {
-      nextPage()
-    } else if (e.deltaY < -15) {
-      prevPage()
-    } else {
-      return
-    }
-  }, [])
+  const touchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isScrollable.current) return
 
-  const touchStart = useCallback((e: React.TouchEvent) => {
-    if (!isScrollable.current) return
-    setTouchPos({
-      x: e.changedTouches[0].pageX,
-      y: e.changedTouches[0].pageY,
-    })
-  }, [])
+      const deltaX: number = touchPos.x - e.changedTouches[0].pageX
 
-  const touchEnd = useCallback((e: React.TouchEvent) => {
-    if (!isScrollable.current) return
-
-    const deltaX: number = touchPos.x - e.changedTouches[0].pageX
-
-    if (deltaX > 30) {
-      nextPage()
-    } else if (deltaX < -30) {
-      prevPage()
-    }
-  }, [])
+      if (deltaX > 30) {
+        nextPage()
+      } else if (deltaX < -30) {
+        prevPage()
+      }
+    },
+    [carouselPage],
+  )
 
   const defaultCarouselProps: CarouselProps = {
     page: carouselPage,
     touchStart,
     touchEnd,
-    scrollHandler: () => defaultScrollHandler,
+    scrollHandler,
     language,
   }
 
   const innerScrollCarouselProps: CarouselProps = {
-    page: carouselPage,
-    touchStart,
-    touchEnd,
-    scrollHandler: scrollHandler,
-    innerScrollHandler: innerScrollHandler,
-    language,
+    ...defaultCarouselProps,
+    innerScrollHandler,
   }
 
   const articleCarouselProps: CarouselArticleProps = {

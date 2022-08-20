@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -7,7 +13,6 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
 } from './CarouselItem'
 
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
@@ -221,9 +226,9 @@ const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
 
   const _innerScrollHandler = useMemo(
     () => innerScrollHandler(carouselBodyRef),
-    [],
+    [page],
   )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allRoadmapJson: { edges },

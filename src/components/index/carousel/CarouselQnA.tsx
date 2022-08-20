@@ -6,8 +6,8 @@ import React, {
   useState,
   useEffect,
   useMemo,
+  useCallback,
 } from 'react'
-import { Language } from 'types/common/language'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 import { CarouselProps } from 'types/index/carousel/CarouselProps'
@@ -17,7 +17,6 @@ import {
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
 } from './CarouselItem'
 
 import {
@@ -176,14 +175,17 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
     const contentChild = useRef<HTMLDivElement>(null)
     const contentLogo = useRef<HTMLDivElement>(null)
 
-    const onclickHandler = (e: React.MouseEvent) => {
-      e.stopPropagation()
-      if (selected) {
-        setSelectedQnA(_ => -1)
-      } else {
-        setSelectedQnA(_ => seq)
-      }
-    }
+    const onclickHandler = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation()
+        if (selected) {
+          setSelectedQnA(_ => -1)
+        } else {
+          setSelectedQnA(_ => seq)
+        }
+      },
+      [selected],
+    )
 
     useEffect(() => {
       if (contentContainer.current === null || contentChild.current === null) {
@@ -250,13 +252,11 @@ const CarouselQnA: FunctionComponent<CarouselProps> = function ({
   useEffect(preventInnerScrollHandler(page, 4, carouselBodyRef), [page])
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
 
-  console.log('qna')
-
   const _innerScrollHandler = useMemo(
     () => innerScrollHandler(carouselBodyRef),
-    [],
+    [page],
   )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allQnaJson: { edges },
