@@ -1,9 +1,16 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
-import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
+import React, {
+  FunctionComponent,
+  useRef,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react'
 import { Language } from 'types/common/language'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 import {
   CarouselItem,
@@ -231,7 +238,7 @@ const Spacer = styled.div`
   }
 `
 
-const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselQnA: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,
   touchEnd,
@@ -242,6 +249,14 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 4, carouselBodyRef), [page])
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
+
+  console.log('qna')
+
+  const _innerScrollHandler = useMemo(
+    () => innerScrollHandler(carouselBodyRef),
+    [],
+  )
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
 
   const {
     allQnaJson: { edges },
@@ -269,7 +284,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
     <>
       <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>
         <CarouselTitleWrapper
-          onWheel={scrollHandler(carouselBodyRef)}
+          onWheel={_scrollHandler}
           onTouchStart={touchStart}
           onTouchEnd={touchEnd}
         >
@@ -297,10 +312,7 @@ const CarouselQnA: FunctionComponent<CarouselInnerScrollProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
-        <QnABody
-          ref={carouselBodyRef}
-          onWheel={innerScrollHandler(carouselBodyRef)}
-        >
+        <QnABody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
           {qnas.map(({ node: { seq, title, content } }) => (
             <CarouselAccordionItems
               seq={seq}

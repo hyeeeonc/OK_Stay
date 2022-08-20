@@ -1,24 +1,28 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useMemo } from 'react'
 
 import {
   CarouselItem,
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselProps,
 } from './CarouselItem'
+
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 const CarouselPartners: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,
   touchEnd,
   scrollHandler,
+  language,
 }) {
+  console.log('partners')
+  const _scrollHandler = useMemo(() => scrollHandler(), [])
   return (
     <CarouselItem
       style={{ opacity: page === 6 ? 1 : 0.2 }}
-      onWheel={scrollHandler}
+      onWheel={_scrollHandler}
       onTouchStart={touchStart}
       onTouchEnd={touchEnd}
     >

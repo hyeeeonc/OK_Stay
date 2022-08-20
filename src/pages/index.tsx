@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import Header from 'components/common/Header'
 import palette from '../../lib/styles/palette'
 import styled from '@emotion/styled'
@@ -17,6 +22,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Language } from 'types/common/language'
 import MobileHeader from 'components/common/MobileHeader'
 import { ArticleType } from 'types/index/carousel/Article'
+import { ArticleModalProps } from 'types/index/modal/Modal'
 import useQueryString from 'hooks/useQueryString'
 
 const IndexWrapper = styled.main`
@@ -48,8 +54,6 @@ const Spacer = styled.div`
   }
 `
 
-type ArticleModalType = ArticleType & { modalOpened: boolean }
-
 const IndexPage: FunctionComponent = function () {
   const isPc = useMediaQuery({
     query: '(min-width:768px)',
@@ -61,9 +65,9 @@ const IndexPage: FunctionComponent = function () {
   const [carouselPageController, setCarouselPageController] =
     useState<number>(null)
 
-  const getHeaderPageData = (page: number) => {
+  const getHeaderPageData = useCallback((page: number) => {
     setCarouselPageController(page)
-  }
+  }, [])
 
   useEffect(() => {
     if (carouselPageController === 0) {
@@ -71,36 +75,43 @@ const IndexPage: FunctionComponent = function () {
     }
   }, [carouselPageController])
 
-  useEffect(() => {
-    console.log(carouselPageController)
-  }, [carouselPageController])
-
   const [dropDownOpened, setDropDownOpened] = useState<boolean>(false)
 
-  const dropDownButtonHandler: React.MouseEventHandler = () => {
-    setDropDownOpened(ddo => !ddo)
-  }
+  const dropDownButtonHandler: React.MouseEventHandler = useCallback(() => {
+    setDropDownOpened(!dropDownOpened)
+  }, [dropDownOpened])
 
   const [modalOpened, setModalOpened] = useState<boolean>(false)
 
-  const modalCloseHandler: React.MouseEventHandler = () =>
-    setModalOpened(_ => false)
-  const modalOpenHandler: React.MouseEventHandler = () =>
-    setModalOpened(_ => true)
+  const modalCloseHandler: React.MouseEventHandler = useCallback(
+    () => setModalOpened(_ => false),
+    [],
+  )
+  const modalOpenHandler: React.MouseEventHandler = useCallback(
+    () => setModalOpened(_ => true),
+    [],
+  )
 
-  const [articleModal, setArticleModal] = useState<ArticleModalType>({
-    title: '',
-    content: '',
-    image: '',
+  const [articleModal, setArticleModal] = useState<ArticleModalProps>({
+    article: {
+      title: '',
+      content: '',
+      image: '',
+    },
     modalOpened: false,
   })
-  const articleModalOpenHandler =
-    (article: ArticleType) => (e: React.MouseEvent) => {
-      setArticleModal(_ => ({ ...article, modalOpened: true }))
-    }
 
-  const articleModalCloseHandler: React.MouseEventHandler = () =>
-    setArticleModal(a => ({ ...a, modalOpened: false }))
+  const articleModalOpenHandler = useCallback(
+    (article: ArticleType) => () => {
+      setArticleModal(_ => ({ article, modalOpened: true }))
+    },
+    [],
+  )
+
+  const articleModalCloseHandler: React.MouseEventHandler = useCallback(
+    () => setArticleModal(a => ({ ...a, modalOpened: false })),
+    [],
+  )
 
   const [dday, setDday] = useState<number>(0)
   useEffect(() => {
@@ -113,14 +124,17 @@ const IndexPage: FunctionComponent = function () {
   }, [])
 
   const [language, setLanguage] = useQueryString<Language>('lang', 'KOR')
-  const changeLanguage = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    if (language === 'KOR') {
-      setLanguage('ENG')
-    } else if (language === 'ENG') {
-      setLanguage('KOR')
-    }
-  }
+  const changeLanguage = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (language === 'KOR') {
+        setLanguage('ENG')
+      } else if (language === 'ENG') {
+        setLanguage('KOR')
+      }
+    },
+    [language],
+  )
 
   return (
     <>
@@ -142,11 +156,10 @@ const IndexPage: FunctionComponent = function () {
               modalOpened={modalOpened}
             ></ContactModal>
             <ArticleModal
-              modalOpened={articleModal.modalOpened}
-              modalCloseHandler={articleModalCloseHandler}
-              title={articleModal.title}
-              content={articleModal.content}
-              image={articleModal.image}
+              {...{
+                ...articleModal,
+                modalCloseHandler: articleModalCloseHandler,
+              }}
             ></ArticleModal>
             <MainCarousel
               headerPage={carouselPageController}

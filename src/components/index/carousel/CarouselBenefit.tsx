@@ -1,13 +1,16 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import {
-  BenefitListType,
-  BenefitType,
-  CarouselDataType,
-} from 'types/index/carousel/CarouselData'
+import React, {
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { BenefitListType, BenefitType } from 'types/index/carousel/CarouselData'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
+import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 import {
   CarouselItem,
@@ -175,7 +178,7 @@ const CarouselBodyItemsContent = styled.h4`
   }
 `
 
-const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
+const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
   page,
   touchStart,
   touchEnd,
@@ -205,6 +208,14 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
     }
   `)
 
+  const _innerScrollHandler = useMemo(
+    () => innerScrollHandler(carouselBodyRef),
+    [],
+  )
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
+
+  console.log('benefit')
+
   const [benefits, setBenefits] = useState<Array<BenefitType>>([])
   useEffect(() => {
     setBenefits(_ => edges.filter(({ node }) => node.language === language))
@@ -212,7 +223,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={scrollHandler(carouselBodyRef)}
+        onWheel={_scrollHandler}
         onTouchStart={touchStart}
         onTouchEnd={touchEnd}
       >
@@ -247,10 +258,7 @@ const CarouselBenefit: FunctionComponent<CarouselInnerScrollProps> = function ({
         <CarouselTitle>NFT Benefit</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <CarouselBody
-        ref={carouselBodyRef}
-        onWheel={innerScrollHandler(carouselBodyRef)}
-      >
+      <CarouselBody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
         {benefits.map(({ node: { title, content, icon } }) => (
           <CarouselBodyItems>
             <CarouselBodyIconContainer src={icon.publicURL} />
