@@ -175,9 +175,9 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
 
   const _innerScrollHandler = useMemo(
     () => innerScrollHandler(carouselBodyRef),
-    [],
+    [page],
   )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allGallaryJson: { edges },

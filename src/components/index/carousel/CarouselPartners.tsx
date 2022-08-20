@@ -17,8 +17,7 @@ const CarouselPartners: FunctionComponent<CarouselProps> = function ({
   scrollHandler,
   language,
 }) {
-  console.log('partners')
-  const _scrollHandler = useMemo(() => scrollHandler(), [])
+  const _scrollHandler = useMemo(() => scrollHandler(), [page])
   return (
     <CarouselItem
       style={{ opacity: page === 6 ? 1 : 0.2 }}

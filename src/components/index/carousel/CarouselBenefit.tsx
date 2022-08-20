@@ -210,11 +210,9 @@ const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
 
   const _innerScrollHandler = useMemo(
     () => innerScrollHandler(carouselBodyRef),
-    [],
+    [page],
   )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [])
-
-  console.log('benefit')
+  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const [benefits, setBenefits] = useState<Array<BenefitType>>([])
   useEffect(() => {
