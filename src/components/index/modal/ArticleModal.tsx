@@ -45,7 +45,7 @@ const ArticleModalBodyContent = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 150%;
   letter-spacing: -0.02em;
 

@@ -54,6 +54,36 @@ const Spacer = styled.div`
   }
 `
 
+const IndicatorBlock = styled.div`
+  position: fixed;
+  top: calc((100vh - 56px) / 2 - 305px);
+  left: calc(50vw - 450px);
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 1199px) {
+    top: calc((100vh - 56px) / 2 - 225px);
+    left: calc(50vw - 330px);
+  }
+  @media (max-height: 900px) {
+    top: calc((100vh - 56px) / 2 - 225px);
+    left: calc(50vw - 330px);
+  }
+
+  z-index: 10;
+`
+
+const IndicatorItems = styled.div`
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  margin-right: 13px;
+
+  transition: 1.5s;
+  cursor: pointer;
+`
+
 const IndexPage: FunctionComponent = function () {
   const isPc = useMediaQuery({
     query: '(min-width:768px)',
@@ -65,8 +95,14 @@ const IndexPage: FunctionComponent = function () {
   const [carouselPageController, setCarouselPageController] =
     useState<number>(null)
 
+  const [indexCarouselPage, setIndexCarouselPage] = useState(0)
+
   const getHeaderPageData = useCallback((page: number) => {
     setCarouselPageController(page)
+  }, [])
+
+  const getIndexCarouselPage = useCallback((page: number) => {
+    setIndexCarouselPage(page)
   }, [])
 
   useEffect(() => {
@@ -150,6 +186,45 @@ const IndexPage: FunctionComponent = function () {
             headerMode={'DETAIL'}
           />
           <Spacer />
+
+          <IndicatorBlock>
+            <IndicatorItems
+              style={{
+                opacity: indexCarouselPage === 0 ? 1 : 0.2,
+              }}
+              onClick={() => setCarouselPageController(0)}
+            />
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 1 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(1)}
+            />
+
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 2 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(2)}
+            />
+
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 3 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(3)}
+            />
+
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 4 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(4)}
+            />
+
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 5 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(5)}
+            />
+
+            <IndicatorItems
+              style={{ opacity: indexCarouselPage === 6 ? 1 : 0.2 }}
+              onClick={() => setCarouselPageController(6)}
+            />
+          </IndicatorBlock>
+
           <IndexWrapper>
             <ContactModal
               modalCloseHandler={modalCloseHandler}
@@ -165,6 +240,7 @@ const IndexPage: FunctionComponent = function () {
               headerPage={carouselPageController}
               language={language}
               articleModalOpenHandler={articleModalOpenHandler}
+              getIndexCarouselPage={getIndexCarouselPage}
             />
             <DropDown
               dropDownOpened={dropDownOpened}

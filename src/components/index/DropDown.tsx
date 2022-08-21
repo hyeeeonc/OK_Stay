@@ -26,6 +26,11 @@ const DropDownMenuBlock = styled.div`
     bottom: calc(50vh - 210px - 45px);
   }
 
+  @media (max-height: 900px) {
+    left: calc(50vw - 365px - 5px);
+    bottom: calc(50vh - 210px - 45px);
+  }
+
   @media (max-width: 767px) {
     left: calc(50vw - 231px);
     bottom: 90px;

@@ -28,9 +28,6 @@ export const CarouselItem = styled.div`
     border-radius: 41px;
   }
 
-  @media (max-width: 970px) {
-    margin-right: calc(50vw - 365px - 15px);
-  }
 
   @media (max-height: 900px) {
     width: 728px;
@@ -38,6 +35,11 @@ export const CarouselItem = styled.div`
     margin-right: calc(50vw - 365px - 60px);
     border-radius: 41px;
   }
+
+  @media (max-width: 970px) {
+    margin-right: calc(50vw - 365px - 15px);
+  }
+
 `
 
 export const CarouselTitleWrapper = styled.div`

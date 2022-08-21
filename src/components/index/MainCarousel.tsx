@@ -75,12 +75,14 @@ interface MainCarouselProps {
   headerPage: number
   language: Language
   articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
+  getIndexCarouselPage
 }
 
 const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
   language,
   articleModalOpenHandler,
+  getIndexCarouselPage,
 }) {
   const carouselBlock = useRef<HTMLDivElement>(null)
   const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
@@ -120,6 +122,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       return
     } else {
       setCarouselPage(carouselPage + 1)
+      getIndexCarouselPage(carouselPage + 1)
       setScrollable(_ => false)
       setTimeout(() => setScrollable(_ => true), 1500)
     }
@@ -130,6 +133,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       return
     } else {
       setCarouselPage(carouselPage - 1)
+      getIndexCarouselPage(carouselPage - 1)
       setScrollable(_ => false)
       setTimeout(() => setScrollable(_ => true), 1500)
     }
@@ -166,6 +170,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
 
   useEffect(() => {
     setCarouselPage(_ => headerPage || 0)
+    getIndexCarouselPage(_ => headerPage || 0)
   }, [headerPage])
 
   const calcPageWidth = useCallback(
@@ -180,7 +185,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
         } else if (windowSize.width > 767) {
           return cp * (730 + windowSize.width / 2 - 365 - 15)
         }
-      } else if (windowSize.height < 900) {
+      } else {
         if (windowSize.width > 970) {
           return cp * (730 + windowSize.width / 2 - 365 - 60)
         } else if (windowSize.width > 767) {

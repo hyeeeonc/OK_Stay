@@ -50,13 +50,23 @@ const reset = css`
   }
 
   html {
+    width: 100vw;
+    height: calc(100vh - calc(100vh - 100%));
+
+    @media (max-width: 767px) {
     height: -webkit-fill-available;
+  }
+
   }
 
   body {
     background-color: #121212;
     overscroll-behavior: none;
     overflow: hidden;
+
+    width: 100vw;
+    height: calc(100vh - calc(100vh - 100%));
+
     @media (max-width: 767px) {
       overflow-y: scroll;
       overflow-x: hidden;

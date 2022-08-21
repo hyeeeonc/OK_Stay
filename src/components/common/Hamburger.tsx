@@ -124,16 +124,13 @@ const HamburgerMenuLanguage = styled.div`
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: 800;
+  font-size: 16px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 
   color: ${palette.gray[8]};
-
-  position: fixed;
-  bottom: 30px;
 `
 
 const HamburgerMenuLanguageIcon = styled.div`
@@ -178,10 +175,6 @@ const Hamburger: FunctionComponent<HamburgerProps> = function ({
       </HamburgerCheckIcon>
       <HamburgerMenu ref={hamburgerMenu} className="menu">
         <HamburgerMenuItemsWrapper>
-          <HamburgerMenuItems>INFORMATION</HamburgerMenuItems>
-          <HamburgerMenuItems>MINTING</HamburgerMenuItems>
-          <HamburgerMenuItems>CONTACT</HamburgerMenuItems>
-
           <HamburgerMenuLanguage onClick={changeLanguage}>
             {language}
             <HamburgerMenuLanguageIcon>
@@ -208,6 +201,10 @@ const Hamburger: FunctionComponent<HamburgerProps> = function ({
               </svg>
             </HamburgerMenuLanguageIcon>
           </HamburgerMenuLanguage>
+
+          <HamburgerMenuItems>INFORMATION</HamburgerMenuItems>
+          <HamburgerMenuItems>MINTING</HamburgerMenuItems>
+          <HamburgerMenuItems>CONTACT</HamburgerMenuItems>
         </HamburgerMenuItemsWrapper>
       </HamburgerMenu>
     </HamburgerContainer>

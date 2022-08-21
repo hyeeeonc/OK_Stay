@@ -107,13 +107,13 @@ const ArticleItemTitle = styled.div`
 
   color: ${palette.gray[9]};
   @media (max-width: 1199px) {
-    font-size: 26px;
-    padding-bottom: 5px;
+    font-size: 23px;
+    margin-bottom: 0px;
   }
 
   @media (max-height: 900px) {
-    font-size: 26px;
-    padding-bottom: 5px;
+    font-size: 23px;
+    padding-bottom: 0px;
   }
 `
 
@@ -135,6 +135,14 @@ const ArticleitemContent = styled.div`
   -webkit-box-orient: vertical;
 
   overflow: hidden;
+
+  @media (max-width: 1199px) {
+    font-size: 16px;
+  }
+
+  @media (max-height: 900px) {
+    font-size: 16px;
+  }
 `
 
 type ArticleItemsProps = {
@@ -152,7 +160,7 @@ const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
   )
   return (
     <ArticleItem onClick={_articleModalOpenHandler}>
-      <ArticleItemImage src={article.image}></ArticleItemImage>
+      <ArticleItemImage src={article.modalImage}></ArticleItemImage>
       <ArticleItemTextWrapper>
         <ArticleItemTitle>{article.title}</ArticleItemTitle>
         <ArticleitemContent>{article.content}</ArticleitemContent>
