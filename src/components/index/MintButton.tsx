@@ -14,7 +14,7 @@ const MintButtonBlock = styled.div`
 
   position: fixed;
   right: calc(50vw - 508px);
-  bottom: calc((100vh - 56px) / 2 - 310px - 105px);
+  bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 310px - 105px);
 
   display: flex;
   flex-direction: row;
@@ -39,7 +39,7 @@ const MintButtonBlock = styled.div`
     border-radius: 9px;
 
     right: calc(50vw - 365px);
-    bottom: calc((100vh - 56px) / 2 - 220px - 97px);
+    bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 220px - 97px);
     font-size: 16px;
   }
 
@@ -49,7 +49,7 @@ const MintButtonBlock = styled.div`
     border-radius: 9px;
 
     right: calc(50vw - 365px);
-    bottom: calc((100vh - 56px) / 2 - 220px - 97px);
+    bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 220px - 97px);
     font-size: 16px;
   }
 

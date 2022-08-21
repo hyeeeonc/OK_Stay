@@ -14,21 +14,21 @@ const DropDownMenuBlock = styled.div`
   width: 145px;
   height: 200px;
   left: calc(50vw - 520px);
-  bottom: calc(50vh - 305px + 208px - 250px);
+  bottom: calc((calc(100vh - calc(100vh - 100%))) / 2 - 305px + 208px - 250px);
   background-color: ${palette.gray[2]};
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 
-  transition: all 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
 
   @media (max-width: 1199px) {
     left: calc(50vw - 365px - 5px);
-    bottom: calc(50vh - 210px - 45px);
+    bottom: calc((calc(100vh - calc(100vh - 100%))) / 2 - 210px - 45px);
   }
 
   @media (max-height: 900px) {
     left: calc(50vw - 365px - 5px);
-    bottom: calc(50vh - 210px - 45px);
+    bottom: calc((calc(100vh - calc(100vh - 100%))) / 2 - 210px - 45px);
   }
 
   @media (max-width: 767px) {
@@ -175,16 +175,16 @@ export const DropDownButtonBlock = styled.div`
   width: 104px;
   height: 104px;
 
-  bottom: calc((100vh - 56px) / 2 - 305px - 133px);
+  bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 305px - 133px);
   left: calc(50vw - 508px - 20px);
 
   @media (max-width: 1199px) {
-    bottom: calc((100vh - 56px) / 2 - 220px - 123px);
+    bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 220px - 123px);
     left: calc(50vw - 365px - 20px);
   }
 
   @media (max-height: 900px) {
-    bottom: calc((100vh - 56px) / 2 - 220px - 123px);
+    bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 220px - 123px);
     left: calc(50vw - 365px - 20px);
   }
 

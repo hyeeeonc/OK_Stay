@@ -30,7 +30,7 @@ const IndexWrapper = styled.main`
   top: 56px;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 56px);
+  height: calc(calc(100vh - calc(100vh - 100%)) - 56px);
   background-color: ${palette.gray[0]};
   display: flex;
   align-items: center;
@@ -56,17 +56,17 @@ const Spacer = styled.div`
 
 const IndicatorBlock = styled.div`
   position: fixed;
-  top: calc((100vh - 56px) / 2 - 305px);
+  top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 305px);
   left: calc(50vw - 450px);
   display: flex;
   align-items: center;
 
   @media (max-width: 1199px) {
-    top: calc((100vh - 56px) / 2 - 225px);
+    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 225px);
     left: calc(50vw - 330px);
   }
   @media (max-height: 900px) {
-    top: calc((100vh - 56px) / 2 - 225px);
+    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 225px);
     left: calc(50vw - 330px);
   }
 

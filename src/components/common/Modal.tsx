@@ -13,7 +13,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s;
+  transition: opacity 0.3s;
 `
 
 export const ContentArea = styled.div`
@@ -22,7 +22,7 @@ export const ContentArea = styled.div`
   height: 520px;
   left: calc(50vw - 435px);
   background-color: ${palette.gray[9]};
-  transition: 0.3s;
+  transition: opacity 0.3s;
   display: flex;
   justify-content: center;
   border-radius: 10px;

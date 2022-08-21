@@ -51,6 +51,7 @@ const BackgroundTri = styled.div`
   left: -100px;
   top: 230px;
   transition: all 1500ms ease 0s;
+  opacity: 0.8;
 
   @keyframes topToBottom {
     0% {
@@ -130,6 +131,7 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({ language }) {
           right: '-100px',
           bottom: '50px',
           animation: 'bottomToHigh 100s infinite linear',
+          opacity: 0.8,
         }}
       />
 
