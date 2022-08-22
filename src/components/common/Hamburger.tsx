@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
+import { navigate } from 'gatsby'
 
 const HamburgerContainer = styled.div`
   width: 52px;
@@ -114,6 +115,7 @@ const HamburgerMenuItems = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
+  cursor: pointer;
 
   color: ${palette.gray[8]};
 `
@@ -130,6 +132,8 @@ const HamburgerMenuLanguage = styled.div`
   letter-spacing: -0.02em;
   margin-bottom: 28px;
 
+  cursor: pointer;
+
   color: ${palette.gray[8]};
 `
 
@@ -142,11 +146,13 @@ const HamburgerMenuLanguageIcon = styled.div`
 interface HamburgerProps {
   changeLanguage: React.MouseEventHandler
   language: Language
+  modalOpenHandler: React.MouseEventHandler
 }
 
 const Hamburger: FunctionComponent<HamburgerProps> = function ({
   language,
   changeLanguage,
+  modalOpenHandler,
 }) {
   const hamburgerClicker = useRef<HTMLDivElement>(null)
   const hamburgerCheck = useRef<HTMLInputElement>(null)
@@ -202,9 +208,14 @@ const Hamburger: FunctionComponent<HamburgerProps> = function ({
             </HamburgerMenuLanguageIcon>
           </HamburgerMenuLanguage>
 
-          <HamburgerMenuItems>INFORMATION</HamburgerMenuItems>
-          <HamburgerMenuItems>MINTING</HamburgerMenuItems>
-          <HamburgerMenuItems>CONTACT</HamburgerMenuItems>
+          <HamburgerMenuItems
+            onClick={() => navigate(`/minting?lang=${language}`)}
+          >
+            MINTING
+          </HamburgerMenuItems>
+          <HamburgerMenuItems onClick={modalOpenHandler}>
+            CONTACT
+          </HamburgerMenuItems>
         </HamburgerMenuItemsWrapper>
       </HamburgerMenu>
     </HamburgerContainer>

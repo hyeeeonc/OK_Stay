@@ -65,48 +65,48 @@ const RoadmapBodyLineContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  padding-top: 42px;
+  padding-top: 14px;
   width: 120px;
   @media (max-width: 1199px) {
-    padding-top: 30px;
+    padding-top: px;
     width: 95px;
   }
 
   @media (max-height: 900px) {
-    padding-top: 30px;
+    padding-top: 14px;
     width: 95px;
   }
 `
 
 const RoadmapBodyLine = styled.div`
   width: 2px;
-  height: 100px;
+  height: 96px;
   background-color: white;
   flex: none;
   @media (max-width: 1199px) {
     width: 1.6px;
-    height: 80px;
+    height: 83px;
   }
 
   @media (max-height: 900px) {
     width: 1.6px;
-    height: 80px;
+    height: 83px;
   }
 `
 
 const RoadmapBodySecondLine = styled.div`
   width: 2px;
-  height: 100px;
+  height: 96px;
   background-color: white;
   flex: none;
   @media (max-width: 1199px) {
     width: 1.6px;
-    height: 80px;
+    height: 127px;
   }
 
   @media (max-height: 900px) {
     width: 1.6px;
-    height: 80px;
+    height: 127px;
   }
 `
 
@@ -305,16 +305,19 @@ const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
         page={page}
       >
         <RoadmapBodyLineContainer>
-          {roadmaps.map((_, index) =>
-            index === roadmaps.length - 1 ? (
-              <RoadmapBodyBall />
-            ) : (
-              <>
-                <RoadmapBodyBall />
-                <RoadmapBodyLine />
-              </>
-            ),
-          )}
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+
+          <RoadmapBodyBall />
+          <RoadmapBodySecondLine />
+
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+
+          <RoadmapBodyBall />
+          <RoadmapBodyLine />
+
+          <RoadmapBodyBall />
         </RoadmapBodyLineContainer>
 
         <RoadmapBodyTextContainer>

@@ -63,6 +63,7 @@ const ArticleItem = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 40px;
+  cursor: pointer;
   @media (max-width: 1199px) {
     margin-bottom: 28px;
   }

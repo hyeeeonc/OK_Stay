@@ -2,10 +2,12 @@ import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import MobileBenefit from './mobileItems/MobileBenefit'
 import { Language } from 'types/common/language'
+import { ArticleType } from 'types/index/carousel/Article'
 import MobileOkra from './mobileItems/MobileOkra'
 import MobileProcess from './mobileItems/MobileProcess'
 import MobileRoadmap from './mobileItems/MobileRoadmap'
 import MobileQnA from './mobileItems/MobileQnA'
+import MobileArticle from './mobileItems/MobileArticle'
 
 const MobileMainContainer = styled.div`
   width: 500px;
@@ -111,9 +113,13 @@ const BottomSpacer = styled.div`
 
 interface MobileMainProps {
   language: Language
+  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
 }
 
-const MobileMain: FunctionComponent<MobileMainProps> = function ({ language }) {
+const MobileMain: FunctionComponent<MobileMainProps> = function ({
+  language,
+  articleModalOpenHandler,
+}) {
   return (
     <MobileMainContainer>
       <BackgroundCircle
@@ -155,6 +161,10 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({ language }) {
       <MobileRoadmap language={language} />
       <MobileProcess language={language} />
       <MobileQnA language={language} />
+      <MobileArticle
+        language={language}
+        articleModalOpenHandler={articleModalOpenHandler}
+      />
 
       <BottomSpacer />
 

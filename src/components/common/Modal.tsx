@@ -14,27 +14,15 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   transition: opacity 0.3s;
-`
 
-export const ContentArea = styled.div`
-  position: absolute;
-  width: 870px;
-  height: 520px;
-  left: calc(50vw - 435px);
-  background-color: ${palette.gray[9]};
-  transition: opacity 0.3s;
-  display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  overflow-x: scroll;
-  @media (max-width: 900px) {
-    width: 760px;
-    left: calc(50vw - 380px);
+  @media (max-width: 767px) {
+    top: 48px;
+    height: calc(calc(100vh - calc(100vh - 100%)) - 48px);
   }
 `
 
 export const ModalContactWrapper = styled.section`
-  max-width: 704px;
+  max-width: 790px;
   display: flex;
   flex-direction: column;
 `
@@ -47,6 +35,10 @@ export const ModalTitle = styled.div`
   line-height: 150%;
   color: ${palette.gray[0]};
   margin: 40px 0 24px 0;
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+  }
 `
 
 export const ModalExit = styled.div`
@@ -55,12 +47,21 @@ export const ModalExit = styled.div`
   top: calc(50vh - 260px - 56px + 8px);
 
   @media (max-width: 1090px) {
+    width: 80px;
+    height: 80px;
     left: calc(50vw + 435px - 85px);
-    top: calc(50vh - 260px - 56px - 80px);
+    top: calc(50vh - 260px - 56px - 70px);
   }
 
   @media (max-width: 900px) {
+    width: 80px;
+    height: 80px;
+
     left: calc(50vw + 380px - 85px);
-    top: calc(50vh - 260px - 56px - 80px);
+    top: calc(50vh - 260px - 56px - 70px);
+  }
+
+  @media (max-width: 767px) {
+    display: none;
   }
 `

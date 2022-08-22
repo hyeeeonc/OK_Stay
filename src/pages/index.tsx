@@ -62,11 +62,11 @@ const IndicatorBlock = styled.div`
   align-items: center;
 
   @media (max-width: 1199px) {
-    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 225px);
+    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 210px);
     left: calc(50vw - 330px);
   }
   @media (max-height: 900px) {
-    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 225px);
+    top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 210px);
     left: calc(50vw - 330px);
   }
 
@@ -263,7 +263,22 @@ const IndexPage: FunctionComponent = function () {
           />
           <Spacer />
           <MobileIndexWrapper>
-            <MobileMain language={language} />
+            <ContactModal
+              modalCloseHandler={modalCloseHandler}
+              modalOpened={modalOpened}
+            />
+
+            <ArticleModal
+              {...{
+                ...articleModal,
+                modalCloseHandler: articleModalCloseHandler,
+              }}
+            />
+
+            <MobileMain
+              language={language}
+              articleModalOpenHandler={articleModalOpenHandler}
+            />
           </MobileIndexWrapper>
           <DropDown
             dropDownOpened={dropDownOpened}

@@ -1,16 +1,63 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../../lib/styles/palette'
-import {
-  Container,
-  ContentArea,
-  ModalContactWrapper,
-  ModalTitle,
-  ModalExit,
-} from '../../common/Modal'
+import { Container, ModalTitle, ModalExit } from '../../common/Modal'
 
 import { ModalProps } from 'types/index/modal/Modal'
 
+const ContentArea = styled.div`
+  position: absolute;
+  width: 870px;
+  height: 520px;
+  left: calc(50vw - 435px);
+  background-color: ${palette.gray[9]};
+  transition: opacity 0.3s;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  @media (max-width: 900px) {
+    width: 760px;
+    left: calc(50vw - 380px);
+  }
+
+  @media (max-width: 767px) {
+    position: fixed;
+    top: calc(48px + 100px);
+    left: calc(50vw - 250px);
+    height: auto;
+
+    max-width: 460px;
+
+    padding: 0 20px;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 500px) {
+    width: calc(100vw - 32px - 40px);
+    top: calc(48px + 50px);
+
+    left: 16px;
+  }
+`
+
+const ContactModalBodyWrapper = styled.div`
+  max-width: 704px;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`
+const ContactModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
 const ContactModalTitle = styled.input`
   width: 664px;
   height: 48px;
@@ -19,6 +66,30 @@ const ContactModalTitle = styled.input`
   background-color: ${palette.gray[8]};
   border-radius: 6px;
   margin-bottom: 1.5rem;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[0]};
+
+  ::placeholder {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    color: ${palette.gray[5]};
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% - 40px);
+  }
 `
 
 const ContactModalContent = styled.textarea`
@@ -27,8 +98,32 @@ const ContactModalContent = styled.textarea`
   border: none;
   padding: 16px 20px;
 
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${palette.gray[0]};
+
   background-color: ${palette.gray[8]};
   border-radius: 6px;
+
+  ::placeholder {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+
+    color: ${palette.gray[5]};
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% - 40px);
+  }
 `
 
 const ContactModalButton = styled.button`
@@ -52,6 +147,13 @@ const ContactModalButton = styled.button`
   line-height: 150%;
   letter-spacing: -0.02em;
   color: white;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
 `
 
 const ContactModal: FunctionComponent<ModalProps> = function ({
@@ -73,9 +175,9 @@ const ContactModal: FunctionComponent<ModalProps> = function ({
           opacity: modalOpened == true ? 1 : 0,
         }}
       >
-        <ModalContactWrapper>
+        <ContactModalBodyWrapper>
           <ModalTitle>Contact Us</ModalTitle>
-          <form
+          <ContactModalForm
             className="gform"
             action="https://script.google.com/macros/s/AKfycbxBg-_4Vmd2r4Jd2PAqqnGwmjvWHhbbURIqsb__5V63uj2JNqTP11oyPyIpp5J4ErypGQ/exec"
             method="POST"
@@ -84,14 +186,14 @@ const ContactModal: FunctionComponent<ModalProps> = function ({
             <ContactModalTitle
               type="email"
               name="email"
-              placeholder="E-Mail"
+              placeholder="답변받으실 이메일을 입력해주세요."
               required
             />
 
             <ContactModalTitle
               type="text"
               name="title"
-              placeholder="제목을 입력해주세요"
+              placeholder="제목을 입력해주세요."
               required
             />
             <ContactModalContent
@@ -102,8 +204,8 @@ const ContactModal: FunctionComponent<ModalProps> = function ({
               required
             ></ContactModalContent>
             <ContactModalButton type="submit">보내기</ContactModalButton>
-          </form>
-        </ModalContactWrapper>
+          </ContactModalForm>
+        </ContactModalBodyWrapper>
       </ContentArea>
       <ModalExit
         style={{

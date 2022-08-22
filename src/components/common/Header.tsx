@@ -2,9 +2,8 @@ import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 import { HeaderMode } from 'types/common/Header'
-import { navigate } from 'gatsby'
 
 const HeaderBlock = styled.div`
   width: 100vw;

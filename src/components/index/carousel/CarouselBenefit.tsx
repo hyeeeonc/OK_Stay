@@ -77,16 +77,16 @@ const CarouselBodyItems = styled.div`
 const CarouselBodyIconContainer = styled.img`
   width: 54px;
   height: 54px;
-  padding: 13px 13px 13px 13px;
+  padding: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 40px;
 
   @media (max-width: 1199px) {
-    width: 38px;
-    height: 38px;
-    padding: 0;
+    width: 42px;
+    height: 42px;
+    padding: 0 13px;
   }
 `
 

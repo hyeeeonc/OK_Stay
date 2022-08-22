@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Language } from 'types/common/language'
+import { ArticleType } from 'types/index/carousel/Article'
+
 
 export const MobileItem = styled.section`
   background: rgba(255, 255, 255, 0.26);
@@ -18,7 +20,7 @@ export const MobileItem = styled.section`
 export const MobileItemTitleWrapper = styled.div`
   margin: 60px 24px 0px 24px;
   flex: none;
-  width: 100%;
+  width: calc(100% - 48px);
 
   font-family: 'Termina';
   font-style: normal;
@@ -50,4 +52,10 @@ export const MobileItemBody = styled.div`
 
 export interface MobileItemsProps {
   language: Language
+}
+
+export type MobileArticleProps = {
+  language: Language
+  articleModalOpenHandler: (article: ArticleType) => React.MouseEventHandler
+
 }
