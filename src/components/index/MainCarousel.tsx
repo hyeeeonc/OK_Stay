@@ -75,7 +75,7 @@ interface MainCarouselProps {
   headerPage: number
   language: Language
   articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
-  getIndexCarouselPage
+  getIndexCarouselPage: React.Dispatch<React.SetStateAction<number>>
 }
 
 const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
@@ -225,7 +225,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
         y: e.changedTouches[0].pageY,
       })
     },
-    [carouselPage],
+    [carouselPage, touchPos],
   )
 
   const touchEnd = useCallback(
@@ -233,14 +233,13 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
       if (!isScrollable.current) return
 
       const deltaX: number = touchPos.x - e.changedTouches[0].pageX
-
       if (deltaX > 30) {
         nextPage()
       } else if (deltaX < -30) {
         prevPage()
       }
     },
-    [carouselPage],
+    [carouselPage, touchPos],
   )
 
   const defaultCarouselProps: CarouselProps = {
