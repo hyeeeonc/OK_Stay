@@ -245,6 +245,7 @@ const IndexPage: FunctionComponent = function () {
             <DropDown
               dropDownOpened={dropDownOpened}
               dropDownButtonHandler={dropDownButtonHandler}
+              dropDownMode={'MAIN'}
             />
             <MintButton dday={dday} />
           </IndexWrapper>
@@ -283,6 +284,7 @@ const IndexPage: FunctionComponent = function () {
           <DropDown
             dropDownOpened={dropDownOpened}
             dropDownButtonHandler={dropDownButtonHandler}
+            dropDownMode={'MAIN'}
           />
           <MintButton dday={dday} />
         </>

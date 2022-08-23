@@ -156,7 +156,7 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({
         </svg>
       </BackgroundTri>
 
-      <MobileOkra />
+      <MobileOkra language={language} />
       <MobileBenefit language={language} />
       <MobileRoadmap language={language} />
       <MobileProcess language={language} />

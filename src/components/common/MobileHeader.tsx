@@ -27,6 +27,34 @@ const Logo = styled.div`
   z-index: 55;
 `
 
+const HeaderMintingLanguageContainer = styled.div`
+  height: 100%;
+  margin-right: 13px;
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+`
+
+const HeaderMintingLanguage = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.002em;
+
+  color: #ffffff;
+`
+
+const HeaderMintingLanguageIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 8px;
+`
+
 const NavWrapper = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -151,7 +179,33 @@ const MobileHeader: FunctionComponent<HeaderProps> = function ({
           modalOpenHandler={modalOpenHandler}
         />
       ) : (
-        <span onClick={changeLanguage}>{language}</span>
+        <HeaderMintingLanguageContainer>
+          <HeaderMintingLanguage onClick={changeLanguage}>
+            {language}
+          </HeaderMintingLanguage>
+          <HeaderMintingLanguageIcon>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="9" cy="9" r="8" stroke="white" stroke-width="2" />
+              <path
+                d="M9 1C11.336 2.20781 13 5.33393 13 9C13 12.6661 11.336 15.7922 9 17"
+                stroke="white"
+                stroke-width="2"
+              />
+              <path
+                d="M9 1C6.66404 2.20781 5 5.33393 5 9C5 12.6661 6.66404 15.7922 9 17"
+                stroke="white"
+                stroke-width="2"
+              />
+              <path d="M17 9L1 9" stroke="white" stroke-width="2" />
+            </svg>
+          </HeaderMintingLanguageIcon>
+        </HeaderMintingLanguageContainer>
       )}
     </HeaderBlock>
   )

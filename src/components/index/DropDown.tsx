@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../lib/styles/palette'
 import { useMediaQuery } from 'react-responsive'
+import { DropDownMode } from 'types/common/dropDown'
 
 const DropDownMenuBlock = styled.div`
   display: flex;
@@ -41,6 +42,29 @@ const DropDownMenuBlock = styled.div`
   }
 `
 
+const DropDownMenuMintingBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 0 16px 20px;
+
+  position: fixed;
+  width: 145px;
+  height: 200px;
+  left: calc(50vw - 845px / 2);
+  bottom: 120px;
+  background-color: ${palette.gray[2]};
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  transition: opacity 0.3s ease-in, z-index 0.3s cubic-bezier(0, 1, 1, 0);
+
+  @media (max-width: 880px) {
+    left: 20px;
+  }
+`
+
 const DropDownMenuItem = styled.div`
   display: flex;
   flex-direction: row;
@@ -52,6 +76,7 @@ const DropDownMenuItem = styled.div`
   flex: none;
 
   color: ${palette.gray[8]};
+  cursor: pointer;
 
   font-family: 'Pretendard';
   font-style: normal;
@@ -69,13 +94,18 @@ const DropDownMenuLogo = styled.div`
 
 type DropDownMenuProps = {
   dropDownOpened: boolean
+  dropDownMode: DropDownMode
 }
 
 const DropDownMenu: FunctionComponent<DropDownMenuProps> = function ({
   dropDownOpened,
+  dropDownMode,
 }) {
+  const DropDownBlock =
+    dropDownMode === 'MAIN' ? DropDownMenuBlock : DropDownMenuMintingBlock
+
   return (
-    <DropDownMenuBlock
+    <DropDownBlock
       style={{
         opacity: dropDownOpened ? 1 : 0,
         zIndex: dropDownOpened ? 40 : -40,
@@ -160,16 +190,11 @@ const DropDownMenu: FunctionComponent<DropDownMenuProps> = function ({
         </DropDownMenuLogo>
         <h4>Facebook</h4>
       </DropDownMenuItem>
-    </DropDownMenuBlock>
+    </DropDownBlock>
   )
 }
 
 export const DropDownButtonBlock = styled.div`
-  // display: flex;
-  // flex-direction: row;
-  // align-items: flex-start;
-  // padding: 0px;
-
   position: fixed;
 
   width: 104px;
@@ -177,6 +202,8 @@ export const DropDownButtonBlock = styled.div`
 
   bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 305px - 133px);
   left: calc(50vw - 508px - 20px);
+
+  cursor: pointer;
 
   @media (max-width: 1199px) {
     bottom: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 220px - 123px);
@@ -200,12 +227,39 @@ export const DropDownButtonBlock = styled.div`
     left: 1px;
   }
 `
+
+const DropDownButtonMintingBlock = styled.div`
+  position: fixed;
+  z-index: 1;
+
+  width: 104px;
+  height: 104px;
+
+  bottom: 16px;
+  left: calc(50vw - 845px / 2 - 20px);
+
+  cursor: pointer;
+
+  @media (max-width: 880px) {
+    left: 0px;
+  }
+  @media (max-width: 767px) {
+    width: 48px;
+    height: 48px;
+
+    bottom: 44px;
+    left: -2px;
+  }
+`
+
 type DropDownButtonProps = {
   dropDownButtonHandler: React.MouseEventHandler
+  dropDownMode: DropDownMode
 }
 
 const DropDownButton: FunctionComponent<DropDownButtonProps> = function ({
   dropDownButtonHandler,
+  dropDownMode,
 }) {
   const isPc = useMediaQuery({
     query: '(min-width:768px)',
@@ -214,8 +268,11 @@ const DropDownButton: FunctionComponent<DropDownButtonProps> = function ({
     query: '(max-width:767px)',
   })
 
+  const DropDownBlock =
+    dropDownMode === 'MAIN' ? DropDownButtonBlock : DropDownButtonMintingBlock
+
   return (
-    <DropDownButtonBlock onClick={dropDownButtonHandler}>
+    <DropDownBlock onClick={dropDownButtonHandler}>
       {isPc && (
         <svg
           width="104"
@@ -397,7 +454,7 @@ const DropDownButton: FunctionComponent<DropDownButtonProps> = function ({
           </defs>
         </svg>
       )}
-    </DropDownButtonBlock>
+    </DropDownBlock>
   )
 }
 
@@ -412,16 +469,24 @@ const DropDownWrapper = styled.div`
 type DropDownProps = {
   dropDownButtonHandler: React.MouseEventHandler
   dropDownOpened: boolean
+  dropDownMode: DropDownMode
 }
 
 const DropDown: FunctionComponent<DropDownProps> = function ({
   dropDownButtonHandler,
   dropDownOpened,
+  dropDownMode,
 }) {
   return (
     <DropDownWrapper>
-      <DropDownMenu dropDownOpened={dropDownOpened} />
-      <DropDownButton dropDownButtonHandler={dropDownButtonHandler} />
+      <DropDownMenu
+        dropDownOpened={dropDownOpened}
+        dropDownMode={dropDownMode}
+      />
+      <DropDownButton
+        dropDownButtonHandler={dropDownButtonHandler}
+        dropDownMode={dropDownMode}
+      />
     </DropDownWrapper>
   )
 }

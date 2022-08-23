@@ -1,6 +1,10 @@
 import styled from '@emotion/styled'
 import React, { FunctionComponent } from 'react'
-import { MobileItem, MobileItemTitleWrapper } from './MobileItems'
+import {
+  MobileItem,
+  MobileItemTitleWrapper,
+  MobileItemsProps,
+} from './MobileItems'
 
 const MobileOkraLogo = styled.div`
   background: rgba(255, 255, 255, 0.1);
@@ -30,7 +34,9 @@ const MobileOkraItemBody = styled.div`
   flex: none;
 `
 
-const MobileOkra: FunctionComponent = function () {
+const MobileOkra: FunctionComponent<MobileItemsProps> = function ({
+  language,
+}) {
   return (
     <MobileItem>
       <MobileOkraLogo>
@@ -80,11 +86,15 @@ const MobileOkra: FunctionComponent = function () {
         </svg>
       </MobileOkraLogo>
       <MobileItemTitleWrapper>Okra Seoul NFT</MobileItemTitleWrapper>
-      <MobileOkraItemBody>
-        해외 유명 페스티벌, 공연, 클럽 등 다양한 문화 공간을 기획, 제작한 멤버가
-        모인 OKRASEOUL이 제공하는 문화행사를 더 특별하게 즐길 수 있는 Culture
-        Membership NFT
-      </MobileOkraItemBody>
+      {language === 'KOR' ? (
+        <MobileOkraItemBody>
+          해외 유명 페스티벌, 공연, 클럽 등 다양한 문화 공간을 기획, 제작한
+          멤버가 모인 OKRASEOUL이 제공하는 문화행사를 더 특별하게 즐길 수 있는
+          Culture Membership NFT
+        </MobileOkraItemBody>
+      ) : (
+        <MobileOkraItemBody>eng TEst</MobileOkraItemBody>
+      )}
     </MobileItem>
   )
 }

@@ -71,6 +71,10 @@ const reset = css`
       overflow-y: scroll;
       overflow-x: hidden;
       height: -webkit-fill-available;
+      ::-webkit-scrollbar {
+        display: none;
+      }
+  
     }
   }
 

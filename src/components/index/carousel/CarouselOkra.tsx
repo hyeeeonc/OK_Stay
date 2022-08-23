@@ -99,12 +99,21 @@ const CarouselOkra: FunctionComponent<CarouselProps> = function ({
         </CarouselIcon>
         <CarouselTitle>Okra Seoul NFT</CarouselTitle>
       </CarouselTitleWrapper>
-      <CarouselBody>
-        해외 유명 페스티벌, 공연, 클럽 등 다양한 문화 공간을
-        <br />
-        기획, 제작한 멤버가 모인 OKRASEOUL이 제공하는 문화행사를
-        <br />더 특별하게 즐길 수 있는 Culture Membership NFT
-      </CarouselBody>
+      {language === 'KOR' ? (
+        <CarouselBody>
+          해외 유명 페스티벌, 공연, 클럽 등 다양한 문화 공간을
+          <br />
+          기획, 제작한 멤버가 모인 OKRASEOUL이 제공하는 문화행사를
+          <br />더 특별하게 즐길 수 있는 Culture Membership NFT
+        </CarouselBody>
+      ) : (
+        <CarouselBody>
+          eng
+          <br />
+          test
+          <br />중
+        </CarouselBody>
+      )}
     </CarouselItem>
   )
 }

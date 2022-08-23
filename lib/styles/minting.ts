@@ -53,6 +53,12 @@ const minting = css`
     height: -webkit-fill-available;
   }
 
+  body {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   html,
   body,
   div,
