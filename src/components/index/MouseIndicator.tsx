@@ -38,14 +38,14 @@ const MouseIndicatorFlagSvgContainer = styled.div`
       transform: translate(0px, 0px);
     }
     50% {
-      transform: translate(-2px, 0px);
+      transform: translate(-4px, 0px);
     }
     100% {
       transform: translate(0px, 0px);
     }
   }
 
-  animation: flagMove 2s infinite linear;
+  animation: flagMove 0.4s infinite ease-in;
 `
 
 interface MouseIndicatorProps {

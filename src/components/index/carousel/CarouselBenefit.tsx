@@ -88,6 +88,12 @@ const CarouselBodyIconContainer = styled.img`
     height: 42px;
     padding: 0 13px;
   }
+
+  @media (max-height: 900px) {
+    width: 42px;
+    height: 42px;
+    padding: 0 13px;
+  }
 `
 
 const CarouselBodyIcon: FunctionComponent = function () {

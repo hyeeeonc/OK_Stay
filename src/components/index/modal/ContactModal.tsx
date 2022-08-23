@@ -63,6 +63,7 @@ const ContactModalTitle = styled.input`
   height: 48px;
   padding: 0px 20px;
   border: none;
+  border: 0px;
   background-color: ${palette.gray[8]};
   border-radius: 6px;
   margin-bottom: 1.5rem;
@@ -75,6 +76,10 @@ const ContactModalTitle = styled.input`
   letter-spacing: -0.02em;
 
   color: ${palette.gray[0]};
+
+  :focus {
+    outline: none;
+  }
 
   ::placeholder {
     font-family: 'Pretendard';
@@ -109,6 +114,10 @@ const ContactModalContent = styled.textarea`
 
   background-color: ${palette.gray[8]};
   border-radius: 6px;
+
+  :focus {
+    outline: none;
+  }
 
   ::placeholder {
     font-family: 'Pretendard';
