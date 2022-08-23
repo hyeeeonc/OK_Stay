@@ -62,6 +62,7 @@ const DropDownMenuMintingBlock = styled.div`
 
   @media (max-width: 880px) {
     left: 20px;
+    bottom: 95px;
   }
 `
 

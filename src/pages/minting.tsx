@@ -46,7 +46,27 @@ const MintingPageCardBlock = styled.div`
   }
 `
 
+const BackgroundCircle = styled.div`
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 50%;
+  @keyframes tutsFade {
+    0% {
+      transform: translate(0px, 0px);
+    }
+    50% {
+      transform: translate(100vw, 10vh);
+    }
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }
+`
+
 const MintingPageCard = styled.div`
+  position: relative;
+
   width: 708px;
   height: 390px;
   border-radius: 40px;
@@ -67,9 +87,7 @@ const MintingPageCard = styled.div`
 const MintingPageCardTitle = styled.div`
   position: absolute;
   left: 9.04%;
-  right: 31.36%;
   top: 12.82%;
-  bottom: 47.18%;
 
   font-family: 'Termina';
   font-style: normal;
@@ -80,11 +98,8 @@ const MintingPageCardTitle = styled.div`
   color: ${palette.gray[9]};
 
   @media (max-width: 767px) {
-    position: absolute;
-    width: 162px;
-    height: 60px;
-    left: 26px;
-    top: 23px;
+    // left: 26px;
+    // top: 23px;
 
     font-size: 20px;
   }
@@ -92,10 +107,11 @@ const MintingPageCardTitle = styled.div`
 
 const MintingPageCardIconContainer = styled.div`
   position: absolute;
-  left: 80.37%;
-  right: 8.33%;
-  top: 17.95%;
-  bottom: 61.54%;
+  right: 59px;
+  top: 70px;
+
+  width: 80px;
+  height: 80px;
 
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -105,11 +121,13 @@ const MintingPageCardIconContainer = styled.div`
   align-items: center;
 
   @media (max-width: 767px) {
+    width: 40px;
+    height: 40px;
+
     position: absolute;
-    left: 78.12%;
-    right: 9.38%;
-    top: 17.22%;
-    bottom: 60.56%;
+    top: 31px;
+
+    right: 30px;
     border-radius: 6px;
   }
 `
@@ -474,6 +492,15 @@ const MintingPage: FunctionComponent = function () {
 
       <MintingPageBody>
         <MintingPageCardBlock>
+          <BackgroundCircle
+            style={{
+              backgroundColor: '#a058ed',
+              left: '-70px',
+              top: '-10px',
+              animation: 'tutsFade 150s infinite linear',
+            }}
+          />
+
           <MintingPageCard>
             <MintingPageCardTitle>
               MEMERSHIP
@@ -693,7 +720,7 @@ const MintingPage: FunctionComponent = function () {
             </MintingPageCardLogoContainer>
 
             <MintingPageCardOrderContainer>
-              No. 00001
+              No.&nbsp;00001
             </MintingPageCardOrderContainer>
           </MintingPageCard>
         </MintingPageCardBlock>
