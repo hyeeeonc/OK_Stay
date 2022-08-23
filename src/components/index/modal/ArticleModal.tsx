@@ -16,7 +16,7 @@ const ArticleModalContentBlock = styled.div`
   width: 870px;
   height: 520px;
   background-color: ${palette.gray[9]};
-  transition: 0.3s;
+  transition: opacity 0.3s, z-index 0.3s cubic-bezier(0, 1, 1, 0);
   border-radius: 10px;
 `
 
@@ -26,7 +26,7 @@ const ContentArea = styled.div`
   height: 520px;
   left: calc(50vw - 435px);
   background-color: ${palette.gray[9]};
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, z-index 0.3s cubic-bezier(0, 1, 1, 0);
   display: flex;
   justify-content: center;
   border-radius: 10px;

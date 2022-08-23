@@ -13,7 +13,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, z-index 0.3s cubic-bezier(0, 1, 1, 0);
 
   @media (max-width: 767px) {
     top: 48px;
