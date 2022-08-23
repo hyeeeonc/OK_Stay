@@ -155,10 +155,7 @@ const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
   article,
   articleModalOpenHandler,
 }) {
-  const _articleModalOpenHandler = useMemo(
-    () => articleModalOpenHandler(article),
-    [],
-  )
+  const _articleModalOpenHandler = articleModalOpenHandler(article)
   return (
     <ArticleItem onClick={_articleModalOpenHandler}>
       <ArticleItemImage src={article.modalImage}></ArticleItemImage>
@@ -215,7 +212,6 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
   useEffect(() => {
     setArticles(_ => edges.filter(({ node }) => node.language === language))
   }, [language])
-  console.log('article')
 
   return (
     <CarouselItem style={{ opacity: page === 5 ? 1 : 0.2 }}>

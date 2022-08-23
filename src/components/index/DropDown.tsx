@@ -19,7 +19,7 @@ const DropDownMenuBlock = styled.div`
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 
-  transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in, z-index 0.3s cubic-bezier(0, 1, 1, 0);
 
   @media (max-width: 1199px) {
     left: calc(50vw - 365px - 5px);

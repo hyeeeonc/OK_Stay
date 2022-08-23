@@ -58,10 +58,7 @@ const ArticleItems: FunctionComponent<MobileArticleItemsProps> = function ({
   article,
   articleModalOpenHandler,
 }) {
-  const _articleModalOpenHandler = useMemo(
-    () => articleModalOpenHandler(article),
-    [],
-  )
+  const _articleModalOpenHandler = articleModalOpenHandler(article)
   return (
     <MobileArticleBodyItems onClick={_articleModalOpenHandler}>
       <MobileArticleBodyItemsTitle>{article.title}</MobileArticleBodyItemsTitle>
