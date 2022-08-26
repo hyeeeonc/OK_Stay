@@ -114,11 +114,13 @@ const BottomSpacer = styled.div`
 interface MobileMainProps {
   language: Language
   articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
+  qnaModalOpenHandler: React.MouseEventHandler
 }
 
 const MobileMain: FunctionComponent<MobileMainProps> = function ({
   language,
   articleModalOpenHandler,
+  qnaModalOpenHandler,
 }) {
   return (
     <MobileMainContainer>
@@ -160,7 +162,10 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({
       <MobileBenefit language={language} />
       <MobileRoadmap language={language} />
       <MobileProcess language={language} />
-      <MobileQnA language={language} />
+      <MobileQnA
+        language={language}
+        qnaModalOpenHandler={qnaModalOpenHandler}
+      />
       <MobileArticle
         language={language}
         articleModalOpenHandler={articleModalOpenHandler}

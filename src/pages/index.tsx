@@ -16,6 +16,7 @@ import MobileMain from 'components/mobile/MobileMain'
 import DropDown from 'components/index/DropDown'
 import ContactModal from 'components/index/modal/ContactModal'
 import ArticleModal from 'components/index/modal/ArticleModal'
+import QnAModal from 'components/index/modal/QnAModal'
 import MintButton from 'components/index/MintButton'
 
 import { useMediaQuery } from 'react-responsive'
@@ -69,8 +70,6 @@ const IndicatorBlock = styled.div`
     top: calc((calc(100vh - calc(100vh - 100%)) - 56px) / 2 - 210px);
     left: calc(50vw - 330px);
   }
-
-  z-index: 10;
 `
 
 const IndicatorItems = styled.div`
@@ -149,6 +148,17 @@ const IndexPage: FunctionComponent = function () {
     [],
   )
 
+  const [qnaModalOpened, setQnAModalOpened] = useState<boolean>(false)
+
+  const qnaModalCloseHandler: React.MouseEventHandler = useCallback(
+    () => setQnAModalOpened(_ => false),
+    [],
+  )
+  const qnaModalOpenHandler: React.MouseEventHandler = useCallback(
+    () => setQnAModalOpened(_ => true),
+    [],
+  )
+
   const [dday, setDday] = useState<number>(0)
   useEffect(() => {
     setDday(_ => {
@@ -187,59 +197,12 @@ const IndexPage: FunctionComponent = function () {
           />
           <Spacer />
 
-          <IndicatorBlock>
-            <IndicatorItems
-              style={{
-                opacity: indexCarouselPage === 0 ? 1 : 0.2,
-              }}
-              onClick={() => setCarouselPageController(0)}
-            />
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 1 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(1)}
-            />
-
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 2 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(2)}
-            />
-
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 3 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(3)}
-            />
-
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 4 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(4)}
-            />
-
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 5 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(5)}
-            />
-
-            <IndicatorItems
-              style={{ opacity: indexCarouselPage === 6 ? 1 : 0.2 }}
-              onClick={() => setCarouselPageController(6)}
-            />
-          </IndicatorBlock>
-
           <IndexWrapper>
-            <ContactModal
-              modalCloseHandler={modalCloseHandler}
-              modalOpened={modalOpened}
-            ></ContactModal>
-            <ArticleModal
-              {...{
-                ...articleModal,
-                modalCloseHandler: articleModalCloseHandler,
-              }}
-            ></ArticleModal>
             <MainCarousel
               headerPage={carouselPageController}
               language={language}
               articleModalOpenHandler={articleModalOpenHandler}
+              qnaModalOpenHandler={qnaModalOpenHandler}
               getIndexCarouselPage={getIndexCarouselPage}
             />
             <DropDown
@@ -248,6 +211,62 @@ const IndexPage: FunctionComponent = function () {
               dropDownMode={'MAIN'}
             />
             <MintButton dday={dday} />
+
+            <ContactModal
+              modalCloseHandler={modalCloseHandler}
+              modalOpened={modalOpened}
+            />
+
+            <QnAModal
+              qnaModalCloseHandler={qnaModalCloseHandler}
+              qnaModalOpened={qnaModalOpened}
+              language={language}
+            />
+
+            <ArticleModal
+              {...{
+                ...articleModal,
+                modalCloseHandler: articleModalCloseHandler,
+              }}
+            />
+
+            <IndicatorBlock>
+              <IndicatorItems
+                style={{
+                  opacity: indexCarouselPage === 0 ? 1 : 0.2,
+                }}
+                onClick={() => setCarouselPageController(0)}
+              />
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 1 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(1)}
+              />
+
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 2 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(2)}
+              />
+
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 3 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(3)}
+              />
+
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 4 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(4)}
+              />
+
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 5 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(5)}
+              />
+
+              <IndicatorItems
+                style={{ opacity: indexCarouselPage === 6 ? 1 : 0.2 }}
+                onClick={() => setCarouselPageController(6)}
+              />
+            </IndicatorBlock>
           </IndexWrapper>
         </>
       )}
@@ -276,9 +295,16 @@ const IndexPage: FunctionComponent = function () {
               }}
             />
 
+            <QnAModal
+              qnaModalCloseHandler={qnaModalCloseHandler}
+              qnaModalOpened={qnaModalOpened}
+              language={language}
+            />
+
             <MobileMain
               language={language}
               articleModalOpenHandler={articleModalOpenHandler}
+              qnaModalOpenHandler={qnaModalOpenHandler}
             />
           </MobileIndexWrapper>
           <DropDown

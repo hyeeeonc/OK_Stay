@@ -45,7 +45,7 @@ const MouseIndicatorFlagSvgContainer = styled.div`
     }
   }
 
-  animation: flagMove 0.4s infinite ease-in;
+  animation: flagMove 0.8s infinite ease-in;
 `
 
 interface MouseIndicatorProps {

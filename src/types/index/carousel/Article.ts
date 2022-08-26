@@ -4,3 +4,4 @@ export type ArticleType = {
   image: string
   modalImage?: string
 }
+

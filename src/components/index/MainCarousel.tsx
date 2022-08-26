@@ -22,6 +22,7 @@ import { ArticleType } from 'types/index/carousel/Article'
 import useRefState from 'hooks/useRefState'
 import {
   CarouselArticleProps,
+  CarouselQnAProps,
   CarouselProps,
 } from 'types/index/carousel/CarouselProps'
 
@@ -75,6 +76,7 @@ interface MainCarouselProps {
   headerPage: number
   language: Language
   articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
+  qnaModalOpenHandler: React.MouseEventHandler
   getIndexCarouselPage: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -82,6 +84,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
   headerPage,
   language,
   articleModalOpenHandler,
+  qnaModalOpenHandler,
   getIndexCarouselPage,
 }) {
   const carouselBlock = useRef<HTMLDivElement>(null)
@@ -255,6 +258,10 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     innerScrollHandler,
   }
 
+  const qnaCarouselProps: CarouselQnAProps = {
+    ...innerScrollCarouselProps,
+    qnaModalOpenHandler,
+  }
   const articleCarouselProps: CarouselArticleProps = {
     ...innerScrollCarouselProps,
     articleModalOpenHandler,
@@ -370,7 +377,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
 
           <CarouselProcess {...innerScrollCarouselProps} />
 
-          <CarouselQnA {...innerScrollCarouselProps} />
+          <CarouselQnA {...qnaCarouselProps} />
 
           <CarouselArticle {...articleCarouselProps} />
 

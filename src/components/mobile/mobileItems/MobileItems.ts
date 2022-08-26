@@ -54,6 +54,11 @@ export interface MobileItemsProps {
   language: Language
 }
 
+export type MobileQnAProps = {
+  language: Language
+  qnaModalOpenHandler: React.MouseEventHandler
+}
+
 export type MobileArticleProps = {
   language: Language
   articleModalOpenHandler: (article: ArticleType) => React.MouseEventHandler

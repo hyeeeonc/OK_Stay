@@ -10,6 +10,11 @@ export type CarouselProps<E = HTMLDivElement> = {
   innerScrollHandler?: (ref: React.RefObject<E>) => React.WheelEventHandler
 }
 
+export type CarouselQnAProps<E = HTMLDivElement> = CarouselProps<E> & {
+  qnaModalOpenHandler:  React.MouseEventHandler
+}
+
+
 export type CarouselArticleProps<E = HTMLDivElement> = CarouselProps<E> & {
   articleModalOpenHandler: (article: ArticleType) => React.MouseEventHandler
 }

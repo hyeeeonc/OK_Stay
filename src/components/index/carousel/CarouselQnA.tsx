@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
+import { CarouselQnAProps } from 'types/index/carousel/CarouselProps'
 
 import {
   CarouselItem,
@@ -229,6 +229,40 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
     )
   }
 
+const ViewMoreContainer = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: ${palette.gray[8]};
+
+  cursor: pointer;
+
+  margin-top: 26px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 1199px) {
+    font-size: 22px;
+  }
+
+  @media (max-height: 900px) {
+    font-size: 22px;
+  }
+`
+
+const ViewMoreIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 6px;
+`
+
 const Spacer = styled.div`
   margin: 30px 0;
   @media (max-width: 1199px) {
@@ -240,12 +274,13 @@ const Spacer = styled.div`
   }
 `
 
-const CarouselQnA: FunctionComponent<CarouselProps> = function ({
+const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
   page,
   touchStart,
   touchEnd,
   scrollHandler,
   innerScrollHandler,
+  qnaModalOpenHandler,
   language,
 }) {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
@@ -276,8 +311,11 @@ const CarouselQnA: FunctionComponent<CarouselProps> = function ({
   `)
 
   const [qnas, setQnAs] = useState<Array<CarouselDataType>>([])
+  const [cardQnAs, setCardQnAs] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
-    setQnAs(_ => edges.filter(({ node }) => node.language == language))
+    const qnasSetter = edges.filter(({ node }) => node.language == language)
+    setQnAs(_ => qnasSetter)
+    setCardQnAs(_ => qnasSetter.slice(0, 5))
   }, [language])
 
   return (
@@ -313,7 +351,7 @@ const CarouselQnA: FunctionComponent<CarouselProps> = function ({
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
         <QnABody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
-          {qnas.map(({ node: { seq, title, content } }) => (
+          {cardQnAs.map(({ node: { seq, title, content } }) => (
             <CarouselAccordionItems
               seq={seq}
               title={`${seq}. ${title}`}
@@ -322,6 +360,49 @@ const CarouselQnA: FunctionComponent<CarouselProps> = function ({
               setSelectedQnA={setSelectedQnA}
             />
           ))}
+          <ViewMoreContainer onClick={qnaModalOpenHandler}>
+            더보기
+            <ViewMoreIcon>
+              <svg
+                width="24"
+                height="25"
+                viewBox="0 0 24 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <mask
+                  id="mask0_616_21419"
+                  style={{ maskType: 'alpha' }}
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="24"
+                  height="25"
+                >
+                  <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
+                </mask>
+                <g mask="url(#mask0_616_21419)"></g>
+                <g clip-path="url(#clip0_616_21419)">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M8.2318 6.85984C7.87824 7.28412 7.93556 7.91468 8.35984 8.26825L13.438 12.5L8.35984 16.7318C7.93556 17.0854 7.87824 17.7159 8.2318 18.1402C8.58537 18.5645 9.21593 18.6218 9.64021 18.2682L15.6402 13.2682C15.8682 13.0783 16 12.7968 16 12.5C16 12.2032 15.8682 11.9218 15.6402 11.7318L9.64021 6.7318C9.21593 6.37824 8.58537 6.43556 8.2318 6.85984Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_616_21419">
+                    <rect
+                      width="24"
+                      height="24"
+                      fill="white"
+                      transform="translate(0 0.5)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </ViewMoreIcon>
+          </ViewMoreContainer>
           <Spacer />
         </QnABody>
       </CarouselItem>

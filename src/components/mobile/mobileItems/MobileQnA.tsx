@@ -7,7 +7,7 @@ import {
   MobileItem,
   MobileItemTitleWrapper,
   MobileItemBody,
-  MobileItemsProps,
+  MobileQnAProps,
 } from './MobileItems'
 
 import {
@@ -136,7 +136,39 @@ const CarouselAccordionItems: FunctionComponent<CarouselAccordionItemsProps> =
     )
   }
 
-const MobileQnA: FunctionComponent<MobileItemsProps> = function ({ language }) {
+const ViewMoreContainer = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: ${palette.gray[8]};
+
+  cursor: pointer;
+
+  margin-top: 26px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+`
+
+const ViewMoreIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 18px;
+  height: 18px;
+
+  margin-left: 6px;
+`
+
+const MobileQnA: FunctionComponent<MobileQnAProps> = function ({
+  language,
+  qnaModalOpenHandler,
+}) {
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
 
   const {
@@ -158,7 +190,8 @@ const MobileQnA: FunctionComponent<MobileItemsProps> = function ({ language }) {
 
   const [qnas, setQnAs] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
-    setQnAs(_ => edges.filter(({ node }) => node.language == language))
+    const qnaSetter = edges.filter(({ node }) => node.language == language)
+    setQnAs(qnaSetter.slice(0, 5))
   }, [language])
 
   return (
@@ -174,6 +207,49 @@ const MobileQnA: FunctionComponent<MobileItemsProps> = function ({ language }) {
             setSelectedQnA={setSelectedQnA}
           />
         ))}
+        <ViewMoreContainer onClick={qnaModalOpenHandler}>
+          더보기
+          <ViewMoreIcon>
+            <svg
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <mask
+                id="mask0_616_21419"
+                style={{ maskType: 'alpha' }}
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="0"
+                width="24"
+                height="25"
+              >
+                <rect y="0.5" width="24" height="24" fill="#D9D9D9" />
+              </mask>
+              <g mask="url(#mask0_616_21419)"></g>
+              <g clip-path="url(#clip0_616_21419)">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8.2318 6.85984C7.87824 7.28412 7.93556 7.91468 8.35984 8.26825L13.438 12.5L8.35984 16.7318C7.93556 17.0854 7.87824 17.7159 8.2318 18.1402C8.58537 18.5645 9.21593 18.6218 9.64021 18.2682L15.6402 13.2682C15.8682 13.0783 16 12.7968 16 12.5C16 12.2032 15.8682 11.9218 15.6402 11.7318L9.64021 6.7318C9.21593 6.37824 8.58537 6.43556 8.2318 6.85984Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_616_21419">
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="white"
+                    transform="translate(0 0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+          </ViewMoreIcon>
+        </ViewMoreContainer>
       </MobileItemBody>
     </MobileItem>
   )
