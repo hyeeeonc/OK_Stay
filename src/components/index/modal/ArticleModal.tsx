@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { useContext } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../../lib/styles/palette'
 import {
@@ -7,8 +7,8 @@ import {
   ModalTitle,
   ModalExitIcon,
 } from '../../common/Modal'
-
-import { ArticleModalProps } from 'types/index/modal/Modal'
+import { ArticleModalContext } from 'hooks/contexts/ArticleModalProvider'
+import {LanguageContext} from 'hooks/contexts/LanguageProvider'
 
 const ArticleModalContentBlock = styled.div`
   overflow-y: hidden;
@@ -110,30 +110,33 @@ const ArticleModalBodyContent = styled.div`
   }
 `
 
-const ArticleModal: FunctionComponent<ArticleModalProps> = function ({
-  modalOpened,
-  modalCloseHandler,
-  article: { image, title, content, modalImage },
-}) {
+const ArticleModal = () => {
+  const {
+    articleModal: {
+      modalOpened,
+      article: { title, content, modalImage },
+    },
+    closeArticleModal,
+  } = useContext(ArticleModalContext)
   return (
     <>
       <Container
         style={{
-          zIndex: modalOpened == true ? 100 : -10,
-          opacity: modalOpened == true ? 1 : 0,
+          zIndex: modalOpened ? 100 : -10,
+          opacity: modalOpened ? 1 : 0,
         }}
-        onClick={modalCloseHandler}
+        onClick={closeArticleModal}
       ></Container>
       <ContentArea
         style={{
-          zIndex: modalOpened == true ? 101 : -11,
-          opacity: modalOpened == true ? 1 : 0,
+          zIndex: modalOpened ? 101 : -11,
+          opacity: modalOpened ? 1 : 0,
         }}
       >
         <ModalContactWrapper>
           <ModalTitle>
             {title}
-            <ModalExitIcon modalCloseHandler={modalCloseHandler} />
+            <ModalExitIcon modalCloseHandler={closeArticleModal} />
           </ModalTitle>
           <ArticleModalImgContainer>
             <ArticleModalImg src={modalImage} />

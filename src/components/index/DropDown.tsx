@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import palette from '../../../lib/styles/palette'
 import { useMediaQuery } from 'react-responsive'
-import { DropDownMode } from 'types/common/dropDown'
+import { DropDownMode } from 'types/common/DropDown'
 
 const DropDownMenuBlock = styled.div`
   display: flex;
@@ -468,16 +468,14 @@ const DropDownWrapper = styled.div`
 `
 
 type DropDownProps = {
-  dropDownButtonHandler: React.MouseEventHandler
-  dropDownOpened: boolean
   dropDownMode: DropDownMode
 }
 
-const DropDown: FunctionComponent<DropDownProps> = function ({
-  dropDownButtonHandler,
-  dropDownOpened,
-  dropDownMode,
-}) {
+const DropDown: FunctionComponent<DropDownProps> = function ({ dropDownMode }) {
+  const [dropDownOpened, setDropDownOpened] = useState(false)
+  const dropDownButtonHandler = () => {
+    setDropDownOpened(o => !o)
+  }
   return (
     <DropDownWrapper>
       <DropDownMenu

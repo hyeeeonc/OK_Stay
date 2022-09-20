@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
+  useContext,
 } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../../lib/styles/palette'
@@ -14,13 +15,13 @@ import {
   ModalExitIcon,
 } from '../../common/Modal'
 
-import { QnAModalProps } from 'types/index/modal/Modal'
-
 import { graphql, useStaticQuery } from 'gatsby'
 import {
   QnAListType,
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
+import { QnAModalContext } from 'hooks/contexts/QnAModalProvider'
+import {LanguageContext} from 'hooks/contexts/LanguageProvider'
 
 const ContentArea = styled.div`
   position: absolute;
@@ -268,13 +269,10 @@ const QnAModalBodyAccordionItems: FunctionComponent<CarouselAccordionItemsProps>
     )
   }
 
-const QnAModal: FunctionComponent<QnAModalProps> = function ({
-  qnaModalOpened,
-  qnaModalCloseHandler,
-  language,
-}) {
+const QnAModal = () => {
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
-
+  const { qnaModalOpened, toggleQnAModal } = useContext(QnAModalContext)
+  const { language } = useContext(LanguageContext)
   const {
     allQnaJson: { edges },
   }: QnAListType = useStaticQuery(graphql`
@@ -306,7 +304,7 @@ const QnAModal: FunctionComponent<QnAModalProps> = function ({
           zIndex: qnaModalOpened == true ? 100 : -10,
           opacity: qnaModalOpened == true ? 1 : 0,
         }}
-        onClick={qnaModalCloseHandler}
+        onClick={toggleQnAModal}
       ></Container>
       <ContentArea
         style={{
@@ -317,7 +315,7 @@ const QnAModal: FunctionComponent<QnAModalProps> = function ({
         <ModalContactWrapper>
           <ModalTitle>
             QnA
-            <ModalExitIcon modalCloseHandler={qnaModalCloseHandler} />
+            <ModalExitIcon modalCloseHandler={toggleQnAModal} />
           </ModalTitle>
           <QnAModalBodyContent>
             <QnAModalBodyAccordionWrapper>

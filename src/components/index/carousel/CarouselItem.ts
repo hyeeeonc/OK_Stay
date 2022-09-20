@@ -17,6 +17,7 @@ export const CarouselItem = styled.div`
   margin-right: calc(50vw - 508px - 200px);
   overflow: hidden;
   transition: opacity 1.5s linear;
+  will-change: opacity;
   @media (max-width: 1450px) {
     margin-right: calc(50vw - 508px - 80px);
   }
@@ -28,7 +29,6 @@ export const CarouselItem = styled.div`
     border-radius: 41px;
   }
 
-
   @media (max-height: 900px) {
     width: 728px;
     height: 438px;
@@ -39,7 +39,6 @@ export const CarouselItem = styled.div`
   @media (max-width: 970px) {
     margin-right: calc(50vw - 365px - 15px);
   }
-
 `
 
 export const CarouselTitleWrapper = styled.div`

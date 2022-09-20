@@ -2,8 +2,8 @@ import styled from '@emotion/styled'
 import React, {
   FunctionComponent,
   useCallback,
+  useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -18,13 +18,7 @@ import CarouselArticle from './carousel/CarouselArticle'
 
 import MouseIndicator from './MouseIndicator'
 import { Language } from 'types/common/language'
-import { ArticleType } from 'types/index/carousel/Article'
-import useRefState from 'hooks/useRefState'
-import {
-  CarouselArticleProps,
-  CarouselQnAProps,
-  CarouselProps,
-} from 'types/index/carousel/CarouselProps'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -35,6 +29,7 @@ const CarouselBlock = styled.div`
   display: flex;
   align-items: center;
   transition: all 1500ms ease 0s;
+  will-change: content;
 `
 
 const CarouselWrapper = styled.div`
@@ -54,42 +49,18 @@ const BackgroundCircle = styled.div`
   background-color: #a058ed;
   border-radius: 50%;
   transition: all 1500ms ease 0s;
+  will-change: content;
 `
 
 const BackgroundTri = styled.div`
   position: absolute;
   left: 100px;
   transition: all 1500ms ease 0s;
+  will-change: content;
 `
 
-const BackgroundRec = styled.div`
-  position: absolute;
-  transition: all 1500ms ease 0s;
-`
-
-type TouchPosition = {
-  x: number
-  y: number
-}
-
-interface MainCarouselProps {
-  headerPage: number
-  language: Language
-  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
-  qnaModalOpenHandler: React.MouseEventHandler
-  getIndexCarouselPage: React.Dispatch<React.SetStateAction<number>>
-}
-
-const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
-  headerPage,
-  language,
-  articleModalOpenHandler,
-  qnaModalOpenHandler,
-  getIndexCarouselPage,
-}) {
+const MainCarousel = () => {
   const carouselBlock = useRef<HTMLDivElement>(null)
-  const [touchPos, setTouchPos] = useState<TouchPosition>({ x: 0, y: 0 })
-  const [carouselPage, setCarouselPage] = useState<number>(0)
   const [xTrans, setXTrans] = useState<number>(0)
   const [windowSize, setWindowSize] = useState<{
     width: number
@@ -120,62 +91,6 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     }
   }, [])
 
-  const nextPage = useCallback(() => {
-    if (carouselPage === 6) {
-      return
-    } else {
-      setCarouselPage(carouselPage + 1)
-      getIndexCarouselPage(carouselPage + 1)
-      setScrollable(_ => false)
-      setTimeout(() => setScrollable(_ => true), 1500)
-    }
-  }, [carouselPage])
-
-  const prevPage = useCallback(() => {
-    if (carouselPage === 0) {
-      return
-    } else {
-      setCarouselPage(carouselPage - 1)
-      getIndexCarouselPage(carouselPage - 1)
-      setScrollable(_ => false)
-      setTimeout(() => setScrollable(_ => true), 1500)
-    }
-  }, [carouselPage])
-
-  const [_, setPrevScrollTime] = useRefState<Date>(new Date())
-  const [isScrollable, setScrollable] = useRefState<boolean>(true)
-  const innerScrollHandler = useCallback(
-    (ref: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
-      if (!isScrollable.current) return
-      setPrevScrollTime(t => {
-        const now = new Date()
-        const timeDiff = now.getTime() - t.getTime()
-
-        if (
-          ref.current.scrollHeight - Math.round(ref.current.scrollTop) <=
-          ref.current.clientHeight
-        ) {
-          if (e.deltaY > 0 && timeDiff >= 100) {
-            nextPage()
-            ref.current.scrollTo(0, 0)
-          }
-        } else if (ref.current.scrollTop === 0) {
-          if (e.deltaY < 0 && timeDiff >= 100) {
-            prevPage()
-            ref.current.scrollTo(0, 0)
-          }
-        }
-        return now
-      })
-    },
-    [carouselPage],
-  )
-
-  useEffect(() => {
-    setCarouselPage(_ => headerPage || 0)
-    getIndexCarouselPage(_ => headerPage || 0)
-  }, [headerPage])
-
   const calcPageWidth = useCallback(
     (cp: number) => {
       if (windowSize.height > 901) {
@@ -200,82 +115,20 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
     [windowSize],
   )
 
+  const { page } = useContext(CarouselContext)
   useEffect(() => {
-    setXTrans(_ => calcPageWidth(carouselPage))
-  }, [carouselPage, xTrans, windowSize])
-
-  const scrollHandler = useCallback(
-    (ref?: React.RefObject<HTMLDivElement>) => (e: React.WheelEvent) => {
-      if (!isScrollable.current) return
-
-      if (e.deltaY > 15) {
-        nextPage()
-      } else if (e.deltaY < -15) {
-        prevPage()
-      } else {
-        return
-      }
-      ref?.current.scrollTo(0, 0)
-    },
-    [carouselPage],
-  )
-
-  const touchStart = useCallback(
-    (e: React.TouchEvent) => {
-      if (!isScrollable.current) return
-      setTouchPos({
-        x: e.changedTouches[0].pageX,
-        y: e.changedTouches[0].pageY,
-      })
-    },
-    [carouselPage, touchPos],
-  )
-
-  const touchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      if (!isScrollable.current) return
-
-      const deltaX: number = touchPos.x - e.changedTouches[0].pageX
-      if (deltaX > 30) {
-        nextPage()
-      } else if (deltaX < -30) {
-        prevPage()
-      }
-    },
-    [carouselPage, touchPos],
-  )
-
-  const defaultCarouselProps: CarouselProps = {
-    page: carouselPage,
-    touchStart,
-    touchEnd,
-    scrollHandler,
-    language,
-  }
-
-  const innerScrollCarouselProps: CarouselProps = {
-    ...defaultCarouselProps,
-    innerScrollHandler,
-  }
-
-  const qnaCarouselProps: CarouselQnAProps = {
-    ...innerScrollCarouselProps,
-    qnaModalOpenHandler,
-  }
-  const articleCarouselProps: CarouselArticleProps = {
-    ...innerScrollCarouselProps,
-    articleModalOpenHandler,
-  }
+    setXTrans(calcPageWidth(page))
+  }, [page, xTrans, windowSize])
 
   return (
     <MainContainer>
       <BackgroundTri
         style={{
           top: `calc(100vh / 3)`,
-          transform: `rotate(-${carouselPage * 20}deg) translate3d(-${
+          transform: `rotate(-${page * 20}deg) translate3d(-${
             xTrans / 10
           }px, -${xTrans / 10}px, 0px)`,
-          opacity: `calc(1 - ${carouselPage}/4)`,
+          opacity: `calc(1 - ${page}/4)`,
         }}
       >
         <svg
@@ -296,9 +149,9 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
         style={{
           top: `calc(100vh / 2)`,
           left: `calc(100vw - 200px)`,
-          transform: `rotate(${carouselPage * 52}deg) translate3d(0px, ${
+          transform: `rotate(${page * 52}deg) translate3d(0px, ${
             xTrans / 10
-          }px, 0px) scale(${carouselPage / 3})`,
+          }px, 0px) scale(${page / 3})`,
         }}
       >
         <svg
@@ -321,10 +174,10 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
           height: 100,
           top: `calc(20vh)`,
           left: `calc(20vw)`,
-          opacity: `calc(${carouselPage} /2 - 1)`,
-          transform: `rotate(-${carouselPage * 40}deg) translate3d(${
+          opacity: `calc(${page} /2 - 1)`,
+          transform: `rotate(-${page * 40}deg) translate3d(${xTrans / 10}px, ${
             xTrans / 10
-          }px, ${xTrans / 10}px, 0px) scale(${carouselPage / 3})`,
+          }px, 0px) scale(${page / 3})`,
         }}
       />
 
@@ -336,7 +189,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
           left: `calc(30vw)`,
           transform: ` translate3d(${xTrans / 7}px, -${
             xTrans / 11
-          }px, 0px) scale(-${carouselPage / 5})`,
+          }px, 0px) scale(-${page / 5})`,
         }}
       />
 
@@ -348,7 +201,7 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
           left: `calc(90vw)`,
           transform: ` translate3d(-${xTrans / 7}px, -${
             xTrans / 20
-          }px, 0px) scale(${carouselPage / 2})`,
+          }px, 0px) scale(${page / 2})`,
         }}
       />
 
@@ -364,27 +217,19 @@ const MainCarousel: FunctionComponent<MainCarouselProps> = function ({
 
       <CarouselBlock
         ref={carouselBlock}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
         style={{ transform: `translate3d(-${xTrans}px, 0px, 0px)` }}
       >
         <CarouselWrapper>
-          <CarouselOkra {...defaultCarouselProps} />
-
-          <CarouselBenefit {...innerScrollCarouselProps} />
-
-          <CarouselRoadmap {...innerScrollCarouselProps} />
-
-          <CarouselProcess {...innerScrollCarouselProps} />
-
-          <CarouselQnA {...qnaCarouselProps} />
-
-          <CarouselArticle {...articleCarouselProps} />
-
-          <CarouselPartners {...defaultCarouselProps} />
+          <CarouselOkra />
+          <CarouselBenefit />
+          <CarouselRoadmap />
+          <CarouselProcess />
+          <CarouselQnA />
+          <CarouselArticle />
+          <CarouselPartners />
         </CarouselWrapper>
       </CarouselBlock>
-      <MouseIndicator carouselPage={carouselPage} />
+      <MouseIndicator />
     </MainContainer>
   )
 }

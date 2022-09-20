@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import React, {
   FunctionComponent,
+  useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -21,7 +21,8 @@ import {
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
 import { graphql, useStaticQuery } from 'gatsby'
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
 
 const RoadmapBody = styled.div<{ page: number }>`
   padding-left: 60px;
@@ -213,22 +214,17 @@ const RoadmapBodyTextItems: FunctionComponent<RoadmapBodyTextComponentProps> =
     )
   }
 
-const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  language,
-  scrollHandler,
-  innerScrollHandler,
-}) {
+const CarouselRoadmap = () => {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
+  const {
+    page,
+    scrollHandler,
+    innerScrollHandler,
+    touchStartHandler,
+    touchEndHandler,
+  } = useContext(CarouselContext)
+  const { language } = useContext(LanguageContext)
   useEffect(preventInnerScrollHandler(page, 2, carouselBodyRef), [page])
-
-  const _innerScrollHandler = useMemo(
-    () => innerScrollHandler(carouselBodyRef),
-    [page],
-  )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allRoadmapJson: { edges },
@@ -246,8 +242,6 @@ const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
       }
     }
   `)
-
-  console.log('roadmap')
   const [roadmaps, setRoadmaps] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
     setRoadmaps(_ => edges.filter(({ node }) => node.language === language))
@@ -256,9 +250,9 @@ const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 2 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={_scrollHandler}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStartHandler}
+        onTouchEnd={touchEndHandler}
       >
         <CarouselIcon>
           <svg
@@ -301,7 +295,7 @@ const CarouselRoadmap: FunctionComponent<CarouselProps> = function ({
 
       <RoadmapBody
         ref={carouselBodyRef}
-        onWheel={_innerScrollHandler}
+        onWheel={innerScrollHandler(carouselBodyRef)}
         page={page}
       >
         <RoadmapBodyLineContainer>

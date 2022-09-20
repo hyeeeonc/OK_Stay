@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useState, useMemo } from 'react'
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 
 import { GallaryListType, GallaryType } from 'types/index/carousel/CarouselData'
@@ -10,8 +16,8 @@ import {
   MobileItem,
   MobileItemTitleWrapper,
   MobileItemBody,
-  MobileArticleProps,
 } from './MobileItems'
+import { ArticleModalContext } from 'hooks/contexts/ArticleModalProvider'
 
 const MobileArticleBodyItems = styled.div`
   margin-bottom: 32px;
@@ -51,16 +57,15 @@ const MobileArticleBodyItemsContent = styled.div`
 
 type MobileArticleItemsProps = {
   article: ArticleType
-  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
 }
 
 const ArticleItems: FunctionComponent<MobileArticleItemsProps> = function ({
   article,
-  articleModalOpenHandler,
 }) {
-  const _articleModalOpenHandler = articleModalOpenHandler(article)
+  const { openArticleModal } = useContext(ArticleModalContext)
+  const _openArticleModal = useMemo(() => openArticleModal(article), [])
   return (
-    <MobileArticleBodyItems onClick={_articleModalOpenHandler}>
+    <MobileArticleBodyItems onClick={_openArticleModal}>
       <MobileArticleBodyItemsTitle>{article.title}</MobileArticleBodyItemsTitle>
       <MobileArticleBodyItemsContent>
         {article.content}
@@ -69,10 +74,7 @@ const ArticleItems: FunctionComponent<MobileArticleItemsProps> = function ({
   )
 }
 
-const MobileArticle: FunctionComponent<MobileArticleProps> = function ({
-  language,
-  articleModalOpenHandler,
-}) {
+const MobileArticle = ({ language }) => {
   const {
     allGallaryJson: { edges },
   }: GallaryListType = useStaticQuery(graphql`
@@ -100,7 +102,6 @@ const MobileArticle: FunctionComponent<MobileArticleProps> = function ({
   useEffect(() => {
     setArticles(_ => edges.filter(({ node }) => node.language === language))
   }, [language])
-  console.log('article')
 
   return (
     <MobileItem>
@@ -115,7 +116,6 @@ const MobileArticle: FunctionComponent<MobileArticleProps> = function ({
               image: img?.publicURL,
               modalImage: modalImg?.publicURL,
             }}
-            articleModalOpenHandler={articleModalOpenHandler}
           />
         ))}
       </MobileItemBody>

@@ -5,12 +5,11 @@ import React, {
   useRef,
   useState,
   useEffect,
-  useMemo,
   useCallback,
+  useContext,
 } from 'react'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
-import { CarouselQnAProps } from 'types/index/carousel/CarouselProps'
 
 import {
   CarouselItem,
@@ -23,6 +22,9 @@ import {
   QnAListType,
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { QnAModalContext } from 'hooks/contexts/QnAModalProvider'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
 
 const QnABody = styled.div`
   padding-left: 80px;
@@ -274,24 +276,19 @@ const Spacer = styled.div`
   }
 `
 
-const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  scrollHandler,
-  innerScrollHandler,
-  qnaModalOpenHandler,
-  language,
-}) {
+const CarouselQnA = () => {
+  const {
+    page,
+    scrollHandler,
+    innerScrollHandler,
+    touchStartHandler,
+    touchEndHandler,
+  } = useContext(CarouselContext)
+  const { language } = useContext(LanguageContext)
+  const { toggleQnAModal } = useContext(QnAModalContext)
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 4, carouselBodyRef), [page])
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
-
-  const _innerScrollHandler = useMemo(
-    () => innerScrollHandler(carouselBodyRef),
-    [page],
-  )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allQnaJson: { edges },
@@ -310,7 +307,7 @@ const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
     }
   `)
 
-  const [qnas, setQnAs] = useState<Array<CarouselDataType>>([])
+  const [_, setQnAs] = useState<Array<CarouselDataType>>([])
   const [cardQnAs, setCardQnAs] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
     const qnasSetter = edges.filter(({ node }) => node.language == language)
@@ -322,9 +319,9 @@ const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
     <>
       <CarouselItem style={{ opacity: page === 4 ? 1 : 0.2 }}>
         <CarouselTitleWrapper
-          onWheel={_scrollHandler}
-          onTouchStart={touchStart}
-          onTouchEnd={touchEnd}
+          onWheel={scrollHandler(carouselBodyRef)}
+          onTouchStart={touchStartHandler}
+          onTouchEnd={touchEndHandler}
         >
           <CarouselIcon>
             <svg
@@ -350,7 +347,10 @@ const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
           </CarouselIcon>
           <CarouselTitle>QnA</CarouselTitle>
         </CarouselTitleWrapper>
-        <QnABody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
+        <QnABody
+          ref={carouselBodyRef}
+          onWheel={innerScrollHandler(carouselBodyRef)}
+        >
           {cardQnAs.map(({ node: { seq, title, content } }) => (
             <CarouselAccordionItems
               seq={seq}
@@ -360,7 +360,7 @@ const CarouselQnA: FunctionComponent<CarouselQnAProps> = function ({
               setSelectedQnA={setSelectedQnA}
             />
           ))}
-          <ViewMoreContainer onClick={qnaModalOpenHandler}>
+          <ViewMoreContainer onClick={toggleQnAModal}>
             더보기
             <ViewMoreIcon>
               <svg

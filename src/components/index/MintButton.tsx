@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent } from 'react'
+import React, { useEffect, useState } from 'react'
 import palette from '../../../lib/styles/palette'
 
 const MintButtonBlock = styled.div`
@@ -70,7 +70,16 @@ const MintButtonBlock = styled.div`
   }
 `
 
-const MintButton: FunctionComponent<{ dday: number }> = function ({ dday }) {
+const MintButton = () => {
+  const [dday, setDday] = useState<number>(0)
+  useEffect(() => {
+    setDday(_ => {
+      const today = new Date()
+      const std = new Date('2022-10-30')
+      const diff = std.getTime() - today.getTime()
+      return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0
+    })
+  }, [])
   return (
     <MintButtonBlock>
       {dday === 0 ? `민팅하러가기` : `${dday}일 뒤 공개예정`}

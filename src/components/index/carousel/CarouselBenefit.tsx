@@ -1,23 +1,23 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import {LanguageContext} from 'hooks/contexts/LanguageProvider'
 import React, {
   FunctionComponent,
+  useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react'
 import { BenefitListType, BenefitType } from 'types/index/carousel/CarouselData'
 import palette from '../../../../lib/styles/palette'
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 import {
   CarouselItem,
   CarouselTitleWrapper,
   CarouselIcon,
   CarouselTitle,
-  CarouselInnerScrollProps,
 } from './CarouselItem'
 
 const CarouselBody = styled.section`
@@ -183,17 +183,19 @@ const CarouselBodyItemsContent = styled.h4`
     padding-bottom: 5px;
   }
 `
-
-const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  scrollHandler,
-  innerScrollHandler,
-  language,
-}) {
+const CarouselBenefit = () => {
   const carouselBodyRef = useRef<HTMLDivElement>(null)
-  useEffect(preventInnerScrollHandler(page, 1, carouselBodyRef), [page])
+
+  const {
+    page,
+    innerScrollHandler,
+    scrollHandler,
+    touchStartHandler,
+    touchEndHandler,
+  } = useContext(CarouselContext)
+
+  const {language} = useContext(LanguageContext)
+
   const {
     allBenefitJson: { edges },
   }: BenefitListType = useStaticQuery(graphql`
@@ -214,12 +216,7 @@ const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
     }
   `)
 
-  const _innerScrollHandler = useMemo(
-    () => innerScrollHandler(carouselBodyRef),
-    [page],
-  )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
-
+  useEffect(preventInnerScrollHandler(page, 1, carouselBodyRef), [page])
   const [benefits, setBenefits] = useState<Array<BenefitType>>([])
   useEffect(() => {
     setBenefits(_ => edges.filter(({ node }) => node.language === language))
@@ -227,9 +224,9 @@ const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 1 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={_scrollHandler}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStartHandler}
+        onTouchEnd={touchEndHandler}
       >
         <CarouselIcon>
           <svg
@@ -262,7 +259,10 @@ const CarouselBenefit: FunctionComponent<CarouselProps> = function ({
         <CarouselTitle>NFT Benefit</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <CarouselBody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
+      <CarouselBody
+        ref={carouselBodyRef}
+        onWheel={innerScrollHandler(carouselBodyRef)}
+      >
         {benefits.map(({ node: { title, content, icon } }) => (
           <CarouselBodyItems>
             <CarouselBodyIconContainer src={icon.publicURL} />

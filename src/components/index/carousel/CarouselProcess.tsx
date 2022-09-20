@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useRef, useState, useEffect, useMemo } from 'react'
+import React, {
+  FunctionComponent,
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+} from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -9,8 +15,6 @@ import {
   CarouselTitle,
 } from './CarouselItem'
 
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
-
 import {
   ProcessListType,
   CarouselDataType,
@@ -18,6 +22,8 @@ import {
 
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 import { useStaticQuery, graphql } from 'gatsby'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
 
 const ProcessBody = styled.div`
   margin-right: 40px;
@@ -119,14 +125,15 @@ const ProcessItems: FunctionComponent<ProcessItemProps> = function ({
   )
 }
 
-const CarouselProcess: FunctionComponent<CarouselProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  language,
-  scrollHandler,
-  innerScrollHandler,
-}) {
+const CarouselProcess = () => {
+  const {
+    page,
+    innerScrollHandler,
+    scrollHandler,
+    touchStartHandler,
+    touchEndHandler,
+  } = useContext(CarouselContext)
+  const { language } = useContext(LanguageContext)
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 3, carouselBodyRef), [page])
   const {
@@ -145,12 +152,6 @@ const CarouselProcess: FunctionComponent<CarouselProps> = function ({
       }
     }
   `)
-  const _innerScrollHandler = useMemo(
-    () => innerScrollHandler(carouselBodyRef),
-    [page],
-  )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
-
   const [processes, setProcesses] = useState<Array<CarouselDataType>>([])
   useEffect(() => {
     setProcesses(_ => edges.filter(({ node }) => node.language === language))
@@ -159,9 +160,9 @@ const CarouselProcess: FunctionComponent<CarouselProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 3 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={_scrollHandler}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStartHandler}
+        onTouchEnd={touchEndHandler}
       >
         <CarouselIcon>
           <svg
@@ -196,7 +197,7 @@ const CarouselProcess: FunctionComponent<CarouselProps> = function ({
 
       <ProcessBody
         ref={carouselBodyRef}
-        onWheel={_innerScrollHandler}
+        onWheel={innerScrollHandler(carouselBodyRef)}
       >
         {processes.map(({ node: { title, content } }) => (
           <ProcessItems title={title} content={content} />

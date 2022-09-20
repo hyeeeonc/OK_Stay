@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+} from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 
 import palette from '../../../../lib/styles/palette'
@@ -7,13 +13,13 @@ import {
   MobileItem,
   MobileItemTitleWrapper,
   MobileItemBody,
-  MobileQnAProps,
 } from './MobileItems'
 
 import {
   QnAListType,
   CarouselDataType,
 } from 'types/index/carousel/CarouselData'
+import { QnAModalContext } from 'hooks/contexts/QnAModalProvider'
 
 const MobileQnAAccordionContainer = styled.div`
   cursor: pointer;
@@ -165,11 +171,9 @@ const ViewMoreIcon = styled.div`
   margin-left: 6px;
 `
 
-const MobileQnA: FunctionComponent<MobileQnAProps> = function ({
-  language,
-  qnaModalOpenHandler,
-}) {
+const MobileQnA = ({ language }) => {
   const [selectedQnA, setSelectedQnA] = useState<number>(-1)
+  const { toggleQnAModal } = useContext(QnAModalContext)
 
   const {
     allQnaJson: { edges },
@@ -207,7 +211,7 @@ const MobileQnA: FunctionComponent<MobileQnAProps> = function ({
             setSelectedQnA={setSelectedQnA}
           />
         ))}
-        <ViewMoreContainer onClick={qnaModalOpenHandler}>
+        <ViewMoreContainer onClick={toggleQnAModal}>
           더보기
           <ViewMoreIcon>
             <svg

@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useMemo } from 'react'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import {LanguageContext} from 'hooks/contexts/LanguageProvider'
+import React, { useContext } from 'react'
 import palette from '../../../../lib/styles/palette'
 
 import {
@@ -8,8 +10,6 @@ import {
   CarouselIcon,
   CarouselTitle,
 } from './CarouselItem'
-
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
 
 const CarouselBody = styled.section`
   margin-top: 175px;
@@ -35,20 +35,16 @@ const CarouselBody = styled.section`
     font-size: 23px;
   }
 `
-const CarouselOkra: FunctionComponent<CarouselProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  scrollHandler,
-  language,
-}) {
-  const _scrollHandler = useMemo(() => scrollHandler(), [page])
+const CarouselOkra = () => {
+  const { page, scrollHandler, touchStartHandler, touchEndHandler } =
+    useContext(CarouselContext)
+  const {language} = useContext(LanguageContext)
   return (
     <CarouselItem
       style={{ opacity: page === 0 ? 1 : 0.2 }}
-      onWheel={_scrollHandler}
-      onTouchStart={touchStart}
-      onTouchEnd={touchEnd}
+      onWheel={scrollHandler()}
+      onTouchStart={touchStartHandler}
+      onTouchEnd={touchEndHandler}
     >
       <CarouselTitleWrapper>
         <CarouselIcon>

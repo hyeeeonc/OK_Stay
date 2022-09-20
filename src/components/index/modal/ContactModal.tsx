@@ -1,14 +1,9 @@
-import React, { FunctionComponent } from 'react'
+import React, { useContext } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../../lib/styles/palette'
-import {
-  Container,
-  ModalTitle,
-  ModalExit,
-  ModalExitIcon,
-} from '../../common/Modal'
+import { Container, ModalTitle, ModalExitIcon } from '../../common/Modal'
 
-import { ModalProps } from 'types/index/modal/Modal'
+import { ContactModalContext } from 'hooks/contexts/ContacModalProvider'
 
 const ContentArea = styled.div`
   position: absolute;
@@ -171,29 +166,28 @@ const ContactModalButton = styled.button`
   }
 `
 
-const ContactModal: FunctionComponent<ModalProps> = function ({
-  modalOpened,
-  modalCloseHandler,
-}) {
+const ContactModal = () => {
+  const { contactModalOpened, closeContactModal } =
+    useContext(ContactModalContext)
   return (
     <>
       <Container
         style={{
-          opacity: modalOpened == true ? 1 : 0,
-          zIndex: modalOpened == true ? 100 : -10,
+          opacity: contactModalOpened ? 1 : 0,
+          zIndex: contactModalOpened ? 100 : -10,
         }}
-        onClick={modalCloseHandler}
+        onClick={closeContactModal}
       ></Container>
       <ContentArea
         style={{
-          opacity: modalOpened == true ? 1 : 0,
-          zIndex: modalOpened == true ? 101 : -11,
+          opacity: contactModalOpened ? 1 : 0,
+          zIndex: contactModalOpened ? 101 : -11,
         }}
       >
         <ContactModalBodyWrapper>
           <ModalTitle>
             Contact Us
-            <ModalExitIcon modalCloseHandler={modalCloseHandler} />
+            <ModalExitIcon modalCloseHandler={closeContactModal} />
           </ModalTitle>
           <ContactModalForm
             className="gform"

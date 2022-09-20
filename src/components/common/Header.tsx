@@ -1,9 +1,12 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
 import { Language } from 'types/common/language'
 import { Link, navigate } from 'gatsby'
 import { HeaderMode } from 'types/common/Header'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { ContactModalContext } from 'hooks/contexts/ContacModalProvider'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -73,30 +76,27 @@ const NavArrow = styled.div`
 `
 
 interface HeaderProps {
-  getHeaderPageData(e: number): void
-  modalOpenHandler: React.MouseEventHandler
-  dday: number
-  changeLanguage: React.MouseEventHandler
-  language: Language
   headerMode: HeaderMode
 }
 
-const Header: FunctionComponent<HeaderProps> = function ({
-  getHeaderPageData,
-  modalOpenHandler,
-  dday,
-  changeLanguage,
-  language,
-  headerMode,
-}) {
-  const headerPageControl = (page: number) => {
-    getHeaderPageData(page)
-  }
+const Header: FunctionComponent<HeaderProps> = function ({ headerMode }) {
+  const [{ setPage }, { openContactModal }, { language, changeLanguage }] =
+    headerMode === 'DETAIL'
+      ? [
+          useContext(CarouselContext),
+          useContext(ContactModalContext),
+          useContext(LanguageContext),
+        ]
+      : [
+          { setPage: () => {} },
+          { openContactModal: () => {} },
+          useContext(LanguageContext),
+        ]
 
   return (
     <HeaderBlock>
       <HeaderWrapper>
-        <Logo onClick={() => headerPageControl(0)}>
+        <Logo onClick={() => setPage(0)}>
           <Link to={`/?lang=${language}`}>
             <svg
               width="145"
@@ -154,13 +154,11 @@ const Header: FunctionComponent<HeaderProps> = function ({
         <NavWrapper>
           {headerMode === 'DETAIL' ? (
             <>
-              <NavItems onClick={() => headerPageControl(0)}>
-                INFORMATION
-              </NavItems>
+              <NavItems onClick={() => setPage(0)}>INFORMATION</NavItems>
               <NavItems onClick={() => navigate(`/minting?lang=${language}`)}>
                 MINTING
               </NavItems>
-              <NavItems onClick={modalOpenHandler}>CONTACT</NavItems>
+              <NavItems onClick={openContactModal}>CONTACT</NavItems>
             </>
           ) : (
             <></>

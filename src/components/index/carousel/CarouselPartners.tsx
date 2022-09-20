@@ -1,5 +1,6 @@
-import styled from '@emotion/styled'
-import React, { FunctionComponent, useMemo } from 'react'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
+import React, { useContext } from 'react'
 
 import {
   CarouselItem,
@@ -8,22 +9,17 @@ import {
   CarouselTitle,
 } from './CarouselItem'
 
-import { CarouselProps } from 'types/index/carousel/CarouselProps'
+const CarouselPartners = () => {
+  const { page, scrollHandler, touchStartHandler, touchEndHandler } =
+    useContext(CarouselContext)
 
-const CarouselPartners: FunctionComponent<CarouselProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  scrollHandler,
-  language,
-}) {
-  const _scrollHandler = useMemo(() => scrollHandler(), [page])
+  const { language } = useContext(LanguageContext)
   return (
     <CarouselItem
       style={{ opacity: page === 6 ? 1 : 0.2 }}
-      onWheel={_scrollHandler}
-      onTouchStart={touchStart}
-      onTouchEnd={touchEnd}
+      onWheel={scrollHandler()}
+      onTouchStart={touchStartHandler}
+      onTouchEnd={touchEndHandler}
     >
       <CarouselTitleWrapper>
         <CarouselIcon>

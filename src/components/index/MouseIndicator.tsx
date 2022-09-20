@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styled from '@emotion/styled'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
 
 const MouseIndicatorBlock = styled.div`
   position: fixed;
@@ -48,15 +49,10 @@ const MouseIndicatorFlagSvgContainer = styled.div`
   animation: flagMove 0.8s infinite ease-in;
 `
 
-interface MouseIndicatorProps {
-  carouselPage: number
-}
-
-const MouseIndicator: FunctionComponent<MouseIndicatorProps> = function ({
-  carouselPage,
-}) {
+const MouseIndicator = () => {
+  const { page } = useContext(CarouselContext)
   return (
-    <MouseIndicatorBlock style={{ opacity: `calc(1 - ${carouselPage})` }}>
+    <MouseIndicatorBlock style={{ opacity: `calc(1 - ${page})` }}>
       <MouseIndicatorMouseSvgContainer>
         <svg
           width="24"

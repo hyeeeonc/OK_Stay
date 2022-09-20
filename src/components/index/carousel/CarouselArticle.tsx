@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
   useMemo,
+  useContext,
 } from 'react'
 import palette from '../../../../lib/styles/palette'
 
@@ -15,13 +16,14 @@ import {
   CarouselTitle,
 } from './CarouselItem'
 
-import { CarouselArticleProps } from 'types/index/carousel/CarouselProps'
-
 import { GallaryListType, GallaryType } from 'types/index/carousel/CarouselData'
 import { ArticleType } from 'types/index/carousel/Article'
 
 import { preventInnerScrollHandler } from '../../../common/InnerScroll'
 import { useStaticQuery, graphql } from 'gatsby'
+import { CarouselContext } from 'hooks/contexts/CarouselProvider'
+import { ArticleModalContext } from 'hooks/contexts/ArticleModalProvider'
+import {LanguageContext} from 'hooks/contexts/LanguageProvider'
 
 const ArticleBody = styled.div`
   margin-right: 40px;
@@ -148,16 +150,15 @@ const ArticleitemContent = styled.div`
 
 type ArticleItemsProps = {
   article: ArticleType
-  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
 }
 
 const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
   article,
-  articleModalOpenHandler,
 }) {
-  const _articleModalOpenHandler = articleModalOpenHandler(article)
+  const { openArticleModal } = useContext(ArticleModalContext)
+  const _openArticleModal = useMemo(() => openArticleModal(article), [])
   return (
-    <ArticleItem onClick={_articleModalOpenHandler}>
+    <ArticleItem onClick={_openArticleModal}>
       <ArticleItemImage src={article.modalImage}></ArticleItemImage>
       <ArticleItemTextWrapper>
         <ArticleItemTitle>{article.title}</ArticleItemTitle>
@@ -167,23 +168,19 @@ const ArticleItems: FunctionComponent<ArticleItemsProps> = function ({
   )
 }
 
-const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
-  page,
-  touchStart,
-  touchEnd,
-  language,
-  scrollHandler,
-  innerScrollHandler,
-  articleModalOpenHandler,
-}) {
+const CarouselArticle = () => {
+  const {
+    page,
+    innerScrollHandler,
+    scrollHandler,
+    touchStartHandler,
+    touchEndHandler,
+  } = useContext(CarouselContext)
+
+  const { language } = useContext(LanguageContext)
+
   const carouselBodyRef = useRef<HTMLDivElement>(null)
   useEffect(preventInnerScrollHandler(page, 5, carouselBodyRef), [page])
-
-  const _innerScrollHandler = useMemo(
-    () => innerScrollHandler(carouselBodyRef),
-    [page],
-  )
-  const _scrollHandler = useMemo(() => scrollHandler(carouselBodyRef), [page])
 
   const {
     allGallaryJson: { edges },
@@ -216,9 +213,9 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
   return (
     <CarouselItem style={{ opacity: page === 5 ? 1 : 0.2 }}>
       <CarouselTitleWrapper
-        onWheel={_scrollHandler}
-        onTouchStart={touchStart}
-        onTouchEnd={touchEnd}
+        onWheel={scrollHandler(carouselBodyRef)}
+        onTouchStart={touchStartHandler}
+        onTouchEnd={touchEndHandler}
       >
         <CarouselIcon>
           <svg
@@ -239,7 +236,10 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
         <CarouselTitle>Article</CarouselTitle>
       </CarouselTitleWrapper>
 
-      <ArticleBody ref={carouselBodyRef} onWheel={_innerScrollHandler}>
+      <ArticleBody
+        ref={carouselBodyRef}
+        onWheel={innerScrollHandler(carouselBodyRef)}
+      >
         {articles.map(({ node: { img, modalImg, title, content } }) => (
           <ArticleItems
             article={{
@@ -248,7 +248,6 @@ const CarouselArticle: FunctionComponent<CarouselArticleProps> = function ({
               image: img?.publicURL,
               modalImage: modalImg?.publicURL,
             }}
-            articleModalOpenHandler={articleModalOpenHandler}
           />
         ))}
       </ArticleBody>

@@ -1,13 +1,12 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React, { useContext } from 'react'
 import MobileBenefit from './mobileItems/MobileBenefit'
-import { Language } from 'types/common/language'
-import { ArticleType } from 'types/index/carousel/Article'
 import MobileOkra from './mobileItems/MobileOkra'
 import MobileProcess from './mobileItems/MobileProcess'
 import MobileRoadmap from './mobileItems/MobileRoadmap'
 import MobileQnA from './mobileItems/MobileQnA'
 import MobileArticle from './mobileItems/MobileArticle'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
 
 const MobileMainContainer = styled.div`
   width: 500px;
@@ -111,17 +110,8 @@ const BottomSpacer = styled.div`
 //   bottom: 0;
 // `
 
-interface MobileMainProps {
-  language: Language
-  articleModalOpenHandler(article: ArticleType): React.MouseEventHandler
-  qnaModalOpenHandler: React.MouseEventHandler
-}
-
-const MobileMain: FunctionComponent<MobileMainProps> = function ({
-  language,
-  articleModalOpenHandler,
-  qnaModalOpenHandler,
-}) {
+const MobileMain = () => {
+  const { language } = useContext(LanguageContext)
   return (
     <MobileMainContainer>
       <BackgroundCircle
@@ -162,14 +152,8 @@ const MobileMain: FunctionComponent<MobileMainProps> = function ({
       <MobileBenefit language={language} />
       <MobileRoadmap language={language} />
       <MobileProcess language={language} />
-      <MobileQnA
-        language={language}
-        qnaModalOpenHandler={qnaModalOpenHandler}
-      />
-      <MobileArticle
-        language={language}
-        articleModalOpenHandler={articleModalOpenHandler}
-      />
+      <MobileQnA language={language} />
+      <MobileArticle language={language} />
 
       <BottomSpacer />
 

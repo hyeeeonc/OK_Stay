@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { Language } from 'types/common/language'
 import { ArticleType } from 'types/index/carousel/Article'
 

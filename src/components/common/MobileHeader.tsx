@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import styled from '@emotion/styled'
 import palette from '../../../lib/styles/palette'
-import { Language } from 'types/common/language'
 import { Link } from 'gatsby'
 import Hamburger from './Hamburger'
 import { HeaderMode } from 'types/common/Header'
+import { LanguageContext } from 'hooks/contexts/LanguageProvider'
+import { ContactModalContext } from 'hooks/contexts/ContacModalProvider'
 
 const HeaderBlock = styled.div`
   width: 100vw;
@@ -90,29 +91,19 @@ const NavArrow = styled.div`
 `
 
 interface HeaderProps {
-  getHeaderPageData(e: number): void
-  modalOpenHandler: React.MouseEventHandler
-  dday: number
-  changeLanguage: React.MouseEventHandler
-  language: Language
   headerMode: HeaderMode
 }
 
-const MobileHeader: FunctionComponent<HeaderProps> = function ({
-  getHeaderPageData,
-  modalOpenHandler,
-  dday,
-  changeLanguage,
-  language,
-  headerMode,
-}) {
-  const headerPageControl = (page: number) => {
-    getHeaderPageData(page)
-  }
+const MobileHeader: FunctionComponent<HeaderProps> = function ({ headerMode }) {
+  const { language, changeLanguage } = useContext(LanguageContext)
+  const { openContactModal } =
+    headerMode === 'DETAIL'
+      ? useContext(ContactModalContext)
+      : { openContactModal: () => {} }
 
   return (
     <HeaderBlock>
-      <Logo onClick={() => headerPageControl(0)}>
+      <Logo>
         <Link to={`/?lang=${language}`}>
           <svg
             width="116"
@@ -176,7 +167,7 @@ const MobileHeader: FunctionComponent<HeaderProps> = function ({
         <Hamburger
           language={language}
           changeLanguage={changeLanguage}
-          modalOpenHandler={modalOpenHandler}
+          modalOpenHandler={openContactModal}
         />
       ) : (
         <HeaderMintingLanguageContainer>
